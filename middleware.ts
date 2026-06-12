@@ -23,44 +23,68 @@ function isProtected(pathname: string): boolean {
   return segment !== undefined && PROTECTED_SEGMENTS.includes(segment);
 }
 
-export async function middleware(request: NextRequest) {
-  const response = intlMiddleware(request);
+function localeOf(pathname: string): string {
+  const first = pathname.split("/").filter(Boolean)[0];
+  return first !== undefined &&
+    (routing.locales as readonly string[]).includes(first)
+    ? first
+    : routing.defaultLocale;
+}
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !anonKey) {
-    // Environment not configured yet — never crash the edge runtime.
+function isValidHttpUrl(value: string): boolean {
+  try {
+    return new URL(value).protocol.startsWith("http");
+  } catch {
+    return false;
+  }
+}
+
+export async function middleware(request: NextRequest) {
+  // The middleware must NEVER take the whole app down with a 500
+  // (MIDDLEWARE_INVOCATION_FAILED): every step fails open, and the pages
+  // themselves degrade properly when auth is unavailable.
+  let response: NextResponse;
+  try {
+    response = intlMiddleware(request);
+  } catch {
+    response = NextResponse.next();
+  }
+
+  // trim() guards against stray whitespace/newlines pasted into the
+  // Vercel env var form — a malformed URL here must not crash the edge
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
+  if (!url || !anonKey || !isValidHttpUrl(url)) {
     return response;
   }
 
-  const supabase = createServerClient(url, anonKey, {
-    cookies: {
-      getAll() {
-        return request.cookies.getAll();
+  try {
+    const supabase = createServerClient(url, anonKey, {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options),
+          );
+        },
       },
-      setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value, options }) =>
-          response.cookies.set(name, value, options),
-        );
-      },
-    },
-  });
+    });
 
-  // Refreshes the session cookie if needed (httpOnly, managed by @supabase/ssr)
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    // Refreshes the session cookie if needed (httpOnly, via @supabase/ssr)
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (!user && isProtected(request.nextUrl.pathname)) {
-    const parts = request.nextUrl.pathname.split("/").filter(Boolean);
-    const first = parts[0];
-    const locale =
-      first !== undefined &&
-      (routing.locales as readonly string[]).includes(first)
-        ? first
-        : routing.defaultLocale;
-    const loginUrl = new URL(`/${locale}/login`, request.url);
-    return NextResponse.redirect(loginUrl);
+    if (!user && isProtected(request.nextUrl.pathname)) {
+      const locale = localeOf(request.nextUrl.pathname);
+      return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
+    }
+  } catch {
+    // Auth backend unreachable/misconfigured → serve the page anyway;
+    // RLS still protects every row server-side.
+    return response;
   }
 
   return response;

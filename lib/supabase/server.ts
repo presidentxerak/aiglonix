@@ -7,8 +7,8 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
  * Used to verify the caller's session inside API routes.
  */
 export async function getSupabaseServer(): Promise<SupabaseClient> {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
   if (!url || !anonKey) {
     throw new Error("Supabase environment variables are not configured");
   }
@@ -36,8 +36,8 @@ export async function getSupabaseServer(): Promise<SupabaseClient> {
  * Used exclusively by API routes after the caller's session has been verified.
  */
 export function getSupabaseAdmin(): SupabaseClient {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
   if (!url || !serviceKey) {
     throw new Error("Supabase service role is not configured");
   }

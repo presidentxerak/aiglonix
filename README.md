@@ -11,7 +11,10 @@ Plateforme tactique web construite en 48h pour l'European Defense Tech Hackathon
 | **Operation** | Vue tactique unifiée : carte, flux d'alertes, compteurs, opérateurs en ligne (Presence) |
 | **Ghost Signal** | Messagerie PWA offline-first — outbox pattern, idempotence garantie en base |
 
-**Challenge EDTH : « opérer sous brouillage » (guerre électronique).**
+**Challenge EDTH (Durandal) : « Collaborative Jammer Detection and
+Localization for Contested Environments ».** Détecter, classifier et
+géolocaliser les sources d'interférence RF avec des capteurs distribués —
+ici, les capteurs distribués sont les opérateurs eux-mêmes.
 Fonctionnalité maîtresse : **triangulation collaborative des émetteurs** —
 3 signalements actifs de la même bande suffisent pour estimer la position de
 l'émetteur (centroïde pondéré par l'intensité², clustering 5 km, rayon

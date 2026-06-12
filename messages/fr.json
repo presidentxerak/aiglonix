@@ -70,14 +70,14 @@
       "ghostBody": "Coupez le réseau. Vos messages attendent, puis se synchronisent. Dans l'ordre, sans doublon."
     },
     "challenge": {
-      "badge": "Challenge EDTH Paris 2026 — opérer sous brouillage",
+      "badge": "EDTH Paris 2026 — Challenge Durandal : détection et localisation collaboratives des brouilleurs",
       "title": "Ils brouillent. Nous triangulons.",
-      "body": "AIGLONIX répond frontalement au challenge guerre électronique : quand tout est brouillé, l'app ne se contente pas de fonctionner — elle transforme chaque opérateur en capteur.",
+      "body": "Le challenge : détecter, classifier et géolocaliser les sources d'interférence RF hostiles avec des capteurs distribués. Les capteurs distribués d'AIGLONIX, ce sont les opérateurs eux-mêmes — chaque téléphone devient un nœud de la situation guerre électronique.",
       "featureName": "Triangulation collaborative des émetteurs",
       "featureBody": "Trois signalements de la même bande suffisent : AIGLONIX estime la position de l'émetteur par triangulation pondérée par l'intensité et partage la localisation à toute l'équipe en moins de 2 secondes, avec un rayon d'incertitude honnête. La zone brouillée cesse d'être subie — elle devient une cible actionnable.",
-      "s1": "Chaque signalement est un relèvement — les opérateurs sont le réseau de capteurs.",
-      "s2": "L'IA embarquée continue de détecter sans aucune connectivité.",
-      "s3": "La messagerie outbox se synchronise dès qu'une liaison revient."
+      "s1": "Détecter — chaque signalement est un relèvement ; les opérateurs sont le réseau de capteurs distribués.",
+      "s2": "Classifier — par bande de fréquence (2.4 GHz, 5.8 GHz, GPS L1, 900 MHz), avec contre-mesure automatique : la recommandation de bascule de fréquence.",
+      "s3": "Opérer dénié — offline-first par conception : IA embarquée, comms outbox, situation tactique en cache."
     },
     "how": {
       "title": "Comment ça marche",

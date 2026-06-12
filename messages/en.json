@@ -70,14 +70,14 @@
       "ghostBody": "Cut the network. Your messages wait, then synchronize. In order, without duplicates."
     },
     "challenge": {
-      "badge": "EDTH Paris 2026 challenge — operating under jamming",
+      "badge": "EDTH Paris 2026 — Durandal challenge: collaborative jammer detection and localization",
       "title": "They jam. We triangulate.",
-      "body": "AIGLONIX answers the electronic-warfare challenge head-on: when everything is jammed, the app doesn't just keep working — it turns every operator into a sensor.",
+      "body": "The challenge: detect, classify and geolocate hostile RF interference with distributed sensors. AIGLONIX's distributed sensors are the operators themselves — every phone becomes a node of the electronic-warfare picture.",
       "featureName": "Collaborative jammer triangulation",
       "featureBody": "Three reports of the same band are enough: AIGLONIX estimates the emitter's position by strength-weighted triangulation and shares the fix with the whole team in under 2 seconds, with an honest uncertainty radius. The jamming zone stops being something you endure — it becomes a target you can act on.",
-      "s1": "Every report is a bearing — the operators are the sensor network.",
-      "s2": "On-device AI keeps detecting with zero connectivity.",
-      "s3": "Outbox messaging synchronizes the moment a link comes back."
+      "s1": "Detect — every report is a bearing; the operators are the distributed sensor network.",
+      "s2": "Classify — by frequency band (2.4 GHz, 5.8 GHz, GPS L1, 900 MHz), with an automatic countermeasure: the frequency-switch recommendation.",
+      "s3": "Operate denied — offline-first by design: on-device AI, outbox communications, cached tactical picture."
     },
     "how": {
       "title": "How it works",
