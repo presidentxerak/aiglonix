@@ -20,3 +20,13 @@ insert into public.jammer_reports (user_id, lat, lng, freq_band, strength, radiu
   (:'operator_id', 48.8320, 2.2890, 'GPS_L1', 7, 1500, now() - interval '50 minutes'),
   (:'operator_id', 48.8790, 2.3160, '2.4GHz', 5,  700, now() - interval '90 minutes'),
   (:'operator_id', 48.8480, 2.3970, 'autre',  2,  300, now() - interval '3 hours');
+
+-- 5 Ghost Signal messages (ops channel). client_id is the idempotency key
+-- (UNIQUE) — keep the seed ids stable so re-running never duplicates rows.
+insert into public.messages (client_id, user_id, channel, body, sent_at) values
+  ('seed-msg-1', :'operator_id', 'ops', 'Prise de poste secteur Trocadéro, RAS.', now() - interval '55 minutes'),
+  ('seed-msg-2', :'operator_id', 'ops', 'Brouillage 2.4GHz confirmé sur la rive, je bascule en 900MHz.', now() - interval '48 minutes'),
+  ('seed-msg-3', :'operator_id', 'ops', 'Triangulation en cours, 3 signalements alignés.', now() - interval '40 minutes'),
+  ('seed-msg-4', :'operator_id', 'ops', 'Émetteur estimé près de la Tour Eiffel, je remonte la position.', now() - interval '32 minutes'),
+  ('seed-msg-5', :'operator_id', 'ops', 'Mode dégradé activé, messages en file. Réseau instable.', now() - interval '20 minutes')
+on conflict (client_id) do nothing;
