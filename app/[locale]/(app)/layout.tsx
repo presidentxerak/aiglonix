@@ -1,13 +1,16 @@
 import type { ReactNode } from "react";
 import { NetworkProvider } from "@/components/shell/network-provider";
+import { AuthGuard } from "@/components/shell/auth-guard";
 import { AppShell } from "@/components/shell/app-shell";
 
-// Route protection lives in middleware.ts: every segment under this layout
-// requires a valid session, otherwise redirect to /login.
+// No middleware in this project (see CLAUDE.md): the session gate is the
+// client-side AuthGuard; real security = RLS + API-route session checks.
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <NetworkProvider>
-      <AppShell>{children}</AppShell>
+      <AuthGuard>
+        <AppShell>{children}</AppShell>
+      </AuthGuard>
     </NetworkProvider>
   );
 }
