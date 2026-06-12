@@ -10,6 +10,7 @@ import {
   type JammerReportRow,
 } from "@/lib/schemas";
 import { getSupabaseBrowser, isSupabaseConfigured } from "@/lib/supabase/client";
+import { estimateEmitters } from "@/lib/triangulation";
 import { TacticalMap } from "@/components/map/tactical-map";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
@@ -98,6 +99,10 @@ export default function MapVisionPage() {
     setDraft({ lat, lng });
   }, []);
 
+  // Flagship EW feature: 3+ active reports of a band → triangulated emitter
+  const emitters = useMemo(() => estimateEmitters(jammers), [jammers]);
+  const bestFix = emitters[0];
+
   // Frequency recommendation (§6): active 2.4GHz report near the user
   const showRecommendation = useMemo(() => {
     const cutoff = Date.now() - ACTIVE_WINDOW_MS;
@@ -152,6 +157,18 @@ export default function MapVisionPage() {
         <p className="text-xs text-fg-muted">{t("hint")}</p>
       </div>
 
+      {bestFix && (
+        <div
+          role="alert"
+          className="banner-slide bg-surface border-y border-critical/40 px-4 py-2 text-sm text-critical"
+        >
+          {t("emitter.banner", {
+            band: bestFix.freq_band,
+            m: bestFix.uncertainty_m,
+          })}
+        </div>
+      )}
+
       {showRecommendation && (
         <div
           role="alert"
@@ -165,6 +182,7 @@ export default function MapVisionPage() {
         <TacticalMap
           center={userPos ?? PARIS}
           jammers={jammers}
+          emitters={emitters}
           onLongPress={handleLongPress}
           className="absolute inset-0 z-0"
         />

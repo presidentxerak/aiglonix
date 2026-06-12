@@ -11,6 +11,15 @@ Plateforme tactique web construite en 48h pour l'European Defense Tech Hackathon
 | **Operation** | Vue tactique unifiée : carte, flux d'alertes, compteurs, opérateurs en ligne (Presence) |
 | **Ghost Signal** | Messagerie PWA offline-first — outbox pattern, idempotence garantie en base |
 
+**Challenge EDTH : « opérer sous brouillage » (guerre électronique).**
+Fonctionnalité maîtresse : **triangulation collaborative des émetteurs** —
+3 signalements actifs de la même bande suffisent pour estimer la position de
+l'émetteur (centroïde pondéré par l'intensité², clustering 5 km, rayon
+d'incertitude honnête). Le fix apparaît chez toute l'équipe en < 2 s : croix
+de visée + cercle pointillé sur les cartes, bannière « émetteur localisé »,
+compteur dédié sur Operation. Calcul pur côté client sur les données Realtime
+partagées : déterministe, zéro infra ajoutée, fonctionne offline.
+
 ## Stack
 
 Next.js 15 (App Router) · TypeScript strict · Tailwind v4 · Supabase (Postgres + Auth + Realtime + Storage) · react-leaflet · onnxruntime-web · Zod · next-intl (FR/EN) · Cloudflare Turnstile · Upstash Redis · Vercel.
@@ -61,6 +70,15 @@ commit. Env vars dans le dashboard Vercel uniquement — jamais dans le repo.
 AGPL-3.0 Ultralytics). Les classes `airplane`/`bird`/`kite` valident la chaîne
 complète ; remplacer par un modèle drone spécialisé = remplacer le fichier et
 `CLASS_NAMES` dans `lib/onnx/detector.ts`.
+
+## Test de la triangulation (la fonctionnalité maîtresse en démo)
+
+1. Map Vision : 3 appuis longs autour d'un même point, même bande (ex. 2.4GHz),
+   intensités variées.
+2. Au 3e signalement publié : croix de visée rouge + cercle d'incertitude en
+   pointillés + bannière « ◎ Émetteur 2.4GHz localisé par triangulation ».
+3. Sur l'écran projeté (Operation) : le compteur « Émetteurs localisés »
+   s'incrémente et le fix apparaît sur la carte unifiée — en < 2 s.
 
 ## Test du mode offline (le moment fort de la démo)
 

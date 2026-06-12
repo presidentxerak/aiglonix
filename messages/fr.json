@@ -63,11 +63,21 @@
       "sentinelName": "Drone Sentinel",
       "sentinelBody": "L'IA tourne dans votre navigateur. Détection en moins de 3 secondes, même sans réseau.",
       "mapName": "Map Vision",
-      "mapBody": "Chaque brouillage signalé apparaît chez toute l'équipe en moins de 2 secondes.",
+      "mapBody": "Chaque brouillage signalé apparaît chez toute l'équipe en moins de 2 secondes — et trois signalements suffisent à localiser l'émetteur.",
       "operationName": "Operation",
       "operationBody": "Toute la situation tactique sur un seul écran.",
       "ghostName": "Ghost Signal",
       "ghostBody": "Coupez le réseau. Vos messages attendent, puis se synchronisent. Dans l'ordre, sans doublon."
+    },
+    "challenge": {
+      "badge": "Challenge EDTH Paris 2026 — opérer sous brouillage",
+      "title": "Ils brouillent. Nous triangulons.",
+      "body": "AIGLONIX répond frontalement au challenge guerre électronique : quand tout est brouillé, l'app ne se contente pas de fonctionner — elle transforme chaque opérateur en capteur.",
+      "featureName": "Triangulation collaborative des émetteurs",
+      "featureBody": "Trois signalements de la même bande suffisent : AIGLONIX estime la position de l'émetteur par triangulation pondérée par l'intensité et partage la localisation à toute l'équipe en moins de 2 secondes, avec un rayon d'incertitude honnête. La zone brouillée cesse d'être subie — elle devient une cible actionnable.",
+      "s1": "Chaque signalement est un relèvement — les opérateurs sont le réseau de capteurs.",
+      "s2": "L'IA embarquée continue de détecter sans aucune connectivité.",
+      "s3": "La messagerie outbox se synchronise dès qu'une liaison revient."
     },
     "how": {
       "title": "Comment ça marche",
@@ -150,6 +160,7 @@
     "counters": {
       "drones": "Menaces actives",
       "jammers": "Brouillages actifs",
+      "emitters": "Émetteurs localisés",
       "operators": "Opérateurs en ligne"
     },
     "feed": {
@@ -205,6 +216,13 @@
     },
     "published": "Signalement de brouillage publié",
     "recommendation": "⚠ Bande 2.4GHz compromise dans votre zone — basculer le contrôle drone sur 900MHz",
+    "emitter": {
+      "title": "Émetteur localisé",
+      "banner": "◎ Émetteur {band} localisé par triangulation — précision ~{m} m",
+      "reports": "{count, plural, one {# signalement} other {# signalements}}",
+      "uncertainty": "précision ~{m} m",
+      "confidence": "confiance"
+    },
     "popup": {
       "band": "Bande",
       "strength": "Intensité",

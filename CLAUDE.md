@@ -44,6 +44,11 @@ Select, badge) sont dans `components/ui/`, plus `sonner` pour les toasts.
   `sent_at` client, badges ⏳→✅ en cascade 120ms, liens neutralisés.
 - [x] **Phase 5 — Landing** : pitch deck complet FR/EN, radar sweep CSS,
   reveal au scroll, count-up des chiffres preuve, section sécurité, roadmap.
+- [x] **Fonctionnalité maîtresse — Triangulation** (challenge EDTH « opérer
+  sous brouillage ») : `lib/triangulation.ts`, ≥3 signalements actifs de la
+  même bande → clustering 5 km → centroïde pondéré strength² → émetteur
+  estimé (croix de visée + cercle d'incertitude pointillé sur les cartes,
+  bannière Map Vision, compteur Operation, section landing « challenge »).
 - [ ] **Déploiement** : nécessite un projet Supabase réel + projet Vercel
   (voir README — migration à appliquer, env vars à renseigner).
 
@@ -67,6 +72,15 @@ Select, badge) sont dans `components/ui/`, plus `sonner` pour les toasts.
 - **Modèle** : yolov8n COCO (12,8 Mo, licence AGPL-3.0 Ultralytics — OK
   hackathon, à revalider pour un produit commercial). Interchangeable : seul
   `CLASS_NAMES` dans `lib/onnx/detector.ts` change.
+
+- **Challenge choisi** : « opérer sous brouillage » (guerre électronique) —
+  axes confirmés sur la page EDTH Paris 2026 (Shahed/FPV, tracking
+  multi-capteurs, *keeping systems working when everything is jammed*, comms
+  sans infrastructure). La triangulation est volontairement 100 % client :
+  calcul pur et déterministe sur les lignes Realtime partagées → même
+  estimation chez tous les opérateurs, zéro backend ajouté, fonctionne
+  offline sur le cache. La vraie multilatération RSSI (capteurs RF réels)
+  est la slide roadmap, pas une promesse de démo.
 
 ## Pièges rencontrés
 - Leaflet casse au SSR → `next/dynamic` ssr:false dans

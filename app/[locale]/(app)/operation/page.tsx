@@ -14,6 +14,7 @@ import {
   type JammerReportRow,
 } from "@/lib/schemas";
 import { getSupabaseBrowser, isSupabaseConfigured } from "@/lib/supabase/client";
+import { estimateEmitters } from "@/lib/triangulation";
 import { TacticalMap, type MapFocus } from "@/components/map/tactical-map";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
@@ -160,6 +161,9 @@ export default function OperationPage() {
     return jammers.filter((j) => new Date(j.created_at).getTime() >= cutoff);
   }, [jammers]);
 
+  // Flagship EW feature: triangulated emitters from the active reports
+  const emitters = useMemo(() => estimateEmitters(jammers), [jammers]);
+
   async function submitManualAlert() {
     const trimmed = title.trim();
     if (trimmed.length === 0) return;
@@ -188,6 +192,7 @@ export default function OperationPage() {
   const counters = [
     { key: "drones", value: detections.length },
     { key: "jammers", value: activeJammers.length },
+    { key: "emitters", value: emitters.length },
     { key: "operators", value: operatorCount },
   ] as const;
 
@@ -199,6 +204,7 @@ export default function OperationPage() {
           center={PARIS}
           detections={detections}
           jammers={activeJammers}
+          emitters={emitters}
           focus={focus}
           className="absolute inset-0 z-0"
         />

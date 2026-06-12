@@ -1,5 +1,6 @@
 import {
   Crosshair,
+  LocateFixed,
   Map as MapIcon,
   MessageSquare,
   Radar as RadarIcon,
@@ -147,6 +148,43 @@ export default async function LandingPage({
                 </div>
               </Reveal>
             ))}
+          </div>
+        </section>
+
+        {/* 3.5 The challenge — flagship feature (EDTH: operating under jamming) */}
+        <section className="py-16 md:py-28">
+          <Reveal>
+            <span className="inline-block border border-accent/40 bg-surface px-3 py-1.5 text-xs text-accent mb-6">
+              {t("challenge.badge")}
+            </span>
+            <h2 className="text-2xl md:text-4xl font-bold mb-4">
+              {t("challenge.title")}
+            </h2>
+            <p className="max-w-2xl text-fg-muted mb-10">
+              {t("challenge.body")}
+            </p>
+          </Reveal>
+          <div className="grid gap-4 lg:grid-cols-3">
+            <Reveal className="lg:col-span-2">
+              <div className="card card-critical p-6 md:p-8 h-full">
+                <LocateFixed className="text-critical mb-4" size={28} aria-hidden />
+                <h3 className="font-bold text-xl mb-3">
+                  {t("challenge.featureName")}
+                </h3>
+                <p className="text-fg-muted">{t("challenge.featureBody")}</p>
+              </div>
+            </Reveal>
+            <div className="flex flex-col gap-4">
+              {[t("challenge.s1"), t("challenge.s2"), t("challenge.s3")].map(
+                (point, i) => (
+                  <Reveal key={point} delay={i * 80} className="flex-1">
+                    <div className="card p-5 h-full">
+                      <p className="text-sm text-fg">{point}</p>
+                    </div>
+                  </Reveal>
+                ),
+              )}
+            </div>
           </div>
         </section>
 
