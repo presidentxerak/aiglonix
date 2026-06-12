@@ -57,9 +57,11 @@ const nextConfig: NextConfig = {
   // (same root cause and same fix as the nostradameme project). Locale
   // routing is handled by these static redirects; route protection is a
   // client-side guard + RLS + server-side session checks in API routes.
+  // "/" is served by a real route (app/page.tsx) because config-level
+  // redirects for the root are not honored on this Vercel project. The
+  // remaining entries are convenience shortcuts for the unprefixed paths.
   async redirects() {
     return [
-      { source: "/", destination: "/en", permanent: false },
       {
         source:
           "/:segment(operation|drone-sentinel|map-vision|ghost-signal|login)",
