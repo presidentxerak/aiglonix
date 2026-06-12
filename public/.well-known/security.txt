@@ -1,0 +1,6 @@
+Contact: mailto:presidentxerak@gmail.com
+Expires: 2027-06-12T00:00:00.000Z
+Preferred-Languages: fr, en
+Policy: https://aiglonix.vercel.app/#security
+# AIGLONIX — European Defense Tech Hackathon 2026
+# Report vulnerabilities responsibly. No data exfiltration, no service disruption.

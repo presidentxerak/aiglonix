@@ -1,0 +1,263 @@
+@import "tailwindcss";
+
+/* ============ AIGLONIX design tokens — "Tactical HUD" (§2.5) ============ */
+
+@theme {
+  /* Backgrounds — deep blue-black, never pure #000 */
+  --color-base: #0a0e13;
+  --color-surface: #11161e;
+  --color-raised: #1a2129;
+  --color-line: #243040; /* default 1px card border */
+  --color-line-active: #3d5a73; /* active/focus border */
+
+  /* Text — AA contrast guaranteed on surface */
+  --color-fg: #e8edf2;
+  --color-fg-muted: #8a9bad;
+  --color-fg-disabled: #4a5868;
+
+  /* Functional accents — color IS information */
+  --color-accent: #38bdf8;
+  --color-critical: #f43f5e;
+  --color-high: #fb923c;
+  --color-medium: #facc15;
+  --color-ok: #34d399;
+  --color-offline: #a78bfa;
+
+  --font-sans: var(--font-outfit), system-ui, sans-serif;
+}
+
+:root {
+  /* Card shadows — wide, diffuse, light, with a faint cyan halo that gives
+     the "control screen" depth (a pure black shadow is invisible on dark bg) */
+  --shadow-card:
+    0 16px 48px -12px rgba(0, 0, 0, 0.45),
+    0 0 32px -8px rgba(56, 189, 248, 0.04);
+  --shadow-card-hover:
+    0 24px 64px -12px rgba(0, 0, 0, 0.55),
+    0 0 48px -8px rgba(56, 189, 248, 0.08);
+  --shadow-alert: 0 0 40px -4px rgba(244, 63, 94, 0.18);
+}
+
+html {
+  background-color: var(--color-base);
+}
+
+body {
+  background-color: var(--color-base);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Numeric data (GPS, timestamps, frequencies, confidence) aligns vertically */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============ Cards — the visual signature: sharp corners ============ */
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 0; /* identity marker — never rounded */
+  box-shadow: var(--shadow-card);
+  transition:
+    border-color 150ms ease,
+    box-shadow 200ms ease;
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: var(--color-line-active);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.card-critical {
+  box-shadow: var(--shadow-card), var(--shadow-alert);
+  border-color: color-mix(in srgb, var(--color-critical) 45%, var(--color-line));
+}
+
+/* ============ The 5 "game" interaction moments (and ONLY those) ============ */
+
+/* 1. Drone Sentinel — target acquisition scan line */
+@keyframes scanline {
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+.scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-accent) 30%,
+    var(--color-accent) 70%,
+    transparent
+  );
+  box-shadow: 0 0 12px 2px rgba(56, 189, 248, 0.5);
+  animation: scanline 1s linear infinite;
+}
+
+@keyframes box-trace {
+  from {
+    stroke-dashoffset: var(--trace-length, 1000);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.box-trace {
+  animation: box-trace 300ms ease-out forwards;
+}
+
+/* 2. Operation — critical alert arrival */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+.pulse-ring {
+  animation: pulse-ring 1.2s ease-out 2; /* 2 cycles then calm */
+}
+.pulse-ring-continuous {
+  animation: pulse-ring 1.6s ease-out infinite;
+}
+
+@keyframes feed-flash {
+  0% {
+    background-color: color-mix(in srgb, var(--color-critical) 10%, transparent);
+    transform: translateX(-8px);
+    opacity: 0;
+  }
+  20% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+.feed-flash {
+  animation: feed-flash 1s ease-out forwards;
+}
+
+/* 3. Offline banner */
+@keyframes banner-slide {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.banner-slide {
+  animation: banner-slide 250ms ease-out forwards;
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.status-pulse {
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+/* 5. Landing — radar sweep (the ONLY continuous animation in the app) */
+@keyframes radar-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.radar-sweep {
+  animation: radar-rotate 4s linear infinite;
+  background: conic-gradient(
+    from 0deg,
+    rgba(56, 189, 248, 0.35) 0deg,
+    rgba(56, 189, 248, 0.08) 40deg,
+    transparent 80deg
+  );
+}
+
+@keyframes blip {
+  0%,
+  85%,
+  100% {
+    opacity: 0.15;
+  }
+  90% {
+    opacity: 1;
+  }
+}
+.radar-blip {
+  animation: blip 4s linear infinite;
+}
+
+/* Landing scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 250ms ease-out,
+    transform 250ms ease-out;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============ Accessibility — mandatory ============ */
+@media (prefers-reduced-motion: reduce) {
+  .scanline,
+  .box-trace,
+  .pulse-ring,
+  .pulse-ring-continuous,
+  .feed-flash,
+  .banner-slide,
+  .status-pulse,
+  .radar-sweep,
+  .radar-blip {
+    animation: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ============ Leaflet dark adjustments ============ */
+.leaflet-container {
+  background: var(--color-base);
+  font-family: var(--font-sans);
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--color-raised);
+  color: var(--color-fg);
+  border-radius: 0;
+  border: 1px solid var(--color-line);
+}
+.leaflet-bar a {
+  background: var(--color-raised);
+  color: var(--color-fg);
+  border-color: var(--color-line);
+}

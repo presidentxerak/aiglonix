@@ -1,0 +1,224 @@
+{
+  "common": {
+    "appName": "AIGLONIX",
+    "nav": {
+      "operation": "Operation",
+      "sentinel": "Sentry",
+      "map": "Map",
+      "comms": "Comms"
+    },
+    "cta": {
+      "signIn": "Sign in",
+      "signOut": "Sign out"
+    },
+    "severity": {
+      "low": "LOW",
+      "medium": "MEDIUM",
+      "high": "HIGH",
+      "critical": "CRITICAL"
+    },
+    "status": {
+      "online": "Link up",
+      "offline": "Offline",
+      "degraded": "Degraded mode — local operations",
+      "reconnected": "Link restored — synchronizing",
+      "pendingItems": "{count, plural, =0 {no pending items} one {# pending item} other {# pending items}}"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "publish": "Publish",
+      "send": "Send",
+      "retry": "Retry",
+      "close": "Close"
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "network": "Network unavailable — action queued locally.",
+      "config": "Backend not configured. Set the Supabase environment variables."
+    }
+  },
+  "landing": {
+    "header": {
+      "signIn": "Sign in"
+    },
+    "hero": {
+      "baseline": "From detection to decision. In seconds. Even jammed.",
+      "subtitle": "The tactical web platform that detects drones with on-device AI, maps jamming zones and keeps communications alive — no install, no infrastructure.",
+      "ctaPrimary": "Enter the command post",
+      "ctaSecondary": "See how it works",
+      "builtAt": "Built in 48h — European Defense Tech Hackathon · Paris · June 2026"
+    },
+    "problem": {
+      "title": "The sky has changed. The tools haven't.",
+      "c1Title": "Saturation from above",
+      "c1Body": "Low-cost drones overwhelm defenses designed for a different era.",
+      "c2Title": "Silence at the worst moment",
+      "c2Body": "Jamming cuts communications exactly when coordination matters most.",
+      "c3Title": "Scattered information",
+      "c3Body": "Detections, reports and orders live in different tools — decisions arrive late."
+    },
+    "solution": {
+      "title": "One URL. Four capabilities.",
+      "sentinelName": "Drone Sentinel",
+      "sentinelBody": "AI runs in your browser. Detection in under 3 seconds, even without network.",
+      "mapName": "Map Vision",
+      "mapBody": "Every reported jamming zone appears for the whole team in under 2 seconds.",
+      "operationName": "Operation",
+      "operationBody": "The entire tactical picture on a single screen.",
+      "ghostName": "Ghost Signal",
+      "ghostBody": "Cut the network. Your messages wait, then synchronize. In order, without duplicates."
+    },
+    "how": {
+      "title": "How it works",
+      "s1": "Detect",
+      "s1Body": "Point your phone — on-device AI identifies the threat.",
+      "s2": "Share",
+      "s2Body": "The detection propagates to the whole team in real time.",
+      "s3": "Decide",
+      "s3Body": "The unified tactical view turns signals into decisions."
+    },
+    "proof": {
+      "title": "Not a mockup. Production.",
+      "stat1Value": "3",
+      "stat1Label": "< 3 s — on-device AI detection",
+      "stat2Value": "2",
+      "stat2Label": "< 2 s — alert propagation",
+      "stat3Value": "100",
+      "stat3Label": "100% functional offline",
+      "note": "Everything you see runs in production, right now."
+    },
+    "security": {
+      "title": "Built for hostile environments",
+      "p1Title": "Hardened transport",
+      "p1Body": "Forced HTTPS, armored sessions — httpOnly cookies, no token ever exposed.",
+      "p2Title": "Anti-phishing",
+      "p2Body": "One official URL, displayed here. AIGLONIX never asks for your credentials.",
+      "p3Title": "Anti-intrusion",
+      "p3Body": "Accounts protected against bots and breached passwords (Turnstile + HaveIBeenPwned check).",
+      "p4Title": "OPSEC",
+      "p4Body": "GPS metadata in your photos is destroyed before anything is sent.",
+      "p5Title": "Anti-sabotage",
+      "p5Body": "Rate limiting against alert-feed poisoning.",
+      "p6Title": "Traceability",
+      "p6Body": "Every action is attributed and timestamped, immutably.",
+      "securityTxt": "Vulnerability disclosure: /.well-known/security.txt"
+    },
+    "why": {
+      "title": "Why AIGLONIX",
+      "p1": "Zero install — one URL, operational in 30 seconds.",
+      "p2": "On-device AI — works in jammed or disconnected areas.",
+      "p3": "Open architecture — Next.js + Supabase, auditable, extensible."
+    },
+    "roadmap": {
+      "title": "Beyond the hackathon",
+      "m1": "Specialized AI model — Shahed / FPV recognition",
+      "m2": "Real sensor ingestion — RF, acoustic",
+      "m3": "Multi-team federation"
+    },
+    "finalCta": {
+      "title": "Ready to enter the command post?",
+      "button": "Sign in"
+    },
+    "footer": {
+      "officialUrl": "Official URL",
+      "edth": "European Defense Tech Hackathon · Paris · June 2026",
+      "github": "Source code"
+    }
+  },
+  "login": {
+    "title": "Command post access",
+    "email": "Email",
+    "password": "Password",
+    "callsign": "Callsign",
+    "callsignPlaceholder": "e.g. Falcon-2",
+    "signIn": "Sign in",
+    "signUp": "Create account",
+    "switchToSignUp": "No account? Create one",
+    "switchToSignIn": "Already registered? Sign in",
+    "passwordHint": "12 characters minimum. Breached passwords are rejected.",
+    "antiPhishing": "AIGLONIX will NEVER ask for your password by message, email or phone. Only legitimate URL: {url}",
+    "checkEmail": "Check your inbox to confirm your account.",
+    "errors": {
+      "invalidEmail": "Enter a valid email address.",
+      "shortPassword": "Password must be at least 12 characters.",
+      "authFailed": "Authentication failed. Check your credentials."
+    }
+  },
+  "operation": {
+    "title": "Operation — tactical view",
+    "counters": {
+      "drones": "Active threats",
+      "jammers": "Active jamming",
+      "operators": "Operators online"
+    },
+    "feed": {
+      "title": "Alert feed",
+      "empty": "No alerts. The sector is calm.",
+      "centerHint": "Tap an alert to center the map"
+    },
+    "manualAlert": {
+      "button": "Manual alert",
+      "title": "Alert title",
+      "severity": "Severity",
+      "submit": "Broadcast alert",
+      "success": "Alert broadcast to all operators",
+      "rateLimited": "Too many alerts — wait a minute before retrying."
+    }
+  },
+  "sentinel": {
+    "title": "Drone Sentinel",
+    "subtitle": "On-device AI detection — works even when jammed",
+    "modelLoading": "Loading detection model…",
+    "modelReady": "Detection model ready",
+    "modelError": "Detection model unavailable. Add yolov8n.onnx to /public/models/.",
+    "dropzone": "Drop an image here or tap to select",
+    "takePhoto": "Take a photo",
+    "analyzing": "Analyzing…",
+    "detections": "{count, plural, =0 {No object detected} one {# object detected} other {# objects detected}}",
+    "confidence": "confidence",
+    "position": {
+      "title": "Confirm broadcast position",
+      "gps": "Use my GPS position",
+      "manual": "Tap the map to position manually",
+      "hint": "Only the position you explicitly confirm is published — never a silently captured one."
+    },
+    "publish": "Publish detection",
+    "published": "Detection published to the team",
+    "queued": "Offline — detection queued, it will sync automatically",
+    "fileErrors": {
+      "tooLarge": "File too large (8 MB max).",
+      "badType": "Unsupported file type (JPEG, PNG or WebP)."
+    },
+    "opsec": "EXIF/GPS metadata is stripped from the photo before upload."
+  },
+  "mapvision": {
+    "title": "Map Vision",
+    "subtitle": "Collaborative jamming map — long-press to report",
+    "hint": "Long-press (or double-click) on the map to report jamming",
+    "form": {
+      "title": "Report jamming",
+      "band": "Frequency band",
+      "strength": "Strength (1–10)",
+      "radius": "Estimated radius (m)",
+      "submit": "Publish report"
+    },
+    "published": "Jamming report published",
+    "recommendation": "⚠ 2.4GHz band compromised in your area — switch drone control to 900MHz",
+    "popup": {
+      "band": "Band",
+      "strength": "Strength",
+      "reported": "Reported"
+    }
+  },
+  "ghost": {
+    "title": "Ghost Signal",
+    "subtitle": "Resilient messaging — offline-first",
+    "placeholder": "Message to the ops channel…",
+    "pending": "pending",
+    "synced": "synced",
+    "empty": "No messages on this channel yet.",
+    "externalLink": "external link — verify the domain before copying",
+    "offlineInfo": "Offline: messages are timestamped and queued locally, then synchronized in order, without duplicates."
+  }
+}

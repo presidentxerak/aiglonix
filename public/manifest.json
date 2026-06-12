@@ -1,0 +1,17 @@
+{
+  "name": "AIGLONIX",
+  "short_name": "AIGLONIX",
+  "description": "From detection to decision. In seconds. Even jammed.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0E13",
+  "theme_color": "#0A0E13",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

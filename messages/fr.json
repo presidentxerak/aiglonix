@@ -1,0 +1,224 @@
+{
+  "common": {
+    "appName": "AIGLONIX",
+    "nav": {
+      "operation": "Opération",
+      "sentinel": "Sentinelle",
+      "map": "Carte",
+      "comms": "Comms"
+    },
+    "cta": {
+      "signIn": "Connexion",
+      "signOut": "Déconnexion"
+    },
+    "severity": {
+      "low": "FAIBLE",
+      "medium": "MOYEN",
+      "high": "ÉLEVÉ",
+      "critical": "CRITIQUE"
+    },
+    "status": {
+      "online": "Liaison établie",
+      "offline": "Hors ligne",
+      "degraded": "Mode dégradé — opérations locales",
+      "reconnected": "Liaison rétablie — synchronisation",
+      "pendingItems": "{count, plural, =0 {aucun élément en attente} one {# élément en attente} other {# éléments en attente}}"
+    },
+    "actions": {
+      "cancel": "Annuler",
+      "confirm": "Confirmer",
+      "publish": "Publier",
+      "send": "Envoyer",
+      "retry": "Réessayer",
+      "close": "Fermer"
+    },
+    "errors": {
+      "generic": "Une erreur est survenue. Réessayez.",
+      "network": "Réseau indisponible — action mise en file locale.",
+      "config": "Backend non configuré. Renseignez les variables d'environnement Supabase."
+    }
+  },
+  "landing": {
+    "header": {
+      "signIn": "Connexion"
+    },
+    "hero": {
+      "baseline": "De la détection à la décision. En secondes. Même brouillé.",
+      "subtitle": "La plateforme tactique web qui détecte les drones par IA embarquée, cartographie les brouillages et maintient les communications — sans installation, sans infrastructure.",
+      "ctaPrimary": "Accéder au poste de commandement",
+      "ctaSecondary": "Découvrir",
+      "builtAt": "Construit en 48h — European Defense Tech Hackathon · Paris · Juin 2026"
+    },
+    "problem": {
+      "title": "Le ciel a changé. Pas les outils.",
+      "c1Title": "Saturation venue du ciel",
+      "c1Body": "Des drones low-cost saturent des défenses conçues pour une autre époque.",
+      "c2Title": "Silence au pire moment",
+      "c2Body": "Le brouillage coupe les communications exactement quand la coordination compte le plus.",
+      "c3Title": "Information dispersée",
+      "c3Body": "Détections, signalements et ordres vivent dans des outils séparés — la décision arrive trop tard."
+    },
+    "solution": {
+      "title": "Une URL. Quatre capacités.",
+      "sentinelName": "Drone Sentinel",
+      "sentinelBody": "L'IA tourne dans votre navigateur. Détection en moins de 3 secondes, même sans réseau.",
+      "mapName": "Map Vision",
+      "mapBody": "Chaque brouillage signalé apparaît chez toute l'équipe en moins de 2 secondes.",
+      "operationName": "Operation",
+      "operationBody": "Toute la situation tactique sur un seul écran.",
+      "ghostName": "Ghost Signal",
+      "ghostBody": "Coupez le réseau. Vos messages attendent, puis se synchronisent. Dans l'ordre, sans doublon."
+    },
+    "how": {
+      "title": "Comment ça marche",
+      "s1": "Détecter",
+      "s1Body": "Pointez votre téléphone — l'IA embarquée identifie la menace.",
+      "s2": "Partager",
+      "s2Body": "La détection se propage à toute l'équipe en temps réel.",
+      "s3": "Décider",
+      "s3Body": "La vue tactique unifiée transforme les signaux en décisions."
+    },
+    "proof": {
+      "title": "Pas une maquette. De la production.",
+      "stat1Value": "3",
+      "stat1Label": "< 3 s — détection IA embarquée",
+      "stat2Value": "2",
+      "stat2Label": "< 2 s — propagation d'une alerte",
+      "stat3Value": "100",
+      "stat3Label": "100 % fonctionnel hors-ligne",
+      "note": "Tout ce que vous voyez tourne en production, maintenant."
+    },
+    "security": {
+      "title": "Conçu pour un environnement hostile",
+      "p1Title": "Transport durci",
+      "p1Body": "HTTPS forcé, sessions blindées — cookies httpOnly, aucun token exposé.",
+      "p2Title": "Anti-hameçonnage",
+      "p2Body": "Une seule URL officielle, affichée ici. AIGLONIX ne demande jamais vos identifiants.",
+      "p3Title": "Anti-intrusion",
+      "p3Body": "Comptes protégés contre les bots et les mots de passe compromis (Turnstile + contrôle HaveIBeenPwned).",
+      "p4Title": "OPSEC",
+      "p4Body": "Les métadonnées GPS de vos photos sont détruites avant tout envoi.",
+      "p5Title": "Anti-sabotage",
+      "p5Body": "Limitation de débit contre l'empoisonnement du flux d'alertes.",
+      "p6Title": "Traçabilité",
+      "p6Body": "Chaque action est attribuée et horodatée, de manière non modifiable.",
+      "securityTxt": "Signalement de vulnérabilité : /.well-known/security.txt"
+    },
+    "why": {
+      "title": "Pourquoi AIGLONIX",
+      "p1": "Zéro installation — une URL, opérationnel en 30 secondes.",
+      "p2": "IA embarquée — fonctionne en zone brouillée ou déconnectée.",
+      "p3": "Architecture ouverte — Next.js + Supabase, auditable, extensible."
+    },
+    "roadmap": {
+      "title": "Et après le hackathon",
+      "m1": "Modèle IA spécialisé — reconnaissance Shahed / FPV",
+      "m2": "Ingestion de capteurs réels — RF, acoustique",
+      "m3": "Fédération multi-équipes"
+    },
+    "finalCta": {
+      "title": "Prêt à entrer dans le poste de commandement ?",
+      "button": "Connexion"
+    },
+    "footer": {
+      "officialUrl": "URL officielle",
+      "edth": "European Defense Tech Hackathon · Paris · Juin 2026",
+      "github": "Code source"
+    }
+  },
+  "login": {
+    "title": "Accès au poste de commandement",
+    "email": "Email",
+    "password": "Mot de passe",
+    "callsign": "Indicatif",
+    "callsignPlaceholder": "ex. Faucon-2",
+    "signIn": "Connexion",
+    "signUp": "Créer un compte",
+    "switchToSignUp": "Pas de compte ? En créer un",
+    "switchToSignIn": "Déjà inscrit ? Connexion",
+    "passwordHint": "12 caractères minimum. Les mots de passe compromis sont refusés.",
+    "antiPhishing": "AIGLONIX ne vous demandera JAMAIS votre mot de passe par message, email ou téléphone. Seule URL légitime : {url}",
+    "checkEmail": "Vérifiez votre boîte mail pour confirmer votre compte.",
+    "errors": {
+      "invalidEmail": "Saisissez une adresse email valide.",
+      "shortPassword": "Le mot de passe doit contenir au moins 12 caractères.",
+      "authFailed": "Échec de l'authentification. Vérifiez vos identifiants."
+    }
+  },
+  "operation": {
+    "title": "Opération — vue tactique",
+    "counters": {
+      "drones": "Menaces actives",
+      "jammers": "Brouillages actifs",
+      "operators": "Opérateurs en ligne"
+    },
+    "feed": {
+      "title": "Flux d'alertes",
+      "empty": "Aucune alerte. Le secteur est calme.",
+      "centerHint": "Touchez une alerte pour centrer la carte"
+    },
+    "manualAlert": {
+      "button": "Alerte manuelle",
+      "title": "Titre de l'alerte",
+      "severity": "Sévérité",
+      "submit": "Diffuser l'alerte",
+      "success": "Alerte diffusée à tous les opérateurs",
+      "rateLimited": "Trop d'alertes — attendez une minute avant de réessayer."
+    }
+  },
+  "sentinel": {
+    "title": "Drone Sentinel",
+    "subtitle": "Détection IA embarquée — fonctionne même brouillé",
+    "modelLoading": "Chargement du modèle de détection…",
+    "modelReady": "Modèle de détection prêt",
+    "modelError": "Modèle de détection indisponible. Ajoutez yolov8n.onnx dans /public/models/.",
+    "dropzone": "Déposez une image ici ou touchez pour sélectionner",
+    "takePhoto": "Prendre une photo",
+    "analyzing": "Analyse…",
+    "detections": "{count, plural, =0 {Aucun objet détecté} one {# objet détecté} other {# objets détectés}}",
+    "confidence": "confiance",
+    "position": {
+      "title": "Confirmer la position de diffusion",
+      "gps": "Utiliser ma position GPS",
+      "manual": "Touchez la carte pour positionner manuellement",
+      "hint": "Seule la position que vous confirmez explicitement est publiée — jamais une position captée silencieusement."
+    },
+    "publish": "Publier la détection",
+    "published": "Détection publiée à l'équipe",
+    "queued": "Hors ligne — détection en file, elle se synchronisera automatiquement",
+    "fileErrors": {
+      "tooLarge": "Fichier trop volumineux (8 Mo max).",
+      "badType": "Type de fichier non supporté (JPEG, PNG ou WebP)."
+    },
+    "opsec": "Les métadonnées EXIF/GPS de la photo sont détruites avant l'envoi."
+  },
+  "mapvision": {
+    "title": "Map Vision",
+    "subtitle": "Carte collaborative des brouillages — appui long pour signaler",
+    "hint": "Appui long (ou double-clic) sur la carte pour signaler un brouillage",
+    "form": {
+      "title": "Signaler un brouillage",
+      "band": "Bande de fréquence",
+      "strength": "Intensité (1–10)",
+      "radius": "Rayon estimé (m)",
+      "submit": "Publier le signalement"
+    },
+    "published": "Signalement de brouillage publié",
+    "recommendation": "⚠ Bande 2.4GHz compromise dans votre zone — basculer le contrôle drone sur 900MHz",
+    "popup": {
+      "band": "Bande",
+      "strength": "Intensité",
+      "reported": "Signalé"
+    }
+  },
+  "ghost": {
+    "title": "Ghost Signal",
+    "subtitle": "Messagerie résiliente — offline-first",
+    "placeholder": "Message au canal ops…",
+    "pending": "en attente",
+    "synced": "synchronisé",
+    "empty": "Aucun message sur ce canal pour l'instant.",
+    "externalLink": "lien externe — vérifiez le domaine avant de copier",
+    "offlineInfo": "Hors ligne : les messages sont horodatés et mis en file localement, puis synchronisés dans l'ordre, sans doublon."
+  }
+}
