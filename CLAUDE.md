@@ -54,8 +54,10 @@ Select, badge) sont dans `components/ui/`, plus `sonner` pour les toasts.
 
 ## Décisions prises
 - **i18n** : segment `app/[locale]/`, fallback `en`, aucune chaîne en dur.
-- **Auth** : cookies httpOnly via @supabase/ssr ; protection des routes dans
-  `middleware.ts` (jamais côté client seul). Turnstile et Upstash sont
+- **Auth** : cookies httpOnly via @supabase/ssr ; protection des routes via
+  `AuthGuard` client (`getSession()` local — un opérateur hors ligne garde
+  l'accès) + RLS + session vérifiée dans les API routes. PAS de middleware
+  (voir Pièges). Turnstile et Upstash sont
   optionnels : l'app dégrade proprement si les env vars manquent (limiteur
   mémoire en fallback — la protection ne disparaît jamais silencieusement).
 - **Alerts** : aucune policy INSERT client ; seule l'API route écrit (service
@@ -96,12 +98,17 @@ Select, badge) sont dans `components/ui/`, plus `sonner` pour les toasts.
   les 15.x sont concernées, GHSA-qx2v-qp2m-jg93, build-time uniquement, CSS
   non fiable — non applicable ici). Aucune vulnérabilité critique/haute.
   À re-vérifier à chaque montée de version de Next.
-- `MIDDLEWARE_INVOCATION_FAILED` (500) en prod Vercel : toute exception dans
-  le middleware edge fait tomber TOUTES les routes. Cause typique : env var
-  Supabase malformée (espace/retour ligne collé dans le formulaire Vercel) →
-  `createServerClient`/fetch jette. Règle : le middleware **fail open**
-  (try/catch sur chaque étape + `trim()` + validation d'URL) — la protection
-  des données reste assurée par RLS côté Supabase.
+- `MIDDLEWARE_INVOCATION_FAILED` (500) en prod Vercel : sur CE compte
+  Vercel, **tout middleware Edge crashe au runtime quelle que soit la
+  simplicité du code** (testé : middleware supabase+intl, puis fail-open
+  try/catch, puis imports dynamiques, puis zéro dépendance — tous 500).
+  Même problème déjà rencontré et résolu dans le repo `nostradameme`
+  (commit « Remove Edge middleware to fix MIDDLEWARE_INVOCATION_FAILED »,
+  avril 2026). **Solution éprouvée : AUCUN middleware.ts.** Locale routing
+  via `redirects()` statiques dans next.config.ts ; protection des routes
+  via AuthGuard client (getSession local, offline-friendly) ; la vraie
+  sécurité reste RLS + vérification de session dans les API routes. Ne
+  JAMAIS réintroduire de middleware dans ce projet.
 
 ## Prochaines étapes
 1. Créer le projet Supabase, appliquer `001_init.sql`, activer la protection

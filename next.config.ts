@@ -52,6 +52,22 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // No middleware: on this Vercel account, ANY Edge middleware produces
+  // MIDDLEWARE_INVOCATION_FAILED at runtime regardless of code simplicity
+  // (same root cause and same fix as the nostradameme project). Locale
+  // routing is handled by these static redirects; route protection is a
+  // client-side guard + RLS + server-side session checks in API routes.
+  async redirects() {
+    return [
+      { source: "/", destination: "/en", permanent: false },
+      {
+        source:
+          "/:segment(operation|drone-sentinel|map-vision|ghost-signal|login)",
+        destination: "/en/:segment",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
