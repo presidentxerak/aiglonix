@@ -5,6 +5,9 @@
 @theme {
   /* Backgrounds — deep blue-black, never pure #000 */
   --color-base: #0a0e13;
+  /* Dark "ink" for text sitting on accent surfaces (NOT `text-base`,
+     which Tailwind resolves as a font-size) */
+  --color-ink: #0a0e13;
   --color-surface: #11161e;
   --color-raised: #1a2129;
   --color-line: #243040; /* default 1px card border */

@@ -73,7 +73,7 @@ export default async function LandingPage({
           <LocaleSwitcher />
           <Link
             href="/login"
-            className="inline-flex min-h-11 items-center rounded-[4px] bg-accent px-4 text-sm font-bold text-base hover:bg-accent/85 transition-colors duration-150"
+            className="inline-flex min-h-11 items-center rounded-[4px] bg-accent px-4 text-sm font-bold text-ink hover:bg-accent/85 transition-colors duration-150"
           >
             {t("header.signIn")}
           </Link>
@@ -93,7 +93,7 @@ export default async function LandingPage({
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link
                 href="/login"
-                className="inline-flex min-h-12 items-center justify-center rounded-[4px] bg-accent px-6 font-bold text-base text-base hover:bg-accent/85 transition-colors duration-150"
+                className="inline-flex min-h-12 items-center justify-center rounded-[4px] bg-accent px-6 font-bold text-ink hover:bg-accent/85 transition-colors duration-150"
               >
                 {t("hero.ctaPrimary")}
               </Link>
@@ -284,7 +284,7 @@ export default async function LandingPage({
               </h2>
               <Link
                 href="/login"
-                className="mt-8 inline-flex min-h-12 items-center justify-center rounded-[4px] bg-accent px-8 font-bold text-base text-base hover:bg-accent/85 transition-colors duration-150"
+                className="mt-8 inline-flex min-h-12 items-center justify-center rounded-[4px] bg-accent px-8 font-bold text-ink hover:bg-accent/85 transition-colors duration-150"
               >
                 {t("finalCta.button")}
               </Link>
