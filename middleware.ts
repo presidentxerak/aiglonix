@@ -1,14 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * This middleware is structurally unable to throw: every dependency is
- * loaded via dynamic import INSIDE a try/catch (a module-init failure in a
- * library would otherwise produce MIDDLEWARE_INVOCATION_FAILED and take
- * down every route). Each step fails open — data is protected by RLS on
- * Supabase regardless, the middleware only provides locale routing and a
- * login redirect.
+ * ZERO-DEPENDENCY middleware. After repeated MIDDLEWARE_INVOCATION_FAILED
+ * on the Vercel Edge runtime with library imports (next-intl middleware,
+ * @supabase/ssr), this middleware imports nothing but next/server: locale
+ * detection and route protection are hand-rolled. There is no module that
+ * can fail to load.
+ *
+ * Trade-offs, all acceptable:
+ * - Locale negotiation: NEXT_LOCALE cookie, then Accept-Language, then en
+ *   (same behavior next-intl's middleware provided).
+ * - Route protection: presence of the Supabase auth cookie. A forged
+ *   cookie only reaches an empty shell — every row is protected by RLS
+ *   and every API route re-verifies the session server-side.
+ * - Session refresh: handled by the Supabase browser client; API routes
+ *   read the refreshed cookies.
  */
 
+const LOCALES = ["en", "fr"] as const;
+const DEFAULT_LOCALE = "en";
 const PROTECTED_SEGMENTS = [
   "operation",
   "drone-sentinel",
@@ -16,94 +26,68 @@ const PROTECTED_SEGMENTS = [
   "ghost-signal",
 ];
 
-// Kept in sync with i18n/routing.ts (not imported here so that the
-// middleware has zero static dependency that could fail at module init)
-const LOCALES = ["en", "fr"];
-const DEFAULT_LOCALE = "en";
-
-type IntlHandler = (
-  request: NextRequest,
-) => NextResponse | Promise<NextResponse>;
-
-let intlHandler: IntlHandler | null = null;
-
-function isProtected(pathname: string): boolean {
-  const parts = pathname.split("/").filter(Boolean);
-  const first = parts[0];
-  const segment =
-    first !== undefined && LOCALES.includes(first) ? parts[1] : first;
-  return segment !== undefined && PROTECTED_SEGMENTS.includes(segment);
-}
-
-function localeOf(pathname: string): string {
-  const first = pathname.split("/").filter(Boolean)[0];
-  return first !== undefined && LOCALES.includes(first)
-    ? first
-    : DEFAULT_LOCALE;
-}
-
-function isValidHttpUrl(value: string): boolean {
-  try {
-    return new URL(value).protocol.startsWith("http");
-  } catch {
-    return false;
+function detectLocale(request: NextRequest): string {
+  const cookie = request.cookies.get("NEXT_LOCALE")?.value;
+  if (cookie && (LOCALES as readonly string[]).includes(cookie)) {
+    return cookie;
   }
+  const header = request.headers.get("accept-language") ?? "";
+  const primary = header.split(",")[0]?.trim().toLowerCase() ?? "";
+  if (primary.startsWith("fr")) return "fr";
+  return DEFAULT_LOCALE;
 }
 
-export async function middleware(request: NextRequest) {
-  // 1. Locale routing (next-intl)
-  let response: NextResponse | null = null;
+function hasSupabaseSessionCookie(request: NextRequest): boolean {
+  return request.cookies
+    .getAll()
+    .some(
+      (c) =>
+        c.name.startsWith("sb-") &&
+        c.name.includes("-auth-token") &&
+        c.value.length > 0,
+    );
+}
+
+export function middleware(request: NextRequest) {
   try {
-    if (!intlHandler) {
-      const [{ default: createMiddleware }, { routing }] = await Promise.all([
-        import("next-intl/middleware"),
-        import("./i18n/routing"),
-      ]);
-      intlHandler = createMiddleware(routing) as IntlHandler;
+    const { pathname } = request.nextUrl;
+    const parts = pathname.split("/").filter(Boolean);
+    const first = parts[0];
+    const hasLocale =
+      first !== undefined && (LOCALES as readonly string[]).includes(first);
+
+    // /foo → /en/foo (or /fr/foo) — locale prefix is mandatory
+    if (!hasLocale) {
+      const locale = detectLocale(request);
+      const url = request.nextUrl.clone();
+      url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
+      return NextResponse.redirect(url);
     }
-    response = await intlHandler(request);
-  } catch {
-    response = null;
-  }
-  if (!response) response = NextResponse.next();
 
-  // 2. Session refresh + route protection (Supabase) — optional layer
-  // trim() guards against stray whitespace pasted into the Vercel env form
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
-  if (!url || !anonKey || !isValidHttpUrl(url)) {
-    return response;
-  }
+    // Protected app segments require a Supabase session cookie
+    const segment = parts[1];
+    if (
+      segment !== undefined &&
+      PROTECTED_SEGMENTS.includes(segment) &&
+      !hasSupabaseSessionCookie(request)
+    ) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${first}/login`;
+      return NextResponse.redirect(url);
+    }
 
-  try {
-    const { createServerClient } = await import("@supabase/ssr");
-    const supabase = createServerClient(url, anonKey, {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response!.cookies.set(name, value, options),
-          );
-        },
-      },
+    // Remember the visited locale for future negotiations
+    const response = NextResponse.next();
+    response.cookies.set("NEXT_LOCALE", first, {
+      path: "/",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 365,
     });
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user && isProtected(request.nextUrl.pathname)) {
-      const locale = localeOf(request.nextUrl.pathname);
-      return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
-    }
-  } catch {
-    // Auth backend unreachable/misconfigured → serve the page anyway
     return response;
+  } catch {
+    // Belt and braces: never take the app down from the middleware
+    return NextResponse.next();
   }
-
-  return response;
 }
 
 export const config = {
