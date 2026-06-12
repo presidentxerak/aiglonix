@@ -44,6 +44,11 @@ Select, badge) sont dans `components/ui/`, plus `sonner` pour les toasts.
   `sent_at` client, badges ⏳→✅ en cascade 120ms, liens neutralisés.
 - [x] **Phase 5 — Landing** : pitch deck complet FR/EN, radar sweep CSS,
   reveal au scroll, count-up des chiffres preuve, section sécurité, roadmap.
+- [x] **Fonctionnalité maîtresse — Triangulation** (challenge EDTH « opérer
+  sous brouillage ») : `lib/triangulation.ts`, ≥3 signalements actifs de la
+  même bande → clustering 5 km → centroïde pondéré strength² → émetteur
+  estimé (croix de visée + cercle d'incertitude pointillé sur les cartes,
+  bannière Map Vision, compteur Operation, section landing « challenge »).
 - [ ] **Déploiement** : nécessite un projet Supabase réel + projet Vercel
   (voir README — migration à appliquer, env vars à renseigner).
 
@@ -68,6 +73,18 @@ Select, badge) sont dans `components/ui/`, plus `sonner` pour les toasts.
   hackathon, à revalider pour un produit commercial). Interchangeable : seul
   `CLASS_NAMES` dans `lib/onnx/detector.ts` change.
 
+- **Challenge choisi** : **Durandal — « Collaborative Jammer Detection and
+  Localization for Contested Environments »** (liste officielle EDTH Paris
+  2026). Énoncé : détecter, classifier et géolocaliser les sources
+  d'interférence RF avec des capteurs distribués + interface opérateur —
+  correspondance directe avec Map Vision (détection = signalements,
+  classification = bande, géolocalisation = triangulation, contre-mesure =
+  bannière 2.4→900MHz). La triangulation est volontairement 100 % client :
+  calcul pur et déterministe sur les lignes Realtime partagées → même
+  estimation chez tous les opérateurs, zéro backend ajouté, fonctionne
+  offline sur le cache. La vraie multilatération RSSI (capteurs RF réels)
+  est la slide roadmap, pas une promesse de démo.
+
 ## Pièges rencontrés
 - Leaflet casse au SSR → `next/dynamic` ssr:false dans
   `components/map/tactical-map.tsx`, jamais d'import statique.
@@ -79,6 +96,12 @@ Select, badge) sont dans `components/ui/`, plus `sonner` pour les toasts.
   les 15.x sont concernées, GHSA-qx2v-qp2m-jg93, build-time uniquement, CSS
   non fiable — non applicable ici). Aucune vulnérabilité critique/haute.
   À re-vérifier à chaque montée de version de Next.
+- `MIDDLEWARE_INVOCATION_FAILED` (500) en prod Vercel : toute exception dans
+  le middleware edge fait tomber TOUTES les routes. Cause typique : env var
+  Supabase malformée (espace/retour ligne collé dans le formulaire Vercel) →
+  `createServerClient`/fetch jette. Règle : le middleware **fail open**
+  (try/catch sur chaque étape + `trim()` + validation d'URL) — la protection
+  des données reste assurée par RLS côté Supabase.
 
 ## Prochaines étapes
 1. Créer le projet Supabase, appliquer `001_init.sql`, activer la protection

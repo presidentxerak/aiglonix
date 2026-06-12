@@ -14,6 +14,7 @@ import {
 import L from "leaflet";
 import { useLocale, useTranslations } from "next-intl";
 import type { DetectionRow, JammerReportRow } from "@/lib/schemas";
+import type { EstimatedEmitter } from "@/lib/triangulation";
 import { formatAge } from "@/lib/utils";
 import "leaflet/dist/leaflet.css";
 
@@ -30,6 +31,8 @@ export interface TacticalMapProps {
   className?: string;
   jammers?: JammerReportRow[];
   detections?: DetectionRow[];
+  /** triangulated jammer emitters (flagship EW feature) */
+  emitters?: EstimatedEmitter[];
   focus?: MapFocus | null;
   /** long-press on touch devices (Leaflet maps it to `contextmenu`) or double-click */
   onLongPress?: (lat: number, lng: number) => void;
@@ -53,6 +56,25 @@ function droneIcon(recent: boolean): L.DivIcon {
     iconSize: [16, 16],
     iconAnchor: [8, 8],
     html: `<span class="relative block h-4 w-4">${ring}<span class="absolute inset-0 rounded-full border-2 border-critical bg-critical/40"></span></span>`,
+  });
+}
+
+function emitterIcon(recent: boolean): L.DivIcon {
+  const ring = recent
+    ? '<span class="absolute -inset-2 rounded-full bg-critical/40 pulse-ring"></span>'
+    : "";
+  // crosshair reticle — "the jamming zone becomes a target"
+  const reticle =
+    '<svg viewBox="0 0 24 24" class="absolute inset-0" fill="none" stroke="#F43F5E" stroke-width="2">' +
+    '<circle cx="12" cy="12" r="7"/>' +
+    '<line x1="12" y1="1" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="23"/>' +
+    '<line x1="1" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="23" y2="12"/>' +
+    '<circle cx="12" cy="12" r="1.5" fill="#F43F5E"/></svg>';
+  return L.divIcon({
+    className: "",
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+    html: `<span class="relative block h-6 w-6">${ring}${reticle}</span>`,
   });
 }
 
@@ -99,6 +121,7 @@ export default function TacticalMapImpl({
   className,
   jammers = [],
   detections = [],
+  emitters = [],
   focus,
   onLongPress,
   onPick,
@@ -106,6 +129,7 @@ export default function TacticalMapImpl({
 }: TacticalMapProps) {
   const locale = useLocale();
   const tJam = useTranslations("mapvision.popup");
+  const tEmitter = useTranslations("mapvision.emitter");
   const tSentinel = useTranslations("sentinel");
   const now = Date.now();
 
@@ -151,6 +175,43 @@ export default function TacticalMapImpl({
             </div>
           </Popup>
         </Circle>
+      ))}
+
+      {emitters.map((e) => (
+        <Circle
+          key={`zone-${e.id}`}
+          center={[e.lat, e.lng]}
+          radius={e.uncertainty_m}
+          pathOptions={{
+            color: "#F43F5E",
+            dashArray: "6 6",
+            weight: 2,
+            fillColor: "#F43F5E",
+            fillOpacity: 0.06,
+          }}
+        />
+      ))}
+      {emitters.map((e) => (
+        <Marker
+          key={e.id}
+          position={[e.lat, e.lng]}
+          icon={emitterIcon(
+            new Date(e.last_report_at).getTime() > now - 2 * 60 * 1000,
+          )}
+        >
+          <Popup>
+            <div className="text-sm tabular">
+              <p className="font-bold text-critical">
+                ◎ {tEmitter("title")} — {e.freq_band}
+              </p>
+              <p>{tEmitter("reports", { count: e.report_count })}</p>
+              <p>{tEmitter("uncertainty", { m: e.uncertainty_m })}</p>
+              <p>
+                {tEmitter("confidence")}: {Math.round(e.confidence * 100)}%
+              </p>
+            </div>
+          </Popup>
+        </Marker>
       ))}
 
       {detections.map((d) => (
