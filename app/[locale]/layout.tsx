@@ -21,7 +21,13 @@ export const metadata: Metadata = {
   description:
     "Tactical web platform: on-device drone detection, collaborative jamming map, resilient offline-first communications.",
   manifest: "/manifest.json",
-  icons: { icon: "/icon.svg" },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export const viewport: Viewport = {
