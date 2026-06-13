@@ -108,10 +108,12 @@ export class SttController {
 
   private async startDeepgram(token: string, lang: string): Promise<void> {
     this.stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    // nova-3 (Deepgram's most accurate model) for English; nova-2 elsewhere.
+    const model = lang === "en" ? "nova-3" : "nova-2";
     const url =
       "wss://api.deepgram.com/v1/listen" +
-      `?model=nova-2&language=${lang}&smart_format=true` +
-      "&interim_results=true&punctuate=true";
+      `?model=${model}&language=${lang}&smart_format=true` +
+      "&interim_results=true&punctuate=true&numerals=true";
     // Browser WebSocket auth via Sec-WebSocket-Protocol. Tokens minted by
     // /v1/auth/grant are short-lived bearer tokens -> use the "bearer" scheme.
     const ws = new WebSocket(url, ["bearer", token]);

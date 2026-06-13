@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Camera, MapPin, Upload } from "lucide-react";
+import { Camera, MapPin, Upload, ScanSearch } from "lucide-react";
 import { loadDetector, runDetection, type Detection } from "@/lib/onnx/detector";
 import {
   preprocessImage,
@@ -18,9 +18,20 @@ import { Button } from "@/components/ui/button";
 import { useNetwork } from "@/components/shell/network-provider";
 import { useTeam } from "@/lib/team/context";
 import { DetectionOverlay } from "@/components/detection/detection-overlay";
+import { AircraftDatasheet } from "@/components/detection/aircraft-datasheet";
+import { AircraftIdSchema, type AircraftId } from "@/lib/sentinel/identify";
 
 const MAX_FILE_BYTES = 8 * 1024 * 1024;
 const PARIS: [number, number] = [48.8566, 2.3522];
+
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(new Error("read failed"));
+    reader.readAsDataURL(blob);
+  });
+}
 
 type ModelState =
   | { status: "loading"; progress: number }
@@ -44,6 +55,8 @@ export default function DroneSentinelPage() {
   const [position, setPosition] = useState<[number, number] | null>(null);
   const [showPicker, setShowPicker] = useState(false);
   const [publishing, setPublishing] = useState(false);
+  const [identifying, setIdentifying] = useState(false);
+  const [aircraft, setAircraft] = useState<AircraftId | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const cameraInputRef = useRef<HTMLInputElement | null>(null);
@@ -86,6 +99,7 @@ export default function DroneSentinelPage() {
         return url;
       });
       setDetections([]);
+      setAircraft(null);
       setPosition(null);
       setPhase("ready");
       void analyze(image);
@@ -109,6 +123,27 @@ export default function DroneSentinelPage() {
       toast.error(
         model.status === "error" ? t("modelError") : tCommon("errors.generic"),
       );
+    }
+  }
+
+  async function identify() {
+    const image = imageRef.current;
+    if (!image) return;
+    setIdentifying(true);
+    try {
+      const blob = await recompressForUpload(image);
+      const dataUrl = await blobToDataUrl(blob);
+      const res = await fetch("/api/sentinel/identify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: dataUrl, hint: detections[0]?.className }),
+      });
+      if (!res.ok) throw new Error("identify");
+      setAircraft(AircraftIdSchema.parse(await res.json()));
+    } catch {
+      toast.error(t("identify.error"));
+    } finally {
+      setIdentifying(false);
     }
   }
 
@@ -136,7 +171,11 @@ export default function DroneSentinelPage() {
     const payload = DetectionInputSchema.safeParse({
       lat: position[0],
       lng: position[1],
-      drone_type: best.className,
+      // prefer the AI identification when available, else the on-device class
+      drone_type:
+        aircraft?.identified && aircraft.name
+          ? aircraft.name.slice(0, 64)
+          : best.className,
       confidence: best.confidence,
       image_url: null,
     });
@@ -168,6 +207,7 @@ export default function DroneSentinelPage() {
         return null;
       });
       setDetections([]);
+      setAircraft(null);
       setPosition(null);
       setShowPicker(false);
     } catch {
@@ -271,6 +311,24 @@ export default function DroneSentinelPage() {
         <p className="text-sm text-fg-muted tabular">
           {t("detections", { count: detections.length })}
         </p>
+      )}
+
+      {/* AI identification + technical datasheet of the photographed aircraft */}
+      {phase === "done" && detections.length > 0 && (
+        <div className="space-y-3">
+          {!aircraft && (
+            <Button
+              variant="secondary"
+              className="w-full"
+              disabled={identifying}
+              onClick={() => void identify()}
+            >
+              <ScanSearch size={16} aria-hidden />
+              {identifying ? t("identify.identifying") : t("identify.cta")}
+            </Button>
+          )}
+          {aircraft && <AircraftDatasheet data={aircraft} />}
+        </div>
       )}
 
       {/* Position confirmation - explicit, never silent (§2.7.6) */}

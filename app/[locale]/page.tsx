@@ -13,7 +13,6 @@ import {
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { LocaleSwitcher } from "@/components/shell/locale-switcher";
 import { Radar } from "@/components/landing/radar";
 import { Reveal } from "@/components/landing/reveal";
 import { SiteFooter } from "@/components/landing/site-footer";
@@ -76,7 +75,6 @@ export default async function LandingPage({
           </span>
         </Link>
         <div className="flex items-center gap-3">
-          <LocaleSwitcher />
           <Link
             href="/login"
             className="inline-flex min-h-11 items-center rounded-none btn-gradient text-white px-4 text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_-8px_rgba(244,63,94,0.55)]"

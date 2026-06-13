@@ -18,7 +18,6 @@ import { useTeam } from "@/lib/team/context";
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 import { useNetwork } from "./network-provider";
-import { LocaleSwitcher } from "./locale-switcher";
 
 const NAV_ITEMS = [
   { href: "/operation", key: "operation", icon: Radar },
@@ -166,9 +165,8 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
         <div className="px-5 py-4 border-t border-line flex flex-col gap-3">
           <TeamBadge />
-          <StatusDot />
           <div className="flex items-center justify-between gap-2">
-            <LocaleSwitcher />
+            <StatusDot />
             <button
               type="button"
               onClick={() => void handleSignOut()}
@@ -191,7 +189,6 @@ export function AppShell({ children }: { children: ReactNode }) {
           </span>
           <div className="flex items-center gap-3 shrink-0">
             <StatusDot />
-            <LocaleSwitcher />
             <button
               type="button"
               onClick={() => void handleSignOut()}

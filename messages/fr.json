@@ -204,7 +204,36 @@
       "tooLarge": "Fichier trop volumineux (8 Mo max).",
       "badType": "Type de fichier non supporté (JPEG, PNG ou WebP)."
     },
-    "opsec": "Les métadonnées EXIF/GPS de la photo sont détruites avant l'envoi."
+    "opsec": "Les métadonnées EXIF/GPS de la photo sont détruites avant l'envoi.",
+    "identify": {
+      "cta": "Identifier l'appareil (IA)",
+      "identifying": "Identification…",
+      "error": "Échec de l'identification."
+    },
+    "datasheet": {
+      "confidence": "Confiance",
+      "manufacturer": "Fabricant",
+      "origin": "Origine",
+      "role": "Rôle",
+      "length": "Longueur",
+      "wingspan": "Envergure",
+      "speed": "Vitesse max",
+      "range": "Portée",
+      "endurance": "Autonomie",
+      "payload": "Charge utile",
+      "warhead": "Charge militaire",
+      "propulsion": "Propulsion",
+      "guidance": "Guidage",
+      "cues": "Indices visuels (cette photo)",
+      "countermeasures": "Contre-mesures",
+      "disclaimer": "Identification assistée par IA - à vérifier avant toute action.",
+      "threat": {
+        "low": "Faible",
+        "medium": "Moyen",
+        "high": "Élevé",
+        "critical": "Critique"
+      }
+    }
   },
   "mapvision": {
     "title": "Map Vision",
