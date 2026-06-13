@@ -204,7 +204,36 @@
       "tooLarge": "File too large (8 MB max).",
       "badType": "Unsupported file type (JPEG, PNG or WebP)."
     },
-    "opsec": "EXIF/GPS metadata is stripped from the photo before upload."
+    "opsec": "EXIF/GPS metadata is stripped from the photo before upload.",
+    "identify": {
+      "cta": "Identify aircraft (AI)",
+      "identifying": "Identifying…",
+      "error": "Identification failed."
+    },
+    "datasheet": {
+      "confidence": "Confidence",
+      "manufacturer": "Manufacturer",
+      "origin": "Origin",
+      "role": "Role",
+      "length": "Length",
+      "wingspan": "Wingspan",
+      "speed": "Max speed",
+      "range": "Range",
+      "endurance": "Endurance",
+      "payload": "Payload",
+      "warhead": "Warhead",
+      "propulsion": "Propulsion",
+      "guidance": "Guidance",
+      "cues": "Visual cues (this photo)",
+      "countermeasures": "Countermeasures",
+      "disclaimer": "AI-assisted identification - verify before acting.",
+      "threat": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "critical": "Critical"
+      }
+    }
   },
   "mapvision": {
     "title": "Map Vision",
