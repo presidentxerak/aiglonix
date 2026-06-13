@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Mic, MicOff, Loader2, MapPin, Send } from "lucide-react";
+import { Mic, MicOff, Loader2, MapPin, Send, ChevronUp } from "lucide-react";
 import { TacticalMap, type MapFocus } from "@/components/map/tactical-map";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -79,6 +79,7 @@ export default function VoiceMapPage() {
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
   const [units, setUnits] = useState<TacticalUnit[]>([]);
   const [showDemo, setShowDemo] = useState(true);
+  const [panelOpen, setPanelOpen] = useState(true);
 
   const controllerRef = useRef<SttController | null>(null);
   const userPosRef = useRef<[number, number] | null>(null);
@@ -230,10 +231,42 @@ export default function VoiceMapPage() {
           className="absolute inset-0 z-0"
         />
 
-        {/* Control panel - top sheet on mobile (keeps the bottom nav clear),
-            floating card top-left on desktop */}
-        <div className="absolute inset-x-0 top-0 z-[1000] p-3 md:inset-x-auto md:left-3 md:top-3 md:w-80">
+        {/* Compact reopen button - shown on mobile when the panel is hidden */}
+        <button
+          type="button"
+          onClick={() => setPanelOpen(true)}
+          className={cn(
+            "absolute top-3 left-3 z-[1000] md:hidden card px-3 py-2 flex items-center gap-2 bg-surface/95 backdrop-blur-sm cursor-pointer",
+            panelOpen && "hidden",
+          )}
+        >
+          <Mic size={16} className="text-accent" aria-hidden />
+          <span className="text-sm font-bold">{t("title")}</span>
+        </button>
+
+        {/* Control panel - top sheet on mobile (collapsible to reveal the map),
+            floating card top-left on desktop (always visible) */}
+        <div
+          className={cn(
+            "absolute inset-x-0 top-0 z-[1000] p-3 md:inset-x-auto md:left-3 md:top-3 md:w-80",
+            !panelOpen && "hidden md:block",
+          )}
+        >
           <div className="card p-4 space-y-3 bg-surface/95 backdrop-blur-sm">
+            {/* mobile-only collapse control */}
+            <div className="flex items-center justify-between md:hidden">
+              <span className="text-xs font-bold uppercase tracking-wide text-fg-muted">
+                {t("title")}
+              </span>
+              <button
+                type="button"
+                onClick={() => setPanelOpen(false)}
+                aria-label={t("collapse")}
+                className="text-fg-muted hover:text-fg transition-colors cursor-pointer p-1 -m-1"
+              >
+                <ChevronUp size={18} aria-hidden />
+              </button>
+            </div>
             <div className="flex items-center gap-3">
               <Button
                 onClick={() =>

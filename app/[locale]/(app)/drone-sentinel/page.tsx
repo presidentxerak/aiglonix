@@ -16,6 +16,7 @@ import { saveBlob } from "@/lib/offline/queue";
 import { TacticalMap } from "@/components/map/tactical-map";
 import { Button } from "@/components/ui/button";
 import { useNetwork } from "@/components/shell/network-provider";
+import { useTeam } from "@/lib/team/context";
 import { DetectionOverlay } from "@/components/detection/detection-overlay";
 
 const MAX_FILE_BYTES = 8 * 1024 * 1024;
@@ -32,6 +33,7 @@ export default function DroneSentinelPage() {
   const t = useTranslations("sentinel");
   const tCommon = useTranslations("common");
   const { online } = useNetwork();
+  const { teamId } = useTeam();
   const [model, setModel] = useState<ModelState>({
     status: "loading",
     progress: 0,
@@ -156,6 +158,7 @@ export default function DroneSentinelPage() {
         id,
         payload: payload.data,
         image_key: imageKey,
+        team_id: teamId,
         queued_at: new Date().toISOString(),
       });
       toast.success(online ? t("published") : t("queued"));

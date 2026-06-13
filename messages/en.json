@@ -295,7 +295,8 @@
     "micDenied": "Microphone access denied. Allow it, or type a position below.",
     "sttNetwork": "Speech service unavailable. Type a position below.",
     "typePlaceholder": "Type a position update…",
-    "send": "Add"
+    "send": "Add",
+    "collapse": "Hide panel"
   },
   "footer": {
     "classification": "UNCLASSIFIED // FOR DEMONSTRATION ONLY",
@@ -335,5 +336,19 @@
       "gdpr": "GDPR · data minimisation",
       "export": "Export control: ITAR / EAR - review before transfer"
     }
+  },
+  "team": {
+    "title": "Join your unit",
+    "subtitle": "Create a team or enter an invite code. Your team shares one live tactical picture.",
+    "createTitle": "Create a team",
+    "namePlaceholder": "Team name",
+    "createCta": "Create team",
+    "joinTitle": "Join with a code",
+    "codePlaceholder": "Invite code",
+    "joinCta": "Join team",
+    "error": "Could not create the team.",
+    "joinError": "Invalid invite code.",
+    "copy": "Copy invite code",
+    "copied": "Invite code copied"
   }
 }

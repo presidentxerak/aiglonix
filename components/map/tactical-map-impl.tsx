@@ -24,6 +24,7 @@ import {
   type Faction,
 } from "@/lib/tactical/units";
 import { formatAge } from "@/lib/utils";
+import { SignedImage } from "@/components/detection/signed-image";
 import "leaflet/dist/leaflet.css";
 
 export interface MapFocus {
@@ -263,12 +264,18 @@ export default function TacticalMapImpl({
           icon={droneIcon(new Date(d.created_at).getTime() > recentThreshold)}
         >
           <Popup>
-            <div className="text-sm tabular">
+            <div className="text-sm tabular space-y-1">
               <p className="font-bold">{d.drone_type}</p>
               <p>
                 {tSentinel("confidence")}: {Math.round(d.confidence * 100)}%
               </p>
               <p className="text-fg-muted">{formatAge(d.created_at, locale)}</p>
+              {d.image_url && (
+                <SignedImage
+                  path={d.image_url}
+                  className="mt-1 w-44 h-28 object-cover border border-line"
+                />
+              )}
             </div>
           </Popup>
         </Marker>

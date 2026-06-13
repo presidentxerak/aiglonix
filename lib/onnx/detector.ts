@@ -34,7 +34,7 @@ export const CLASS_NAMES: readonly string[] = [
 /** COCO classes considered aerial-threat relevant for the demo chain. */
 export const AERIAL_CLASSES = new Set(["airplane", "bird", "kite"]);
 
-const CONFIDENCE_THRESHOLD = 0.35;
+const CONFIDENCE_THRESHOLD = 0.25;
 const IOU_THRESHOLD = 0.45;
 
 export interface Detection {
