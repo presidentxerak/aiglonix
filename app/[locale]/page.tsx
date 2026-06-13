@@ -1,9 +1,5 @@
 import {
-  Crosshair,
   LocateFixed,
-  Map as MapIcon,
-  MessageSquare,
-  Radar as RadarIcon,
   Radio,
   Share2,
   Target,
@@ -14,6 +10,7 @@ import {
   Fingerprint,
   Globe,
 } from "lucide-react";
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "@/components/shell/locale-switcher";
@@ -37,10 +34,10 @@ export default async function LandingPage({
   const officialDomain = APP_URL.replace(/^https?:\/\//, "");
 
   const modules = [
-    { icon: Crosshair, name: t("solution.sentinelName"), body: t("solution.sentinelBody") },
-    { icon: MapIcon, name: t("solution.mapName"), body: t("solution.mapBody") },
-    { icon: RadarIcon, name: t("solution.operationName"), body: t("solution.operationBody") },
-    { icon: MessageSquare, name: t("solution.ghostName"), body: t("solution.ghostBody") },
+    { image: "/image-drone-sentinel.png", name: t("solution.sentinelName"), body: t("solution.sentinelBody") },
+    { image: "/image-map-vision.png", name: t("solution.mapName"), body: t("solution.mapBody") },
+    { image: "/image-operation.png", name: t("solution.operationName"), body: t("solution.operationBody") },
+    { image: "/image-ghost-signal.png", name: t("solution.ghostName"), body: t("solution.ghostBody") },
   ];
 
   const problems = [
@@ -175,12 +172,22 @@ export default async function LandingPage({
             </h2>
           </Reveal>
           <div className="grid gap-4 md:grid-cols-2">
-            {modules.map(({ icon: Icon, name, body }, i) => (
+            {modules.map(({ image, name, body }, i) => (
               <Reveal key={name} delay={i * 80}>
-                <div className="card p-6 h-full">
-                  <Icon className="text-accent mb-3" size={24} aria-hidden />
-                  <h3 className="font-bold text-lg mb-2">{name}</h3>
-                  <p className="text-sm text-fg-muted">{body}</p>
+                <div className="card h-full overflow-hidden">
+                  <div className="relative h-48 w-full">
+                    <Image
+                      src={image}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="font-bold text-lg mb-2">{name}</h3>
+                    <p className="text-sm text-fg-muted">{body}</p>
+                  </div>
                 </div>
               </Reveal>
             ))}
