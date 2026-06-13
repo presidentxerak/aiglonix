@@ -19,7 +19,6 @@ import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "@/components/shell/locale-switcher";
 import { Radar } from "@/components/landing/radar";
 import { Reveal } from "@/components/landing/reveal";
-import { StatCount } from "@/components/landing/stat-count";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { Logo } from "@/components/brand/logo";
 
@@ -80,7 +79,7 @@ export default async function LandingPage({
           <LocaleSwitcher />
           <Link
             href="/login"
-            className="inline-flex min-h-11 items-center rounded-[4px] btn-gradient text-white px-4 text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_-8px_rgba(56,189,248,0.55)]"
+            className="inline-flex min-h-11 items-center rounded-none btn-gradient text-white px-4 text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_-8px_rgba(244,63,94,0.55)]"
           >
             {t("header.signIn")}
           </Link>
@@ -122,13 +121,13 @@ export default async function LandingPage({
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link
                 href="/login"
-                className="inline-flex min-h-12 items-center justify-center rounded-[4px] btn-gradient text-white px-6 font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(56,189,248,0.55)]"
+                className="inline-flex min-h-12 items-center justify-center rounded-none btn-gradient text-white px-6 font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(244,63,94,0.55)]"
               >
                 {t("hero.ctaPrimary")}
               </Link>
               <a
                 href="#how"
-                className="inline-flex min-h-12 items-center justify-center rounded-[4px] border border-line bg-surface/40 px-6 text-fg transition-all duration-200 hover:-translate-y-0.5 hover:border-line-active"
+                className="inline-flex min-h-12 items-center justify-center rounded-none border border-line bg-surface/40 px-6 text-fg transition-all duration-200 hover:-translate-y-0.5 hover:border-line-active"
               >
                 {t("hero.ctaSecondary")}
               </a>
@@ -248,38 +247,6 @@ export default async function LandingPage({
           </div>
         </section>
 
-        {/* 5. Proof */}
-        <section className="py-16 md:py-28">
-          <Reveal>
-            <div className="card p-8 md:p-12">
-              <h2 className="text-2xl md:text-4xl font-bold mb-10">
-                {t("proof.title")}
-              </h2>
-              <div className="grid gap-8 md:grid-cols-3">
-                <div>
-                  <StatCount value={3} prefix="< " suffix=" s" />
-                  <p className="text-sm text-fg-muted mt-2">
-                    {t("proof.stat1Label")}
-                  </p>
-                </div>
-                <div>
-                  <StatCount value={2} prefix="< " suffix=" s" />
-                  <p className="text-sm text-fg-muted mt-2">
-                    {t("proof.stat2Label")}
-                  </p>
-                </div>
-                <div>
-                  <StatCount value={100} suffix=" %" />
-                  <p className="text-sm text-fg-muted mt-2">
-                    {t("proof.stat3Label")}
-                  </p>
-                </div>
-              </div>
-              <p className="mt-10 text-sm text-accent">{t("proof.note")}</p>
-            </div>
-          </Reveal>
-        </section>
-
         {/* 6. Security by design */}
         <section id="security" className="py-16 md:py-28">
           <Reveal>
@@ -321,29 +288,6 @@ export default async function LandingPage({
           </ul>
         </section>
 
-        {/* 8. Roadmap */}
-        <section className="py-16 md:py-28">
-          <Reveal>
-            <h2 className="text-2xl md:text-4xl font-bold mb-10">
-              {t("roadmap.title")}
-            </h2>
-          </Reveal>
-          <div className="grid gap-4 md:grid-cols-3">
-            {[t("roadmap.m1"), t("roadmap.m2"), t("roadmap.m3")].map(
-              (milestone, i) => (
-                <Reveal key={milestone} delay={i * 80}>
-                  <div className="card p-5 h-full">
-                    <span className="tabular text-accent font-bold">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <p className="text-sm text-fg mt-2">{milestone}</p>
-                  </div>
-                </Reveal>
-              ),
-            )}
-          </div>
-        </section>
-
         {/* 9. Final CTA */}
         <section className="py-16 md:py-28">
           <Reveal>
@@ -353,7 +297,7 @@ export default async function LandingPage({
               </h2>
               <Link
                 href="/login"
-                className="mt-8 inline-flex min-h-12 items-center justify-center rounded-[4px] btn-gradient text-white px-8 font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(56,189,248,0.55)]"
+                className="mt-8 inline-flex min-h-12 items-center justify-center rounded-none btn-gradient text-white px-8 font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(244,63,94,0.55)]"
               >
                 {t("finalCta.button")}
               </Link>

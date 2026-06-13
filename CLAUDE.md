@@ -73,8 +73,9 @@ heuristique (`lib/voice/extract.ts`) ; Nominatim sans clé.
 ## Décisions prises
 - **Design system v2** : police racine agrandie (`html { font-size: 17.5px }`)
   pour la lisibilité ; **aucun tiret cadratin (— / –) dans l'app** — utiliser
-  un trait d'union. Dégradés animés (`@keyframes grad-shift`) : `.btn-gradient`
-  (bleu ciel→bleu foncé) sur boutons/liens importants ; `.grad-magenta` /
+  un trait d'union. **Boutons à coins nets** (`rounded-none`, comme les
+  cards). Dégradés animés (`@keyframes grad-shift`) : `.btn-gradient`
+  (magenta→rouge) sur boutons/liens importants ; `.grad-magenta` /
   `.unit-fill` / `.alert-gradient` (magenta→rouge) sur icônes et alertes carte ;
   bordure de carte en dégradé animé au survol (`.card::after`). Toutes les
   animations sont coupées sous `prefers-reduced-motion`.
