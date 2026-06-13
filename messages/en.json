@@ -7,7 +7,8 @@
       "map": "Map",
       "comms": "Comms",
       "voice": "Voice",
-      "connectors": "API"
+      "connectors": "API",
+      "account": "Account"
     },
     "cta": {
       "signIn": "Sign in",
@@ -400,5 +401,26 @@
     "endpoint": "Endpoint",
     "example": "Example (detection)",
     "kinds": "kind can be \"detection\", \"jammer\" or \"alert\"."
+  },
+  "account": {
+    "title": "Account",
+    "profile": "Profile",
+    "callsign": "Callsign",
+    "email": "Email",
+    "save": "Save",
+    "saved": "Saved",
+    "team": "Team",
+    "teamName": "Team name",
+    "ownerOnly": "Only the team owner can change this.",
+    "inviteCode": "Invite code",
+    "inviteHint": "Share this code so teammates can join your team.",
+    "copy": "Copy code",
+    "regenerate": "Regenerate code",
+    "codeRegenerated": "Invite code regenerated",
+    "members": "Members ({count})",
+    "you": "you",
+    "leave": "Leave team",
+    "leaveConfirm": "Leave this team? You will lose access to its data until you join again.",
+    "left": "You left the team"
   }
 }
