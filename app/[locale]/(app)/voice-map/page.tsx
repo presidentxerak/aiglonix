@@ -230,8 +230,9 @@ export default function VoiceMapPage() {
           className="absolute inset-0 z-0"
         />
 
-        {/* Control panel overlay */}
-        <div className="absolute inset-x-0 bottom-0 z-[1000] p-3 md:inset-x-auto md:top-3 md:left-3 md:bottom-auto md:w-80">
+        {/* Control panel - top sheet on mobile (keeps the bottom nav clear),
+            floating card top-left on desktop */}
+        <div className="absolute inset-x-0 top-0 z-[1000] p-3 md:inset-x-auto md:left-3 md:top-3 md:w-80">
           <div className="card p-4 space-y-3 bg-surface/95 backdrop-blur-sm">
             <div className="flex items-center gap-3">
               <Button

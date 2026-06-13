@@ -24,8 +24,14 @@ type Near = { lat: number; lng: number } | undefined;
 const cache = new Map<string, GeocodeResult>();
 
 function biasViewbox(lat: number, lng: number): string {
-  const d = 0.55; // ~1.1° box around the centre to prefer nearby matches
+  const d = 0.25; // small box so it's a soft local preference, not an override
   return `&viewbox=${lng - d},${lat + d},${lng + d},${lat - d}&bounded=0`;
+}
+
+// Only bias toward the user when the query does NOT name a place explicitly
+// (a comma/number usually means an explicit address/city -> trust it globally).
+function shouldBias(query: string): boolean {
+  return !/[,\d]/.test(query);
 }
 
 async function geocodeNominatim(
@@ -36,7 +42,7 @@ async function geocodeNominatim(
     const url =
       `${NOMINATIM}?format=jsonv2&limit=1&accept-language=en` +
       `&q=${encodeURIComponent(query)}` +
-      (near ? biasViewbox(near.lat, near.lng) : "");
+      (near && shouldBias(query) ? biasViewbox(near.lat, near.lng) : "");
     const res = await fetch(url, {
       headers: {
         "User-Agent": USER_AGENT,
@@ -66,7 +72,8 @@ async function geocodePhoton(
   near: Near,
 ): Promise<GeocodeResult | null> {
   try {
-    const bias = near ? `&lat=${near.lat}&lon=${near.lng}` : "";
+    const bias =
+      near && shouldBias(query) ? `&lat=${near.lat}&lon=${near.lng}` : "";
     const url = `${PHOTON}?limit=1&lang=en&q=${encodeURIComponent(query)}${bias}`;
     const res = await fetch(url, {
       headers: { "User-Agent": USER_AGENT, Accept: "application/json" },

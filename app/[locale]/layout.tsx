@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit, Rajdhani } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -13,6 +13,14 @@ import "../globals.css";
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
+  display: "swap",
+});
+
+// Tactical/military display face for headings (HUD-style, condensed).
+const rajdhani = Rajdhani({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-tactical",
   display: "swap",
 });
 
@@ -56,7 +64,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className="dark">
-      <body className={`${outfit.variable} font-sans bg-base text-fg`}>
+      <body
+        className={`${outfit.variable} ${rajdhani.variable} font-sans bg-base text-fg`}
+      >
         <NextIntlClientProvider messages={messages}>
           {children}
           <Toaster

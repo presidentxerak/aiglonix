@@ -62,6 +62,19 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* Tactical/military display face for titles (Rajdhani - HUD-style) */
+h1,
+h2,
+h3 {
+  font-family: var(--font-tactical), var(--font-sans);
+  letter-spacing: 0.015em;
+}
+h1,
+h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.045em;
+}
+
 /* ============ Cards - the visual signature: sharp corners ============ */
 
 .card {
