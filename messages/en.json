@@ -291,7 +291,11 @@
     "unit": {
       "speed": "Speed",
       "heading": "heading"
-    }
+    },
+    "micDenied": "Microphone access denied. Allow it, or type a position below.",
+    "sttNetwork": "Speech service unavailable. Type a position below.",
+    "typePlaceholder": "Type a position update…",
+    "send": "Add"
   },
   "footer": {
     "classification": "UNCLASSIFIED // FOR DEMONSTRATION ONLY",
