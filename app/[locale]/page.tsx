@@ -80,7 +80,7 @@ export default async function LandingPage({
           <LocaleSwitcher />
           <Link
             href="/login"
-            className="inline-flex min-h-11 items-center rounded-[4px] btn-gradient text-white px-4 text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_-8px_rgba(56,189,248,0.55)]"
+            className="inline-flex min-h-11 items-center rounded-none btn-gradient text-white px-4 text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_-8px_rgba(244,63,94,0.55)]"
           >
             {t("header.signIn")}
           </Link>
@@ -122,13 +122,13 @@ export default async function LandingPage({
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link
                 href="/login"
-                className="inline-flex min-h-12 items-center justify-center rounded-[4px] btn-gradient text-white px-6 font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(56,189,248,0.55)]"
+                className="inline-flex min-h-12 items-center justify-center rounded-none btn-gradient text-white px-6 font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(244,63,94,0.55)]"
               >
                 {t("hero.ctaPrimary")}
               </Link>
               <a
                 href="#how"
-                className="inline-flex min-h-12 items-center justify-center rounded-[4px] border border-line bg-surface/40 px-6 text-fg transition-all duration-200 hover:-translate-y-0.5 hover:border-line-active"
+                className="inline-flex min-h-12 items-center justify-center rounded-none border border-line bg-surface/40 px-6 text-fg transition-all duration-200 hover:-translate-y-0.5 hover:border-line-active"
               >
                 {t("hero.ctaSecondary")}
               </a>
@@ -353,7 +353,7 @@ export default async function LandingPage({
               </h2>
               <Link
                 href="/login"
-                className="mt-8 inline-flex min-h-12 items-center justify-center rounded-[4px] btn-gradient text-white px-8 font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(56,189,248,0.55)]"
+                className="mt-8 inline-flex min-h-12 items-center justify-center rounded-none btn-gradient text-white px-8 font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(244,63,94,0.55)]"
               >
                 {t("finalCta.button")}
               </Link>
