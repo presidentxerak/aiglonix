@@ -59,7 +59,7 @@ export function preprocessImage(image: HTMLImageElement): PreprocessResult {
 
 /**
  * OPSEC re-compression (§2.7.6): redraw through a canvas and re-encode as
- * JPEG. Canvas re-encoding produces a brand new bitstream — every EXIF
+ * JPEG. Canvas re-encoding produces a brand new bitstream - every EXIF
  * field, including embedded GPS coordinates, is destroyed.
  */
 export async function recompressForUpload(
@@ -82,7 +82,7 @@ export async function recompressForUpload(
   });
 }
 
-/** Real file type check via magic bytes — the extension is never trusted. */
+/** Real file type check via magic bytes - the extension is never trusted. */
 export async function sniffImageType(
   file: File,
 ): Promise<"jpeg" | "png" | "webp" | null> {

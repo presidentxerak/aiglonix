@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
 
-/** Locale-aware time formatting — never hand-rolled formats. */
+/** Locale-aware time formatting - never hand-rolled formats. */
 export function formatTime(iso: string, locale: string): string {
   return new Intl.DateTimeFormat(locale, {
     hour: "2-digit",
@@ -23,7 +23,7 @@ export function formatDateTime(iso: string, locale: string): string {
   }).format(new Date(iso));
 }
 
-/** Relative age like "4 min" — Intl.RelativeTimeFormat, locale aware. */
+/** Relative age like "4 min" - Intl.RelativeTimeFormat, locale aware. */
 export function formatAge(iso: string, locale: string): string {
   const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "always" });
   const diffMs = Date.now() - new Date(iso).getTime();

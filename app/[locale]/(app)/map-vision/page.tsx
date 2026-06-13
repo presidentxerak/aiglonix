@@ -35,7 +35,7 @@ export default function MapVisionPage() {
   const [busy, setBusy] = useState(false);
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
 
-  // Initial load + Realtime subscription — always in an effect with cleanup
+  // Initial load + Realtime subscription - always in an effect with cleanup
   useEffect(() => {
     if (!isSupabaseConfigured()) {
       toast.error(tCommon("errors.config"));
@@ -160,7 +160,7 @@ export default function MapVisionPage() {
       {bestFix && (
         <div
           role="alert"
-          className="banner-slide bg-surface border-y border-critical/40 px-4 py-2 text-sm text-critical"
+          className="banner-slide alert-gradient bg-surface border-y border-critical/40 px-4 py-2 text-sm font-bold text-critical"
         >
           {t("emitter.banner", {
             band: bestFix.freq_band,
@@ -214,7 +214,7 @@ export default function MapVisionPage() {
               </div>
               <div>
                 <Label htmlFor="strength">
-                  {t("form.strength")} —{" "}
+                  {t("form.strength")} -{" "}
                   <span className="tabular text-fg">{strength}</span>
                 </Label>
                 <input

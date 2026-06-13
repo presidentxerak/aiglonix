@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
-import { Radar, Crosshair, Map as MapIcon, MessageSquare, LogOut } from "lucide-react";
+import { Radar, Crosshair, Map as MapIcon, Mic, MessageSquare, LogOut } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
+import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 import { useNetwork } from "./network-provider";
 import { LocaleSwitcher } from "./locale-switcher";
@@ -13,6 +14,7 @@ const NAV_ITEMS = [
   { href: "/operation", key: "operation", icon: Radar },
   { href: "/drone-sentinel", key: "sentinel", icon: Crosshair },
   { href: "/map-vision", key: "map", icon: MapIcon },
+  { href: "/voice-map", key: "voice", icon: Mic },
   { href: "/ghost-signal", key: "comms", icon: MessageSquare },
 ] as const;
 
@@ -99,7 +101,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       {/* Desktop sidebar */}
       <aside className="hidden md:flex w-56 shrink-0 flex-col border-r border-line bg-surface">
         <div className="px-5 py-5 border-b border-line">
-          <Link href="/operation" className="font-bold text-lg tracking-wide">
+          <Link
+            href="/operation"
+            className="flex items-center gap-2 font-bold text-lg tracking-wide"
+          >
+            <Logo size={26} />
             {t("appName")}
           </Link>
         </div>
@@ -143,7 +149,10 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile header */}
         <header className="md:hidden flex items-center justify-between gap-2 border-b border-line bg-surface px-4 py-3 sticky top-0 z-[1100]">
-          <span className="font-bold tracking-wide">{t("appName")}</span>
+          <span className="flex items-center gap-2 font-bold tracking-wide">
+            <Logo size={22} />
+            {t("appName")}
+          </span>
           <div className="flex items-center gap-3">
             <StatusDot />
             <LocaleSwitcher />
@@ -163,10 +172,10 @@ export function AppShell({ children }: { children: ReactNode }) {
 
         <main className="flex-1 pb-20 md:pb-0">{children}</main>
 
-        {/* Mobile bottom navigation — thumb-reachable (§2.5 responsive) */}
+        {/* Mobile bottom navigation - thumb-reachable (§2.5 responsive) */}
         <nav
           aria-label="Main"
-          className="md:hidden fixed bottom-0 inset-x-0 z-[1100] grid grid-cols-4 border-t border-line bg-surface"
+          className="md:hidden fixed bottom-0 inset-x-0 z-[1100] grid grid-cols-5 border-t border-line bg-surface"
         >
           {NAV_ITEMS.map(({ href, key, icon: Icon }) => {
             const active = pathname.startsWith(href);

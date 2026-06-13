@@ -4,7 +4,7 @@ import type { SEVERITIES } from "@/lib/schemas";
 
 type Severity = (typeof SEVERITIES)[number];
 
-/** Severity is always color + icon + text label — never color alone. */
+/** Severity is always color + icon + text label - never color alone. */
 const STYLES: Record<Severity, { icon: string; cls: string }> = {
   critical: { icon: "▲", cls: "text-critical border-critical/40" },
   high: { icon: "▲", cls: "text-high border-high/40" },

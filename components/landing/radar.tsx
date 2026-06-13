@@ -1,5 +1,5 @@
 /**
- * Hero radar sweep (§2.5 moment 5) — pure CSS conic-gradient rotating at
+ * Hero radar sweep (§2.5 moment 5) - pure CSS conic-gradient rotating at
  * 4s/turn with blips lighting up on its passage. The ONLY continuous
  * animation in the entire product, and it lives on the landing page.
  */

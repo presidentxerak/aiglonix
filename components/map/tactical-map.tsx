@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-// Leaflet crashes under SSR — dynamic import with ssr:false is mandatory.
+// Leaflet crashes under SSR - dynamic import with ssr:false is mandatory.
 export const TacticalMap = dynamic(() => import("./tactical-map-impl"), {
   ssr: false,
   loading: () => (

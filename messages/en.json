@@ -5,7 +5,8 @@
       "operation": "Operation",
       "sentinel": "Sentry",
       "map": "Map",
-      "comms": "Comms"
+      "comms": "Comms",
+      "voice": "Voice"
     },
     "cta": {
       "signIn": "Sign in",
@@ -20,8 +21,8 @@
     "status": {
       "online": "Link up",
       "offline": "Offline",
-      "degraded": "Degraded mode — local operations",
-      "reconnected": "Link restored — synchronizing",
+      "degraded": "Degraded mode - local operations",
+      "reconnected": "Link restored - synchronizing",
       "pendingItems": "{count, plural, =0 {no pending items} one {# pending item} other {# pending items}}"
     },
     "actions": {
@@ -34,7 +35,7 @@
     },
     "errors": {
       "generic": "Something went wrong. Please try again.",
-      "network": "Network unavailable — action queued locally.",
+      "network": "Network unavailable - action queued locally.",
       "config": "Backend not configured. Set the Supabase environment variables."
     }
   },
@@ -44,10 +45,11 @@
     },
     "hero": {
       "baseline": "From detection to decision. In seconds. Even jammed.",
-      "subtitle": "The tactical web platform that detects drones with on-device AI, maps jamming zones and keeps communications alive — no install, no infrastructure.",
+      "subtitle": "The tactical web platform that detects drones with on-device AI, maps jamming zones and keeps communications alive - no install, no infrastructure.",
       "ctaPrimary": "Enter the command post",
       "ctaSecondary": "See how it works",
-      "builtAt": "Built in 48h — European Defense Tech Hackathon · Paris · June 2026"
+      "builtAt": "Built in 48h - European Defense Tech Hackathon · Paris · June 2026",
+      "voiceTagline": "We translate voice onto a map for real-time positional tracking."
     },
     "problem": {
       "title": "The sky has changed. The tools haven't.",
@@ -56,33 +58,33 @@
       "c2Title": "Silence at the worst moment",
       "c2Body": "Jamming cuts communications exactly when coordination matters most.",
       "c3Title": "Scattered information",
-      "c3Body": "Detections, reports and orders live in different tools — decisions arrive late."
+      "c3Body": "Detections, reports and orders live in different tools - decisions arrive late."
     },
     "solution": {
       "title": "One URL. Four capabilities.",
       "sentinelName": "Drone Sentinel",
       "sentinelBody": "AI runs in your browser. Detection in under 3 seconds, even without network.",
       "mapName": "Map Vision",
-      "mapBody": "Every reported jamming zone appears for the whole team in under 2 seconds — and three reports are enough to localize the emitter.",
+      "mapBody": "Every reported jamming zone appears for the whole team in under 2 seconds - and three reports are enough to localize the emitter.",
       "operationName": "Operation",
       "operationBody": "The entire tactical picture on a single screen.",
       "ghostName": "Ghost Signal",
       "ghostBody": "Cut the network. Your messages wait, then synchronize. In order, without duplicates."
     },
     "challenge": {
-      "badge": "EDTH Paris 2026 — Durandal challenge: collaborative jammer detection and localization",
+      "badge": "EDTH Paris 2026 - Durandal challenge: collaborative jammer detection and localization",
       "title": "They jam. We triangulate.",
-      "body": "The challenge: detect, classify and geolocate hostile RF interference with distributed sensors. AIGLONIX's distributed sensors are the operators themselves — every phone becomes a node of the electronic-warfare picture.",
+      "body": "The challenge: detect, classify and geolocate hostile RF interference with distributed sensors. AIGLONIX's distributed sensors are the operators themselves - every phone becomes a node of the electronic-warfare picture.",
       "featureName": "Collaborative jammer triangulation",
-      "featureBody": "Three reports of the same band are enough: AIGLONIX estimates the emitter's position by strength-weighted triangulation and shares the fix with the whole team in under 2 seconds, with an honest uncertainty radius. The jamming zone stops being something you endure — it becomes a target you can act on.",
-      "s1": "Detect — every report is a bearing; the operators are the distributed sensor network.",
-      "s2": "Classify — by frequency band (2.4 GHz, 5.8 GHz, GPS L1, 900 MHz), with an automatic countermeasure: the frequency-switch recommendation.",
-      "s3": "Operate denied — offline-first by design: on-device AI, outbox communications, cached tactical picture."
+      "featureBody": "Three reports of the same band are enough: AIGLONIX estimates the emitter's position by strength-weighted triangulation and shares the fix with the whole team in under 2 seconds, with an honest uncertainty radius. The jamming zone stops being something you endure - it becomes a target you can act on.",
+      "s1": "Detect - every report is a bearing; the operators are the distributed sensor network.",
+      "s2": "Classify - by frequency band (2.4 GHz, 5.8 GHz, GPS L1, 900 MHz), with an automatic countermeasure: the frequency-switch recommendation.",
+      "s3": "Operate denied - offline-first by design: on-device AI, outbox communications, cached tactical picture."
     },
     "how": {
       "title": "How it works",
       "s1": "Detect",
-      "s1Body": "Point your phone — on-device AI identifies the threat.",
+      "s1Body": "Point your phone - on-device AI identifies the threat.",
       "s2": "Share",
       "s2Body": "The detection propagates to the whole team in real time.",
       "s3": "Decide",
@@ -91,9 +93,9 @@
     "proof": {
       "title": "Not a mockup. Production.",
       "stat1Value": "3",
-      "stat1Label": "< 3 s — on-device AI detection",
+      "stat1Label": "< 3 s - on-device AI detection",
       "stat2Value": "2",
-      "stat2Label": "< 2 s — alert propagation",
+      "stat2Label": "< 2 s - alert propagation",
       "stat3Value": "100",
       "stat3Label": "100% functional offline",
       "note": "Everything you see runs in production, right now."
@@ -101,7 +103,7 @@
     "security": {
       "title": "Built for hostile environments",
       "p1Title": "Hardened transport",
-      "p1Body": "Forced HTTPS, armored sessions — httpOnly cookies, no token ever exposed.",
+      "p1Body": "Forced HTTPS, armored sessions - httpOnly cookies, no token ever exposed.",
       "p2Title": "Anti-phishing",
       "p2Body": "One official URL, displayed here. AIGLONIX never asks for your credentials.",
       "p3Title": "Anti-intrusion",
@@ -116,14 +118,14 @@
     },
     "why": {
       "title": "Why AIGLONIX",
-      "p1": "Zero install — one URL, operational in 30 seconds.",
-      "p2": "On-device AI — works in jammed or disconnected areas.",
-      "p3": "Open architecture — Next.js + Supabase, auditable, extensible."
+      "p1": "Zero install - one URL, operational in 30 seconds.",
+      "p2": "On-device AI - works in jammed or disconnected areas.",
+      "p3": "Open architecture - Next.js + Supabase, auditable, extensible."
     },
     "roadmap": {
       "title": "Beyond the hackathon",
-      "m1": "Specialized AI model — Shahed / FPV recognition",
-      "m2": "Real sensor ingestion — RF, acoustic",
+      "m1": "Specialized AI model - Shahed / FPV recognition",
+      "m2": "Real sensor ingestion - RF, acoustic",
       "m3": "Multi-team federation"
     },
     "finalCta": {
@@ -156,7 +158,7 @@
     }
   },
   "operation": {
-    "title": "Operation — tactical view",
+    "title": "Operation - tactical view",
     "counters": {
       "drones": "Active threats",
       "jammers": "Active jamming",
@@ -174,12 +176,12 @@
       "severity": "Severity",
       "submit": "Broadcast alert",
       "success": "Alert broadcast to all operators",
-      "rateLimited": "Too many alerts — wait a minute before retrying."
+      "rateLimited": "Too many alerts - wait a minute before retrying."
     }
   },
   "sentinel": {
     "title": "Drone Sentinel",
-    "subtitle": "On-device AI detection — works even when jammed",
+    "subtitle": "On-device AI detection - works even when jammed",
     "modelLoading": "Loading detection model…",
     "modelReady": "Detection model ready",
     "modelError": "Detection model unavailable. Add yolov8n.onnx to /public/models/.",
@@ -192,11 +194,11 @@
       "title": "Confirm broadcast position",
       "gps": "Use my GPS position",
       "manual": "Tap the map to position manually",
-      "hint": "Only the position you explicitly confirm is published — never a silently captured one."
+      "hint": "Only the position you explicitly confirm is published - never a silently captured one."
     },
     "publish": "Publish detection",
     "published": "Detection published to the team",
-    "queued": "Offline — detection queued, it will sync automatically",
+    "queued": "Offline - detection queued, it will sync automatically",
     "fileErrors": {
       "tooLarge": "File too large (8 MB max).",
       "badType": "Unsupported file type (JPEG, PNG or WebP)."
@@ -205,20 +207,20 @@
   },
   "mapvision": {
     "title": "Map Vision",
-    "subtitle": "Collaborative jamming map — long-press to report",
+    "subtitle": "Collaborative jamming map - long-press to report",
     "hint": "Long-press (or double-click) on the map to report jamming",
     "form": {
       "title": "Report jamming",
       "band": "Frequency band",
-      "strength": "Strength (1–10)",
+      "strength": "Strength (1-10)",
       "radius": "Estimated radius (m)",
       "submit": "Publish report"
     },
     "published": "Jamming report published",
-    "recommendation": "⚠ 2.4GHz band compromised in your area — switch drone control to 900MHz",
+    "recommendation": "⚠ 2.4GHz band compromised in your area - switch drone control to 900MHz",
     "emitter": {
       "title": "Emitter localized",
-      "banner": "◎ {band} emitter localized by triangulation — accuracy ~{m} m",
+      "banner": "◎ {band} emitter localized by triangulation - accuracy ~{m} m",
       "reports": "{count, plural, one {# report} other {# reports}}",
       "uncertainty": "accuracy ~{m} m",
       "confidence": "confidence"
@@ -231,12 +233,103 @@
   },
   "ghost": {
     "title": "Ghost Signal",
-    "subtitle": "Resilient messaging — offline-first",
+    "subtitle": "Resilient messaging - offline-first",
     "placeholder": "Message to the ops channel…",
     "pending": "pending",
     "synced": "synced",
     "empty": "No messages on this channel yet.",
-    "externalLink": "external link — verify the domain before copying",
+    "externalLink": "external link - verify the domain before copying",
     "offlineInfo": "Offline: messages are timestamped and queued locally, then synchronized in order, without duplicates."
+  },
+  "voicemap": {
+    "title": "Voice Map",
+    "hint": "Speak a position update - it becomes a live map marker.",
+    "start": "Start listening",
+    "stop": "Stop",
+    "idle": "Microphone off",
+    "speakNow": "Listening… speak now",
+    "processing": "Locating…",
+    "engine": {
+      "deepgram": "Listening (Deepgram)",
+      "webspeech": "Listening (browser)",
+      "starting": "Starting…"
+    },
+    "actions": {
+      "sighting": "Sighting",
+      "move": "Movement",
+      "hold": "Holding",
+      "contact": "Contact",
+      "mark": "Waypoint"
+    },
+    "pin": {
+      "heard": "Heard"
+    },
+    "dropped": "Marker dropped: {place}",
+    "notFound": "Couldn’t locate “{place}”.",
+    "example": "Try: “Drone spotted near the Eiffel Tower” or “Hold position at Gare du Nord”.",
+    "unsupported": "Voice input isn’t supported on this browser. Try Chrome.",
+    "tagline": "We translate voice onto a map for real-time positional tracking.",
+    "demo": {
+      "on": "Live demo units: on",
+      "off": "Live demo units: off"
+    },
+    "units": {
+      "drone": "Drone",
+      "missile": "Missile",
+      "tank": "Armor",
+      "troops": "Troops",
+      "aircraft": "Aircraft",
+      "jammer": "Jammer",
+      "recon": "Recon",
+      "unknown": "Unknown"
+    },
+    "faction": {
+      "hostile": "Hostile",
+      "friendly": "Friendly",
+      "unknown": "Unknown"
+    },
+    "unit": {
+      "speed": "Speed",
+      "heading": "heading"
+    }
+  },
+  "footer": {
+    "classification": "UNCLASSIFIED // FOR DEMONSTRATION ONLY",
+    "tagline": "From detection to decision. In seconds. Even under jamming.",
+    "builtNote": "Built for the European Defense Tech Hackathon - Paris 2026. Prototype for demonstration; not an accredited, classified, or operational system.",
+    "rights": "All rights reserved.",
+    "edth": "European Defense Tech Hackathon - Paris 2026",
+    "official": "Official domain",
+    "antiPhishing": "AIGLONIX will never ask for your password by email or chat. Always verify the domain - {domain} - before you sign in.",
+    "col": {
+      "platform": "Platform",
+      "legal": "Legal",
+      "security": "Security",
+      "compliance": "Compliance"
+    },
+    "links": {
+      "features": "Capabilities",
+      "voice": "Voice Map",
+      "security": "Security model",
+      "signin": "Sign in"
+    },
+    "legal": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Use",
+      "aup": "Acceptable Use Policy",
+      "cookies": "Cookie Policy"
+    },
+    "security": {
+      "policy": "Security Policy",
+      "disclosure": "Responsible Disclosure",
+      "txt": "security.txt",
+      "status": "System Status"
+    },
+    "compliance": {
+      "nato": "NATO interoperability by design",
+      "stanag": "STANAG-aligned formats (roadmap)",
+      "gdpr": "GDPR · data minimisation",
+      "export": "Export control: ITAR / EAR - review before transfer"
+    }
   }
 }

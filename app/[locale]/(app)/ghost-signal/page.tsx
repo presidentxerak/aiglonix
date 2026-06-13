@@ -30,7 +30,7 @@ const URL_REGEX = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
 
 /**
  * Anti-phishing rendering (§2.7.3): URLs in messages are NEVER clickable.
- * The domain is highlighted and a warning is attached — a poisoned link in
+ * The domain is highlighted and a warning is attached - a poisoned link in
  * tactical chat is the most likely attack vector.
  */
 function SafeBody({ body, warning }: { body: string; warning: string }) {
@@ -55,7 +55,7 @@ function SafeBody({ body, warning }: { body: string; warning: string }) {
               className="inline-block border border-high/40 bg-raised px-1 text-high rounded-[4px]"
             >
               <span className="font-bold">{domain}</span>{" "}
-              <span className="text-xs text-fg-muted">— {warning}</span>
+              <span className="text-xs text-fg-muted">- {warning}</span>
             </span>
           );
         }
@@ -82,7 +82,7 @@ export default function GhostSignalPage() {
     let cancelled = false;
 
     (async () => {
-      // Outbox first — works fully offline
+      // Outbox first - works fully offline
       const queue = await import("@/lib/offline/queue").then((m) =>
         m.listQueue(),
       );
@@ -171,7 +171,7 @@ export default function GhostSignalPage() {
       .subscribe();
 
     // Outbox cascade: each delivered item flips its badge ⏳ → ✅ (staggered
-    // 120ms by the sync worker — the queue visibly drains, §2.5 moment 4)
+    // 120ms by the sync worker - the queue visibly drains, §2.5 moment 4)
     const offSynced = syncManager.on("synced", (item) => {
       if (item.kind !== "message") return;
       setMessages((prev) =>
@@ -210,7 +210,7 @@ export default function GhostSignalPage() {
     });
     if (!payload.success) return;
     setBody("");
-    // Immediate local write + optimistic UI — outbox pattern (§8)
+    // Immediate local write + optimistic UI - outbox pattern (§8)
     setMessages((prev) =>
       mergeMessages(prev, [
         {
@@ -264,7 +264,7 @@ export default function GhostSignalPage() {
               >
                 <div className="flex items-baseline gap-3 mb-1">
                   <span className="text-xs font-bold text-fg-muted">
-                    {m.user_id ? (callsigns[m.user_id] ?? "Operator") : "—"}
+                    {m.user_id ? (callsigns[m.user_id] ?? "Operator") : "-"}
                   </span>
                   <span className="text-xs text-fg-disabled tabular">
                     {formatDateTime(m.sent_at, locale)}
@@ -314,7 +314,7 @@ export default function GhostSignalPage() {
   );
 }
 
-/** Merge by client_id — synced state always wins over pending. */
+/** Merge by client_id - synced state always wins over pending. */
 function mergeMessages(
   base: DisplayMessage[],
   incoming: DisplayMessage[],
