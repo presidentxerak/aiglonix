@@ -64,7 +64,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source:
-          "/:segment(operation|drone-sentinel|map-vision|voice-map|ghost-signal|login)",
+          "/:segment(operation|drone-sentinel|map-vision|voice-map|ghost-signal|connectors|login)",
         destination: "/en/:segment",
         permanent: false,
       },

@@ -6,7 +6,8 @@
       "sentinel": "Sentry",
       "map": "Map",
       "comms": "Comms",
-      "voice": "Voice"
+      "voice": "Voice",
+      "connectors": "API"
     },
     "cta": {
       "signIn": "Sign in",
@@ -350,5 +351,24 @@
     "joinError": "Invalid invite code.",
     "copy": "Copy invite code",
     "copied": "Invite code copied"
+  },
+  "connectors": {
+    "title": "Connectors",
+    "subtitle": "Connect detection devices and external apps. Create an API key and push events into your team in real time.",
+    "createLabel": "New API key",
+    "namePlaceholder": "e.g. RF sensor north gate",
+    "createCta": "Generate key",
+    "newKeyTitle": "Your new API key",
+    "newKeyWarn": "Copy it now - it is shown only once and cannot be recovered.",
+    "done": "Done",
+    "noKeys": "No API keys yet.",
+    "revoke": "Revoke key",
+    "revoked": "Key revoked",
+    "revokedTag": "revoked",
+    "docsTitle": "How it works",
+    "docsIntro": "Any device or app sends a POST with its API key. Detections and jamming reports also raise an alert and appear live on every teammate's map.",
+    "endpoint": "Endpoint",
+    "example": "Example (detection)",
+    "kinds": "kind can be \"detection\", \"jammer\" or \"alert\"."
   }
 }
