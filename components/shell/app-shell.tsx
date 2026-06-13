@@ -9,10 +9,10 @@ import {
   Mic,
   MessageSquare,
   Plug,
+  UserCog,
   LogOut,
 } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import { toast } from "sonner";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
 import { useTeam } from "@/lib/team/context";
 import { Logo } from "@/components/brand/logo";
@@ -30,23 +30,17 @@ const NAV_ITEMS = [
 
 function TeamBadge() {
   const { team } = useTeam();
-  const t = useTranslations("team");
+  const t = useTranslations("account");
   if (!team) return null;
   return (
-    <button
-      type="button"
-      title={t("copy")}
-      onClick={() => {
-        void navigator.clipboard?.writeText(team.invite_code);
-        toast.success(t("copied"));
-      }}
-      className="group text-left cursor-pointer"
-    >
-      <span className="block text-sm font-bold truncate">{team.name}</span>
-      <span className="block text-xs text-fg-muted tabular tracking-widest group-hover:text-fg transition-colors">
+    <Link href="/account" className="group block" title={t("title")}>
+      <span className="block text-sm font-bold truncate group-hover:text-accent transition-colors">
+        {team.name}
+      </span>
+      <span className="block text-xs text-fg-muted tabular tracking-widest">
         {team.invite_code}
       </span>
-    </button>
+    </Link>
   );
 }
 
@@ -189,6 +183,13 @@ export function AppShell({ children }: { children: ReactNode }) {
           </span>
           <div className="flex items-center gap-3 shrink-0">
             <StatusDot />
+            <Link
+              href="/account"
+              aria-label={t("nav.account")}
+              className="text-fg-muted min-h-11 min-w-11 inline-flex items-center justify-center"
+            >
+              <UserCog size={18} aria-hidden />
+            </Link>
             <button
               type="button"
               onClick={() => void handleSignOut()}

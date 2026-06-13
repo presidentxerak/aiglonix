@@ -7,7 +7,8 @@
       "map": "Carte",
       "comms": "Comms",
       "voice": "Voix",
-      "connectors": "API"
+      "connectors": "API",
+      "account": "Compte"
     },
     "cta": {
       "signIn": "Connexion",
@@ -400,5 +401,26 @@
     "endpoint": "Point d'accès",
     "example": "Exemple (détection)",
     "kinds": "kind peut valoir \"detection\", \"jammer\" ou \"alert\"."
+  },
+  "account": {
+    "title": "Compte",
+    "profile": "Profil",
+    "callsign": "Indicatif",
+    "email": "E-mail",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "team": "Équipe",
+    "teamName": "Nom de l'équipe",
+    "ownerOnly": "Seul le propriétaire de l'équipe peut modifier ceci.",
+    "inviteCode": "Code d'invitation",
+    "inviteHint": "Partagez ce code pour que vos coéquipiers rejoignent l'équipe.",
+    "copy": "Copier le code",
+    "regenerate": "Régénérer le code",
+    "codeRegenerated": "Code d'invitation régénéré",
+    "members": "Membres ({count})",
+    "you": "vous",
+    "leave": "Quitter l'équipe",
+    "leaveConfirm": "Quitter cette équipe ? Vous perdrez l'accès à ses données jusqu'à la rejoindre de nouveau.",
+    "left": "Vous avez quitté l'équipe"
   }
 }
