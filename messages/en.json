@@ -365,7 +365,8 @@
       "stanag": "STANAG-aligned formats (roadmap)",
       "gdpr": "GDPR · data minimisation",
       "export": "Export control: ITAR / EAR - review before transfer"
-    }
+    },
+    "beta": "AIGLONIX is in public beta and improves continuously with advances in technology and lessons from the modern battlefield."
   },
   "team": {
     "title": "Join your unit",

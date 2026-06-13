@@ -365,7 +365,8 @@
       "stanag": "Formats alignés STANAG (roadmap)",
       "gdpr": "RGPD · minimisation des données",
       "export": "Contrôle export : ITAR / EAR - vérifier avant transfert"
-    }
+    },
+    "beta": "AIGLONIX est en bêta publique et s'améliore en continu avec les avancées technologiques et les enseignements du champ de bataille moderne."
   },
   "team": {
     "title": "Rejoignez votre unité",
