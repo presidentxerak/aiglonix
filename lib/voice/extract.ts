@@ -1,4 +1,5 @@
 import { VOICE_ACTIONS, type ExtractedPlace, type VoiceAction } from "./types";
+import { UNIT_TYPES, unitFromText } from "@/lib/tactical/units";
 
 /**
  * Deterministic extractor used as the fallback when MISTRAL_API_KEY is not
@@ -65,6 +66,7 @@ export function heuristicExtract(transcript: string): ExtractedPlace {
   return {
     landmark,
     action,
+    unit: unitFromText(text),
     label: text.length <= 80 ? text : `${text.slice(0, 77)}…`,
     confidence: m ? 0.6 : 0.4,
   };
@@ -76,6 +78,7 @@ export const EXTRACT_SYSTEM_PROMPT = [
   "Return ONLY a JSON object with keys:",
   '"landmark" (the place/landmark to geocode, no leading article),',
   `"action" (one of: ${VOICE_ACTIONS.join(", ")}),`,
+  `"unit" (the military unit mentioned, one of: ${UNIT_TYPES.join(", ")}; use "unknown" if none),`,
   '"label" (a concise marker label, <= 80 chars),',
   '"confidence" (0..1, how sure you are about the landmark).',
   "If no place is mentioned, set landmark to the most location-like noun phrase.",

@@ -48,7 +48,8 @@
       "subtitle": "The tactical web platform that detects drones with on-device AI, maps jamming zones and keeps communications alive — no install, no infrastructure.",
       "ctaPrimary": "Enter the command post",
       "ctaSecondary": "See how it works",
-      "builtAt": "Built in 48h — European Defense Tech Hackathon · Paris · June 2026"
+      "builtAt": "Built in 48h — European Defense Tech Hackathon · Paris · June 2026",
+      "voiceTagline": "We translate voice onto a map for real-time positional tracking."
     },
     "problem": {
       "title": "The sky has changed. The tools haven't.",
@@ -266,6 +267,69 @@
     "dropped": "Marker dropped: {place}",
     "notFound": "Couldn’t locate “{place}”.",
     "example": "Try: “Drone spotted near the Eiffel Tower” or “Hold position at Gare du Nord”.",
-    "unsupported": "Voice input isn’t supported on this browser. Try Chrome."
+    "unsupported": "Voice input isn’t supported on this browser. Try Chrome.",
+    "tagline": "We translate voice onto a map for real-time positional tracking.",
+    "demo": {
+      "on": "Live demo units: on",
+      "off": "Live demo units: off"
+    },
+    "units": {
+      "drone": "Drone",
+      "missile": "Missile",
+      "tank": "Armor",
+      "troops": "Troops",
+      "aircraft": "Aircraft",
+      "jammer": "Jammer",
+      "recon": "Recon",
+      "unknown": "Unknown"
+    },
+    "faction": {
+      "hostile": "Hostile",
+      "friendly": "Friendly",
+      "unknown": "Unknown"
+    },
+    "unit": {
+      "speed": "Speed",
+      "heading": "heading"
+    }
+  },
+  "footer": {
+    "classification": "UNCLASSIFIED // FOR DEMONSTRATION ONLY",
+    "tagline": "From detection to decision. In seconds. Even under jamming.",
+    "builtNote": "Built for the European Defense Tech Hackathon — Paris 2026. Prototype for demonstration; not an accredited, classified, or operational system.",
+    "rights": "All rights reserved.",
+    "edth": "European Defense Tech Hackathon — Paris 2026",
+    "official": "Official domain",
+    "antiPhishing": "AIGLONIX will never ask for your password by email or chat. Always verify the domain — {domain} — before you sign in.",
+    "col": {
+      "platform": "Platform",
+      "legal": "Legal",
+      "security": "Security",
+      "compliance": "Compliance"
+    },
+    "links": {
+      "features": "Capabilities",
+      "voice": "Voice Map",
+      "security": "Security model",
+      "signin": "Sign in"
+    },
+    "legal": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Use",
+      "aup": "Acceptable Use Policy",
+      "cookies": "Cookie Policy"
+    },
+    "security": {
+      "policy": "Security Policy",
+      "disclosure": "Responsible Disclosure",
+      "txt": "security.txt",
+      "status": "System Status"
+    },
+    "compliance": {
+      "nato": "NATO interoperability by design",
+      "stanag": "STANAG-aligned formats (roadmap)",
+      "gdpr": "GDPR · data minimisation",
+      "export": "Export control: ITAR / EAR — review before transfer"
+    }
   }
 }

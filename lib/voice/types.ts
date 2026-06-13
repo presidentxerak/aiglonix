@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { UNIT_TYPES, type UnitType, type Faction } from "@/lib/tactical/units";
 
 /**
  * Voice-to-Map pipeline (challenge "Voice-to-Map: Real-Time Positional
@@ -27,6 +28,8 @@ export const ExtractedPlaceSchema = z.object({
   /** the geocodable place / landmark phrase pulled from the sentence */
   landmark: z.string().trim().min(1).max(160),
   action: z.enum(VOICE_ACTIONS),
+  /** detected military unit type (drives the animated map icon) */
+  unit: z.enum(UNIT_TYPES).default("unknown"),
   /** short human label for the marker */
   label: z.string().trim().min(1).max(160),
   confidence: z.number().min(0).max(1),
@@ -60,6 +63,8 @@ export interface VoicePin {
   lng: number;
   label: string;
   action: VoiceAction;
+  unit: UnitType;
+  faction: Faction;
   transcript: string;
   display_name: string;
   at: number;

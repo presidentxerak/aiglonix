@@ -12,9 +12,57 @@ import {
   ExtractedPlaceSchema,
   GeocodeResultSchema,
   type VoicePin,
+  type VoiceAction,
 } from "@/lib/voice/types";
+import {
+  type TacticalUnit,
+  type Faction,
+  type UnitType,
+} from "@/lib/tactical/units";
 
 const PARIS: [number, number] = [48.8566, 2.3522];
+
+function factionFor(action: VoiceAction, unit: UnitType): Faction {
+  if (unit === "jammer" || action === "contact" || action === "sighting")
+    return "hostile";
+  if (action === "hold" || action === "move") return "friendly";
+  return "unknown";
+}
+
+// Live demo units so the map reads as a real-time tracking picture.
+function seedUnits(center: [number, number]): TacticalUnit[] {
+  const [lat, lng] = center;
+  const old = Date.now() - 10 * 60 * 1000;
+  const mk = (
+    id: string,
+    type: UnitType,
+    faction: Faction,
+    dLat: number,
+    dLng: number,
+    label: string,
+    heading: number,
+    speedKph: number,
+    note: string,
+  ): TacticalUnit => ({
+    id,
+    type,
+    faction,
+    lat: lat + dLat,
+    lng: lng + dLng,
+    label,
+    heading,
+    speedKph,
+    note,
+    at: old,
+  });
+  return [
+    mk("u-drone", "drone", "hostile", 0.03, -0.02, "Recon drone, low altitude", 135, 65, "Bearing SE"),
+    mk("u-tank", "tank", "hostile", -0.028, 0.032, "Armored column · 3 vehicles", 300, 28, "Advancing"),
+    mk("u-troops", "troops", "friendly", 0.012, 0.04, "Friendly squad", 0, 0, "Static overwatch"),
+    mk("u-sam", "missile", "hostile", -0.04, -0.03, "SAM site", 0, 0, "Air-defence threat"),
+    mk("u-recon", "recon", "unknown", 0.045, 0.012, "Unidentified scout", 220, 45, "Track unconfirmed"),
+  ];
+}
 
 export default function VoiceMapPage() {
   const t = useTranslations("voicemap");
@@ -28,10 +76,40 @@ export default function VoiceMapPage() {
   const [processing, setProcessing] = useState(false);
   const [focus, setFocus] = useState<MapFocus | null>(null);
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
+  const [units, setUnits] = useState<TacticalUnit[]>([]);
+  const [showDemo, setShowDemo] = useState(true);
 
   const controllerRef = useRef<SttController | null>(null);
   const userPosRef = useRef<[number, number] | null>(null);
   userPosRef.current = userPos;
+
+  // Live demo layer: seed tactical units and step their positions so the map
+  // animates like a real tracking picture (radar-style position updates).
+  useEffect(() => {
+    if (!showDemo) {
+      setUnits([]);
+      return;
+    }
+    const c = userPosRef.current ?? PARIS;
+    let arr = seedUnits(c);
+    setUnits(arr);
+    const id = window.setInterval(() => {
+      arr = arr.map((u) => {
+        if (!u.speedKph) return u;
+        const stepKm = (u.speedKph * 1.5) / 3600;
+        const h = ((u.heading ?? 0) * Math.PI) / 180;
+        const nlat = u.lat + (stepKm / 111) * Math.cos(h);
+        const nlng =
+          u.lng + (stepKm / (111 * Math.cos((u.lat * Math.PI) / 180))) * Math.sin(h);
+        let heading = u.heading ?? 0;
+        if (Math.abs(nlat - c[0]) > 0.07) heading = (540 - heading) % 360;
+        if (Math.abs(nlng - c[1]) > 0.07) heading = (360 - heading) % 360;
+        return { ...u, lat: nlat, lng: nlng, heading };
+      });
+      setUnits(arr);
+    }, 1500);
+    return () => window.clearInterval(id);
+  }, [showDemo, userPos]);
 
   useEffect(() => {
     navigator.geolocation?.getCurrentPosition(
@@ -78,6 +156,8 @@ export default function VoiceMapPage() {
           lng: geo.lng,
           label: place.label,
           action: place.action,
+          unit: place.unit,
+          faction: factionFor(place.action, place.unit),
           transcript: text,
           display_name: geo.display_name,
           at: Date.now(),
@@ -135,6 +215,7 @@ export default function VoiceMapPage() {
       <div className="px-4 py-3 border-b border-line">
         <h1 className="font-bold text-lg">{t("title")}</h1>
         <p className="text-xs text-fg-muted">{t("hint")}</p>
+        <p className="mt-1 text-xs text-accent">{t("tagline")}</p>
       </div>
 
       <div className="relative flex-1 min-h-[45vh]">
@@ -142,6 +223,7 @@ export default function VoiceMapPage() {
           center={userPos ?? PARIS}
           zoom={12}
           pins={pins}
+          units={units}
           focus={focus}
           className="absolute inset-0 z-0"
         />
@@ -194,6 +276,22 @@ export default function VoiceMapPage() {
                 {interim || t("speakNow")}
               </p>
             )}
+
+            <button
+              type="button"
+              onClick={() => setShowDemo((v) => !v)}
+              aria-pressed={showDemo}
+              className="text-xs text-fg-muted hover:text-fg transition-colors cursor-pointer flex items-center gap-2"
+            >
+              <span
+                aria-hidden
+                className={cn(
+                  "h-2 w-2 rounded-full",
+                  showDemo ? "bg-critical" : "bg-fg-muted/40",
+                )}
+              />
+              {showDemo ? t("demo.on") : t("demo.off")}
+            </button>
 
             {pins.length === 0 ? (
               <p className="text-xs text-fg-muted leading-relaxed">

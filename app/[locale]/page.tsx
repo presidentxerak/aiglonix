@@ -20,6 +20,8 @@ import { LocaleSwitcher } from "@/components/shell/locale-switcher";
 import { Radar } from "@/components/landing/radar";
 import { Reveal } from "@/components/landing/reveal";
 import { StatCount } from "@/components/landing/stat-count";
+import { SiteFooter } from "@/components/landing/site-footer";
+import { Logo } from "@/components/brand/logo";
 
 const APP_URL =
   process.env.NEXT_PUBLIC_APP_URL ?? "https://aiglonix.vercel.app";
@@ -67,9 +69,13 @@ export default async function LandingPage({
     <div className="min-h-dvh">
       {/* 0. Fixed header */}
       <header className="sticky top-0 z-50 flex items-center justify-between border-b border-line/60 bg-base/90 px-4 md:px-8 py-3 backdrop-blur-sm">
-        <span className="font-bold text-lg tracking-wide">
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-bold text-lg tracking-wide"
+        >
+          <Logo size={28} />
           {tCommon("appName")}
-        </span>
+        </Link>
         <div className="flex items-center gap-3">
           <LocaleSwitcher />
           <Link
@@ -81,10 +87,32 @@ export default async function LandingPage({
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 md:px-8">
-        {/* 1. Hero */}
-        <section className="flex flex-col lg:flex-row items-center gap-10 py-16 md:py-28">
+      {/* 1. Hero — full-bleed background video + overlay */}
+      <section className="relative overflow-hidden border-b border-line/60">
+        <video
+          className="absolute inset-0 h-full w-full object-cover opacity-35"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden
+        >
+          <source src="/aiglonix-hero-video1.mp4" type="video/mp4" />
+        </video>
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-b from-base/75 via-base/85 to-base"
+        />
+        <div className="relative mx-auto max-w-6xl px-4 md:px-8 py-20 md:py-32 flex flex-col lg:flex-row items-center gap-10">
           <div className="flex-1">
+            <Logo
+              size={64}
+              className="mb-6 drop-shadow-[0_0_24px_rgba(56,189,248,0.25)]"
+            />
+            <span className="inline-block border border-accent/40 bg-surface/70 px-3 py-1.5 text-xs text-accent mb-5">
+              {t("hero.voiceTagline")}
+            </span>
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight max-w-2xl">
               {t("hero.baseline")}
             </h1>
@@ -94,21 +122,24 @@ export default async function LandingPage({
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link
                 href="/login"
-                className="inline-flex min-h-12 items-center justify-center rounded-[4px] bg-accent px-6 font-bold text-ink hover:bg-accent/85 transition-colors duration-150"
+                className="inline-flex min-h-12 items-center justify-center rounded-[4px] bg-accent px-6 font-bold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent/90 hover:shadow-[0_12px_32px_-8px_rgba(56,189,248,0.55)]"
               >
                 {t("hero.ctaPrimary")}
               </Link>
               <a
                 href="#how"
-                className="inline-flex min-h-12 items-center justify-center rounded-[4px] border border-line px-6 text-fg hover:border-line-active transition-colors duration-150"
+                className="inline-flex min-h-12 items-center justify-center rounded-[4px] border border-line bg-surface/40 px-6 text-fg transition-all duration-200 hover:-translate-y-0.5 hover:border-line-active"
               >
                 {t("hero.ctaSecondary")}
               </a>
             </div>
           </div>
           <Radar />
-        </section>
-        <p className="border-y border-line/60 py-2 text-center text-xs text-fg-muted">
+        </div>
+      </section>
+
+      <main className="mx-auto max-w-6xl px-4 md:px-8">
+        <p className="border-b border-line/60 py-2 text-center text-xs text-fg-muted">
           {t("hero.builtAt")}
         </p>
 
@@ -250,7 +281,7 @@ export default async function LandingPage({
         </section>
 
         {/* 6. Security by design */}
-        <section className="py-16 md:py-28">
+        <section id="security" className="py-16 md:py-28">
           <Reveal>
             <h2 className="text-2xl md:text-4xl font-bold mb-10">
               {t("security.title")}
@@ -331,15 +362,7 @@ export default async function LandingPage({
         </section>
       </main>
 
-      <footer className="border-t border-line px-4 md:px-8 py-8">
-        <div className="mx-auto max-w-6xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-fg-muted">
-          <span className="font-bold text-fg">{tCommon("appName")}</span>
-          <span>{t("footer.edth")}</span>
-          <span className="tabular">
-            {t("footer.officialUrl")}: {officialDomain}
-          </span>
-        </div>
-      </footer>
+      <SiteFooter officialDomain={officialDomain} />
     </div>
   );
 }

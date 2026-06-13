@@ -66,13 +66,15 @@ body {
   box-shadow: var(--shadow-card);
   transition:
     border-color 150ms ease,
-    box-shadow 200ms ease;
+    box-shadow 200ms ease,
+    transform 200ms ease;
 }
 
 .card:hover,
 .card:focus-within {
   border-color: var(--color-line-active);
   box-shadow: var(--shadow-card-hover);
+  transform: translateY(-2px);
 }
 
 .card-critical {
@@ -214,6 +216,75 @@ body {
   animation: blip 4s linear infinite;
 }
 
+/* ============ Tactical map units — animated, clickable markers ============ */
+/* gentle hover/idle bob so live units read as "tracked", not static pins */
+@keyframes unit-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+.unit-bob {
+  animation: unit-bob 2.6s ease-in-out infinite;
+}
+
+/* threat ring — expanding pulse under hostile units */
+@keyframes unit-threat {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+.unit-threat {
+  animation: unit-threat 1.8s ease-out infinite;
+}
+
+/* directional heading sweep for moving units */
+@keyframes unit-track {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+.unit-track {
+  animation: unit-track 1.4s ease-in-out infinite;
+}
+
+/* a unit marker drops/locks in when it first appears */
+@keyframes unit-drop {
+  0% {
+    transform: translateY(-10px) scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(0) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+.unit-drop {
+  animation: unit-drop 360ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* smooth movement of demo units between position updates */
+.unit-moving {
+  transition: transform 1400ms linear;
+}
+
 /* Landing scroll reveal */
 .reveal {
   opacity: 0;
@@ -237,7 +308,11 @@ body {
   .banner-slide,
   .status-pulse,
   .radar-sweep,
-  .radar-blip {
+  .radar-blip,
+  .unit-bob,
+  .unit-threat,
+  .unit-track,
+  .unit-drop {
     animation: none !important;
   }
   .reveal {

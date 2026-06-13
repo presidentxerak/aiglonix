@@ -48,7 +48,8 @@
       "subtitle": "La plateforme tactique web qui détecte les drones par IA embarquée, cartographie les brouillages et maintient les communications — sans installation, sans infrastructure.",
       "ctaPrimary": "Accéder au poste de commandement",
       "ctaSecondary": "Découvrir",
-      "builtAt": "Construit en 48h — European Defense Tech Hackathon · Paris · Juin 2026"
+      "builtAt": "Construit en 48h — European Defense Tech Hackathon · Paris · Juin 2026",
+      "voiceTagline": "Nous traduisons la voix en carte pour un suivi de position en temps réel."
     },
     "problem": {
       "title": "Le ciel a changé. Pas les outils.",
@@ -266,6 +267,69 @@
     "dropped": "Marqueur placé : {place}",
     "notFound": "Impossible de localiser « {place} ».",
     "example": "Essayez : « Drone aperçu près de la Tour Eiffel » ou « Tiens la position à la Gare du Nord ».",
-    "unsupported": "La saisie vocale n’est pas supportée par ce navigateur. Essayez Chrome."
+    "unsupported": "La saisie vocale n’est pas supportée par ce navigateur. Essayez Chrome.",
+    "tagline": "Nous traduisons la voix en carte pour un suivi de position en temps réel.",
+    "demo": {
+      "on": "Unités démo en direct : activées",
+      "off": "Unités démo en direct : désactivées"
+    },
+    "units": {
+      "drone": "Drone",
+      "missile": "Missile",
+      "tank": "Blindé",
+      "troops": "Troupes",
+      "aircraft": "Aéronef",
+      "jammer": "Brouilleur",
+      "recon": "Reconnaissance",
+      "unknown": "Inconnu"
+    },
+    "faction": {
+      "hostile": "Hostile",
+      "friendly": "Allié",
+      "unknown": "Inconnu"
+    },
+    "unit": {
+      "speed": "Vitesse",
+      "heading": "cap"
+    }
+  },
+  "footer": {
+    "classification": "NON CLASSIFIÉ // DÉMONSTRATION UNIQUEMENT",
+    "tagline": "De la détection à la décision. En quelques secondes. Même sous brouillage.",
+    "builtNote": "Réalisé pour l'European Defense Tech Hackathon — Paris 2026. Prototype de démonstration ; pas un système accrédité, classifié ou opérationnel.",
+    "rights": "Tous droits réservés.",
+    "edth": "European Defense Tech Hackathon — Paris 2026",
+    "official": "Domaine officiel",
+    "antiPhishing": "AIGLONIX ne vous demandera jamais votre mot de passe par e-mail ou messagerie. Vérifiez toujours le domaine — {domain} — avant de vous connecter.",
+    "col": {
+      "platform": "Plateforme",
+      "legal": "Mentions légales",
+      "security": "Sécurité",
+      "compliance": "Conformité"
+    },
+    "links": {
+      "features": "Capacités",
+      "voice": "Carte Vocale",
+      "security": "Modèle de sécurité",
+      "signin": "Connexion"
+    },
+    "legal": {
+      "privacy": "Politique de confidentialité",
+      "terms": "Conditions d'utilisation",
+      "aup": "Charte d'usage",
+      "cookies": "Politique cookies"
+    },
+    "security": {
+      "policy": "Politique de sécurité",
+      "disclosure": "Divulgation responsable",
+      "txt": "security.txt",
+      "status": "État du système"
+    },
+    "compliance": {
+      "nato": "Interopérabilité OTAN par conception",
+      "stanag": "Formats alignés STANAG (roadmap)",
+      "gdpr": "RGPD · minimisation des données",
+      "export": "Contrôle export : ITAR / EAR — vérifier avant transfert"
+    }
   }
 }
