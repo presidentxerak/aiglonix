@@ -19,7 +19,6 @@ import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "@/components/shell/locale-switcher";
 import { Radar } from "@/components/landing/radar";
 import { Reveal } from "@/components/landing/reveal";
-import { StatCount } from "@/components/landing/stat-count";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { Logo } from "@/components/brand/logo";
 
@@ -248,38 +247,6 @@ export default async function LandingPage({
           </div>
         </section>
 
-        {/* 5. Proof */}
-        <section className="py-16 md:py-28">
-          <Reveal>
-            <div className="card p-8 md:p-12">
-              <h2 className="text-2xl md:text-4xl font-bold mb-10">
-                {t("proof.title")}
-              </h2>
-              <div className="grid gap-8 md:grid-cols-3">
-                <div>
-                  <StatCount value={3} prefix="< " suffix=" s" />
-                  <p className="text-sm text-fg-muted mt-2">
-                    {t("proof.stat1Label")}
-                  </p>
-                </div>
-                <div>
-                  <StatCount value={2} prefix="< " suffix=" s" />
-                  <p className="text-sm text-fg-muted mt-2">
-                    {t("proof.stat2Label")}
-                  </p>
-                </div>
-                <div>
-                  <StatCount value={100} suffix=" %" />
-                  <p className="text-sm text-fg-muted mt-2">
-                    {t("proof.stat3Label")}
-                  </p>
-                </div>
-              </div>
-              <p className="mt-10 text-sm text-accent">{t("proof.note")}</p>
-            </div>
-          </Reveal>
-        </section>
-
         {/* 6. Security by design */}
         <section id="security" className="py-16 md:py-28">
           <Reveal>
@@ -319,29 +286,6 @@ export default async function LandingPage({
               </Reveal>
             ))}
           </ul>
-        </section>
-
-        {/* 8. Roadmap */}
-        <section className="py-16 md:py-28">
-          <Reveal>
-            <h2 className="text-2xl md:text-4xl font-bold mb-10">
-              {t("roadmap.title")}
-            </h2>
-          </Reveal>
-          <div className="grid gap-4 md:grid-cols-3">
-            {[t("roadmap.m1"), t("roadmap.m2"), t("roadmap.m3")].map(
-              (milestone, i) => (
-                <Reveal key={milestone} delay={i * 80}>
-                  <div className="card p-5 h-full">
-                    <span className="tabular text-accent font-bold">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <p className="text-sm text-fg mt-2">{milestone}</p>
-                  </div>
-                </Reveal>
-              ),
-            )}
-          </div>
         </section>
 
         {/* 9. Final CTA */}
