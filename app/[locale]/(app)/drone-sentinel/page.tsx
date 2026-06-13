@@ -166,7 +166,8 @@ export default function DroneSentinelPage() {
   async function publish() {
     const image = imageRef.current;
     const best = detections[0];
-    if (!image || !best || !position) return;
+    // publishable if YOLO found a box OR the vision model identified a system
+    if (!image || !position || (!best && !aircraft?.identified)) return;
 
     const payload = DetectionInputSchema.safeParse({
       lat: position[0],
@@ -175,8 +176,8 @@ export default function DroneSentinelPage() {
       drone_type:
         aircraft?.identified && aircraft.name
           ? aircraft.name.slice(0, 64)
-          : best.className,
-      confidence: best.confidence,
+          : (best?.className ?? "Unidentified aerial object"),
+      confidence: best?.confidence ?? aircraft?.confidence ?? 0.5,
       image_url: null,
     });
     if (!payload.success) {
@@ -313,8 +314,9 @@ export default function DroneSentinelPage() {
         </p>
       )}
 
-      {/* AI identification + technical datasheet of the photographed aircraft */}
-      {phase === "done" && detections.length > 0 && (
+      {/* AI identification + technical datasheet of the photographed aircraft.
+          Offered even when YOLO found no box - COCO misses most military UAS. */}
+      {phase === "done" && (
         <div className="space-y-3">
           {!aircraft && (
             <Button
@@ -332,7 +334,7 @@ export default function DroneSentinelPage() {
       )}
 
       {/* Position confirmation - explicit, never silent (§2.7.6) */}
-      {phase === "done" && detections.length > 0 && (
+      {phase === "done" && (detections.length > 0 || aircraft?.identified) && (
         <div className="card p-4 space-y-3">
           <h2 className="font-bold">{t("position.title")}</h2>
           <p className="text-xs text-fg-muted">{t("position.hint")}</p>

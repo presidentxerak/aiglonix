@@ -1,14 +1,20 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ShieldCheck, Lock, FileText, Globe2 } from "lucide-react";
 import { Brand } from "@/components/brand/logo";
 
 /**
  * Landing footer - legal, privacy, security and defence-sector (NATO/EU)
- * compliance posture. Honest by design: links are placeholders for a
+ * compliance posture. Honest by design: the linked pages describe a beta
  * prototype and the classification banner makes the demo status explicit.
  */
-export async function SiteFooter({ officialDomain }: { officialDomain: string }) {
+export async function SiteFooter({
+  officialDomain,
+}: {
+  officialDomain: string;
+}) {
   const t = await getTranslations("footer");
+  const locale = await getLocale();
+  const legal = (slug: string) => `/${locale}/legal/${slug}`;
 
   const columns: {
     title: string;
@@ -29,37 +35,39 @@ export async function SiteFooter({ officialDomain }: { officialDomain: string })
       title: t("col.legal"),
       icon: FileText,
       links: [
-        { label: t("legal.privacy"), href: "#" },
-        { label: t("legal.terms"), href: "#" },
-        { label: t("legal.aup"), href: "#" },
-        { label: t("legal.cookies"), href: "#" },
+        { label: t("legal.privacy"), href: legal("privacy") },
+        { label: t("legal.terms"), href: legal("terms") },
+        { label: t("legal.aup"), href: legal("acceptable-use") },
+        { label: t("legal.cookies"), href: legal("cookies") },
       ],
     },
     {
       title: t("col.security"),
       icon: Lock,
       links: [
-        { label: t("security.policy"), href: "#" },
-        { label: t("security.disclosure"), href: "#" },
+        { label: t("security.policy"), href: legal("security") },
+        {
+          label: t("security.disclosure"),
+          href: legal("responsible-disclosure"),
+        },
         { label: t("security.txt"), href: "/.well-known/security.txt" },
-        { label: t("security.status"), href: "#" },
+        { label: t("security.status"), href: legal("status") },
       ],
     },
     {
       title: t("col.compliance"),
       icon: ShieldCheck,
       links: [
-        { label: t("compliance.nato"), href: "#" },
-        { label: t("compliance.stanag"), href: "#" },
-        { label: t("compliance.gdpr"), href: "#" },
-        { label: t("compliance.export"), href: "#" },
+        { label: t("compliance.nato"), href: legal("compliance") },
+        { label: t("compliance.stanag"), href: legal("compliance") },
+        { label: t("compliance.gdpr"), href: legal("compliance") },
+        { label: t("compliance.export"), href: legal("compliance") },
       ],
     },
   ];
 
   return (
     <footer className="border-t border-line bg-surface/40">
-      {/* classification banner */}
       <div className="border-b border-line/60 bg-base/60 py-1.5 text-center text-[11px] font-bold tracking-[0.2em] text-fg-muted">
         {t("classification")}
       </div>
@@ -68,10 +76,11 @@ export async function SiteFooter({ officialDomain }: { officialDomain: string })
         <div className="grid gap-10 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div>
             <Brand logoSize={30} className="text-lg" />
-            <p className="mt-4 max-w-xs text-sm text-fg-muted">
-              {t("tagline")}
-            </p>
+            <p className="mt-4 max-w-xs text-sm text-fg-muted">{t("tagline")}</p>
             <p className="mt-4 text-xs text-fg-muted">{t("builtNote")}</p>
+            <p className="mt-4 border border-accent/30 bg-accent/5 px-3 py-2 text-xs text-accent">
+              {t("beta")}
+            </p>
           </div>
 
           {columns.map(({ title, icon: Icon, links }) => (
@@ -96,7 +105,7 @@ export async function SiteFooter({ officialDomain }: { officialDomain: string })
           ))}
         </div>
 
-        <p className="mt-10 rounded-[4px] border border-line bg-base/40 px-4 py-3 text-xs text-fg-muted">
+        <p className="mt-10 border border-line bg-base/40 px-4 py-3 text-xs text-fg-muted">
           {t("antiPhishing", { domain: officialDomain })}
         </p>
 
