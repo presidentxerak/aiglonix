@@ -8,7 +8,7 @@ import { routing } from "@/i18n/routing";
 import { ServiceWorkerRegistrar } from "@/components/shell/service-worker-registrar";
 import "../globals.css";
 
-// Single font family for the whole app (§2.5) — self-hosted via next/font,
+// Single font family for the whole app (§2.5) - self-hosted via next/font,
 // zero external request at runtime.
 const outfit = Outfit({
   subsets: ["latin"],
@@ -17,7 +17,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "AIGLONIX — From detection to decision",
+  title: "AIGLONIX - From detection to decision",
   description:
     "Tactical web platform: on-device drone detection, collaborative jamming map, resilient offline-first communications.",
   manifest: "/manifest.json",

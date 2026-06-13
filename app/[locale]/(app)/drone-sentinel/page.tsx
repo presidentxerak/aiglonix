@@ -69,7 +69,7 @@ export default function DroneSentinelPage() {
       toast.error(t("fileErrors.tooLarge"));
       return;
     }
-    // Real type via magic bytes — the extension is never trusted (§2.7.6)
+    // Real type via magic bytes - the extension is never trusted (§2.7.6)
     const type = await sniffImageType(file);
     if (!type) {
       toast.error(t("fileErrors.badType"));
@@ -147,7 +147,7 @@ export default function DroneSentinelPage() {
     try {
       const id = crypto.randomUUID();
       // Canvas re-encode destroys EXIF (incl. GPS) before anything leaves
-      // the device — OPSEC requirement §2.7.6
+      // the device - OPSEC requirement §2.7.6
       const blob = await recompressForUpload(image);
       const imageKey = `img:${id}`;
       await saveBlob(imageKey, blob);
@@ -270,7 +270,7 @@ export default function DroneSentinelPage() {
         </p>
       )}
 
-      {/* Position confirmation — explicit, never silent (§2.7.6) */}
+      {/* Position confirmation - explicit, never silent (§2.7.6) */}
       {phase === "done" && detections.length > 0 && (
         <div className="card p-4 space-y-3">
           <h2 className="font-bold">{t("position.title")}</h2>

@@ -10,6 +10,8 @@ Slogan : « De la détection à la décision en quelques secondes. »
 3. **Operation** — vue tactique unifiée (carte + flux + compteurs + Presence)
 4. **Ghost Signal** — messagerie PWA offline-first (outbox pattern)
 5. **Landing** — pitch deck vivant, bilingue FR/EN
+6. **Voice Map** — Voice-to-Map : dictée vocale → marqueur temps réel sur la
+   carte (challenge « Voice-to-Map: Real-Time Positional Tracking »).
 
 Hors périmètre : mobile natif, backend Python, Bluetooth/LoRa/mesh, SensorFusion, AutoIntercept 3D.
 
@@ -20,6 +22,13 @@ onnxruntime-web · Zod · next-intl · Turnstile · Upstash Redis · Vercel.
 Composants UI : primitives maison style shadcn (cva + tailwind-merge) — le CLI
 shadcn n'a pas été utilisé, les primitives nécessaires (Button, Input, Card,
 Select, badge) sont dans `components/ui/`, plus `sonner` pour les toasts.
+**Voice Map** (challenge Voice-to-Map) : Deepgram (STT temps réel), Mistral
+(extraction lieu/intention) et OpenStreetMap/Nominatim (géocodage). Ce sont des
+**services externes** appelés via `fetch`/WebSocket — **zéro dépendance npm
+ajoutée**. Clés serveur-only (`DEEPGRAM_API_KEY`, `MISTRAL_API_KEY`) ; le client
+n'obtient qu'un token Deepgram éphémère (`/api/voice/token`). Dégradation propre :
+pas de clé Deepgram → Web Speech API du navigateur ; pas de Mistral → parseur
+heuristique (`lib/voice/extract.ts`) ; Nominatim sans clé.
 
 ## État des phases
 - [x] **Phase 0 — Fondations** : scaffold, design system §2.5 (tokens dans
@@ -49,10 +58,26 @@ Select, badge) sont dans `components/ui/`, plus `sonner` pour les toasts.
   même bande → clustering 5 km → centroïde pondéré strength² → émetteur
   estimé (croix de visée + cercle d'incertitude pointillé sur les cartes,
   bannière Map Vision, compteur Operation, section landing « challenge »).
+- [x] **Voice Map — Voice-to-Map** (challenge « Real-Time Positional
+  Tracking ») : `app/[locale]/(app)/voice-map`. Pipeline : voix → STT
+  (`lib/voice/stt.ts` : Deepgram WS via token éphémère, fallback Web Speech) →
+  extraction lieu/action (`/api/voice/extract` : Mistral, fallback heuristique)
+  → géocodage (`/api/voice/geocode` : Nominatim, cache mémoire) → marqueur
+  vocal sur `TacticalMap` (prop `pins`) + flyTo. Markers côté client (session)
+  pour l'instant ; persistance Supabase = prochaine étape si collaboration
+  voulue. Routes API : session + rate limit (`voice:<uid>`) + Zod, clés
+  serveur-only.
 - [ ] **Déploiement** : nécessite un projet Supabase réel + projet Vercel
   (voir README — migration à appliquer, env vars à renseigner).
 
 ## Décisions prises
+- **Design system v2** : police racine agrandie (`html { font-size: 17.5px }`)
+  pour la lisibilité ; **aucun tiret cadratin (— / –) dans l'app** — utiliser
+  un trait d'union. Dégradés animés (`@keyframes grad-shift`) : `.btn-gradient`
+  (bleu ciel→bleu foncé) sur boutons/liens importants ; `.grad-magenta` /
+  `.unit-fill` / `.alert-gradient` (magenta→rouge) sur icônes et alertes carte ;
+  bordure de carte en dégradé animé au survol (`.card::after`). Toutes les
+  animations sont coupées sous `prefers-reduced-motion`.
 - **i18n** : segment `app/[locale]/`, fallback `en`, aucune chaîne en dur.
 - **Auth** : cookies httpOnly via @supabase/ssr ; protection des routes via
   `AuthGuard` client (`getSession()` local — un opérateur hors ligne garde

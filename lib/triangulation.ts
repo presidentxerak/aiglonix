@@ -2,7 +2,7 @@ import { distanceMeters } from "@/lib/utils";
 import type { JammerReportRow } from "@/lib/schemas";
 
 /**
- * Flagship feature — EDTH challenge "operating under jamming" (EW).
+ * Flagship feature - EDTH challenge "operating under jamming" (EW).
  *
  * Collaborative jammer triangulation: every operator report is a noisy
  * range/power observation of the same emitter. With 3+ active reports of
@@ -13,7 +13,7 @@ import type { JammerReportRow } from "@/lib/schemas";
  *
  * Deliberately pure and client-side: it runs identically on every device
  * from the same Realtime-shared rows, so the whole team sees the same fix
- * with zero extra backend — and it keeps working offline on cached data.
+ * with zero extra backend - and it keeps working offline on cached data.
  * True RSSI multilateration with real RF sensors is the roadmap; the
  * operator-as-sensor model is what 48h of production code can prove.
  */
@@ -30,7 +30,7 @@ export interface EstimatedEmitter {
   lat: number;
   lng: number;
   uncertainty_m: number;
-  /** 0..1 — grows with report count, shrinks with geometric dispersion */
+  /** 0..1 - grows with report count, shrinks with geometric dispersion */
   confidence: number;
   report_count: number;
   last_report_at: string;
@@ -74,7 +74,7 @@ export function estimateEmitters(
 
   const emitters: EstimatedEmitter[] = [];
   for (const [band, group] of byBand) {
-    // greedy proximity clustering — areas of operation are small enough
+    // greedy proximity clustering - areas of operation are small enough
     const clusters: JammerReportRow[][] = [];
     for (const report of group) {
       const host = clusters.find((cluster) => {

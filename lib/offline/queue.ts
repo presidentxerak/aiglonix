@@ -33,7 +33,7 @@ export async function listQueue(): Promise<OutboxItem[]> {
     if (parsed.success) {
       items.push(parsed.data);
     } else {
-      // Corrupted entry — drop it rather than poisoning the sync loop.
+      // Corrupted entry - drop it rather than poisoning the sync loop.
       await del(key, store);
     }
   }
