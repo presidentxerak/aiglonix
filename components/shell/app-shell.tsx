@@ -2,7 +2,15 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
-import { Radar, Crosshair, Map as MapIcon, Mic, MessageSquare, LogOut } from "lucide-react";
+import {
+  Radar,
+  Crosshair,
+  Map as MapIcon,
+  Mic,
+  MessageSquare,
+  Plug,
+  LogOut,
+} from "lucide-react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { toast } from "sonner";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
@@ -18,6 +26,7 @@ const NAV_ITEMS = [
   { href: "/map-vision", key: "map", icon: MapIcon },
   { href: "/voice-map", key: "voice", icon: Mic },
   { href: "/ghost-signal", key: "comms", icon: MessageSquare },
+  { href: "/connectors", key: "connectors", icon: Plug },
 ] as const;
 
 function TeamBadge() {
@@ -202,7 +211,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         {/* Mobile bottom navigation - thumb-reachable (§2.5 responsive) */}
         <nav
           aria-label="Main"
-          className="md:hidden fixed bottom-0 inset-x-0 z-[1100] grid grid-cols-5 border-t border-line bg-surface"
+          className="md:hidden fixed bottom-0 inset-x-0 z-[1100] grid grid-cols-6 border-t border-line bg-surface"
         >
           {NAV_ITEMS.map(({ href, key, icon: Icon }) => {
             const active = pathname.startsWith(href);

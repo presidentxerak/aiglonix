@@ -6,7 +6,8 @@
       "sentinel": "Sentinelle",
       "map": "Carte",
       "comms": "Comms",
-      "voice": "Voix"
+      "voice": "Voix",
+      "connectors": "API"
     },
     "cta": {
       "signIn": "Connexion",
@@ -350,5 +351,24 @@
     "joinError": "Code d'invitation invalide.",
     "copy": "Copier le code d'invitation",
     "copied": "Code d'invitation copié"
+  },
+  "connectors": {
+    "title": "Connecteurs",
+    "subtitle": "Connectez des appareils de détection et des apps externes. Créez une clé API et poussez des évènements dans votre équipe en temps réel.",
+    "createLabel": "Nouvelle clé API",
+    "namePlaceholder": "ex. capteur RF porte nord",
+    "createCta": "Générer la clé",
+    "newKeyTitle": "Votre nouvelle clé API",
+    "newKeyWarn": "Copiez-la maintenant - elle n'est affichée qu'une fois et ne peut pas être récupérée.",
+    "done": "Terminé",
+    "noKeys": "Aucune clé API pour l'instant.",
+    "revoke": "Révoquer la clé",
+    "revoked": "Clé révoquée",
+    "revokedTag": "révoquée",
+    "docsTitle": "Comment ça marche",
+    "docsIntro": "N'importe quel appareil ou app envoie un POST avec sa clé API. Les détections et brouillages déclenchent aussi une alerte et apparaissent en direct sur la carte de chaque coéquipier.",
+    "endpoint": "Point d'accès",
+    "example": "Exemple (détection)",
+    "kinds": "kind peut valoir \"detection\", \"jammer\" ou \"alert\"."
   }
 }
