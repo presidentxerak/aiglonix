@@ -71,6 +71,9 @@ export default async function LandingPage({
         >
           <Logo size={28} />
           {tCommon("appName")}
+          <span className="border border-accent/50 bg-accent/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-accent">
+            Beta
+          </span>
         </Link>
         <div className="flex items-center gap-3">
           <LocaleSwitcher />

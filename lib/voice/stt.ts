@@ -112,8 +112,9 @@ export class SttController {
       "wss://api.deepgram.com/v1/listen" +
       `?model=nova-2&language=${lang}&smart_format=true` +
       "&interim_results=true&punctuate=true";
-    // Browser WebSocket auth uses the Sec-WebSocket-Protocol header.
-    const ws = new WebSocket(url, ["token", token]);
+    // Browser WebSocket auth via Sec-WebSocket-Protocol. Tokens minted by
+    // /v1/auth/grant are short-lived bearer tokens -> use the "bearer" scheme.
+    const ws = new WebSocket(url, ["bearer", token]);
     this.ws = ws;
 
     await new Promise<void>((resolve, reject) => {
