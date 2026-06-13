@@ -118,8 +118,8 @@ function unitIcon(
     html:
       `<span class="relative block h-[30px] w-[30px] ${drop}">${threat}` +
       `<span class="absolute inset-0 unit-bob">` +
-      `<span class="absolute inset-0 rounded-full unit-fill" style="border:2px solid ${color}"></span>` +
-      `<svg viewBox="0 0 24 24" class="absolute inset-[5px] h-5 w-5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${glyph}</svg>` +
+      `<span class="absolute inset-[2px] rounded-full unit-fill" style="box-shadow:0 0 10px 1px ${color}aa, 0 2px 6px rgba(0,0,0,0.55)"></span>` +
+      `<svg viewBox="0 0 24 24" class="absolute inset-[6px] h-[18px] w-[18px]" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 1px 1px rgba(0,0,0,0.5))">${glyph}</svg>` +
       `</span></span>`,
   });
 }
@@ -283,24 +283,42 @@ export default function TacticalMapImpl({
           })}
         >
           <Popup>
-            <div className="text-sm tabular space-y-0.5">
-              <p
-                className="font-bold"
-                style={{ color: FACTION_COLOR[u.faction] }}
-              >
-                {tVoice(`units.${u.type}`)} - {tVoice(`faction.${u.faction}`)}
+            <div className="min-w-[170px] space-y-1.5">
+              <div className="flex items-center gap-2">
+                <span
+                  aria-hidden
+                  className="h-2.5 w-2.5 rounded-full shrink-0"
+                  style={{ background: FACTION_COLOR[u.faction] }}
+                />
+                <span
+                  className="font-bold text-[15px]"
+                  style={{ color: FACTION_COLOR[u.faction] }}
+                >
+                  {tVoice(`units.${u.type}`)}
+                </span>
+                <span
+                  className="ml-auto text-[10px] font-bold uppercase tracking-wide rounded-full border px-1.5 py-px"
+                  style={{
+                    color: FACTION_COLOR[u.faction],
+                    borderColor: FACTION_COLOR[u.faction],
+                  }}
+                >
+                  {tVoice(`faction.${u.faction}`)}
+                </span>
+              </div>
+              <p className="text-sm text-fg font-medium leading-snug">
+                {u.label}
               </p>
-              <p className="text-fg">{u.label}</p>
-              {typeof u.speedKph === "number" && (
-                <p className="text-fg-muted text-xs">
-                  {tVoice("unit.speed")}: {Math.round(u.speedKph)} km/h
+              {typeof u.speedKph === "number" && u.speedKph > 0 && (
+                <p className="text-xs text-fg-muted tabular">
+                  {Math.round(u.speedKph)} km/h
                   {typeof u.heading === "number"
                     ? ` · ${tVoice("unit.heading")} ${Math.round(u.heading)}°`
                     : ""}
                 </p>
               )}
-              {u.note && <p className="text-fg-muted text-xs">{u.note}</p>}
-              <p className="text-fg-muted text-xs">
+              {u.note && <p className="text-xs text-fg-muted">{u.note}</p>}
+              <p className="text-[11px] text-fg-disabled tabular pt-1 border-t border-line/60">
                 {u.lat.toFixed(4)}, {u.lng.toFixed(4)}
               </p>
             </div>
@@ -315,17 +333,29 @@ export default function TacticalMapImpl({
           icon={unitIcon(p.unit, p.faction, { recent: p.at > now - 60 * 1000 })}
         >
           <Popup>
-            <div className="text-sm">
-              <p
-                className="font-bold"
-                style={{ color: FACTION_COLOR[p.faction] }}
-              >
-                {tVoice(`units.${p.unit}`)} · {tVoice(`actions.${p.action}`)}
+            <div className="min-w-[170px] space-y-1.5">
+              <div className="flex items-center gap-2">
+                <span
+                  aria-hidden
+                  className="h-2.5 w-2.5 rounded-full shrink-0"
+                  style={{ background: FACTION_COLOR[p.faction] }}
+                />
+                <span
+                  className="font-bold text-[15px]"
+                  style={{ color: FACTION_COLOR[p.faction] }}
+                >
+                  {tVoice(`units.${p.unit}`)}
+                </span>
+                <span className="ml-auto text-[10px] font-bold uppercase tracking-wide rounded-full border border-accent/50 text-accent px-1.5 py-px">
+                  {tVoice(`actions.${p.action}`)}
+                </span>
+              </div>
+              <p className="text-sm text-fg font-medium leading-snug">
+                {p.label}
               </p>
-              <p>{p.label}</p>
-              <p className="text-fg-muted text-xs">{p.display_name}</p>
-              <p className="text-fg-muted text-xs italic">
-                {tVoice("pin.heard")}: “{p.transcript}”
+              <p className="text-xs text-fg-muted">{p.display_name}</p>
+              <p className="text-[11px] text-fg-disabled italic pt-1 border-t border-line/60">
+                {tVoice("pin.heard")}: {p.transcript}
               </p>
             </div>
           </Popup>

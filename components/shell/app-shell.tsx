@@ -22,15 +22,17 @@ function StatusDot() {
   const { online } = useNetwork();
   const t = useTranslations("common.status");
   return (
-    <span className="inline-flex items-center gap-2 text-xs text-fg-muted">
+    <span className="inline-flex items-center gap-2 text-xs text-fg-muted whitespace-nowrap">
       <span
         aria-hidden
         className={cn(
-          "h-2 w-2 rounded-full",
+          "h-2 w-2 rounded-full shrink-0",
           online ? "bg-ok status-pulse" : "bg-offline",
         )}
       />
-      {online ? t("online") : t("offline")}
+      <span className="hidden sm:inline">
+        {online ? t("online") : t("offline")}
+      </span>
     </span>
   );
 }
@@ -149,11 +151,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile header */}
         <header className="md:hidden flex items-center justify-between gap-2 border-b border-line bg-surface px-4 py-3 sticky top-0 z-[1100]">
-          <span className="flex items-center gap-2 font-bold tracking-wide">
+          <span className="flex items-center gap-2 font-bold tracking-wide min-w-0 truncate">
             <Logo size={22} />
             {t("appName")}
           </span>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             <StatusDot />
             <LocaleSwitcher />
             <button

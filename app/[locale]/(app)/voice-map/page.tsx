@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Mic, MicOff, Loader2, MapPin } from "lucide-react";
+import { Mic, MicOff, Loader2, MapPin, Send } from "lucide-react";
 import { TacticalMap, type MapFocus } from "@/components/map/tactical-map";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -74,6 +74,7 @@ export default function VoiceMapPage() {
   const [sttState, setSttState] = useState<SttState>("idle");
   const [engine, setEngine] = useState<SttEngine | null>(null);
   const [processing, setProcessing] = useState(false);
+  const [manual, setManual] = useState("");
   const [focus, setFocus] = useState<MapFocus | null>(null);
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
   const [units, setUnits] = useState<TacticalUnit[]>([]);
@@ -190,11 +191,12 @@ export default function VoiceMapPage() {
           setEngine(eng);
         },
         onError: (message) => {
-          toast.error(
-            message === "unsupported"
-              ? t("unsupported")
-              : tCommon("errors.generic"),
-          );
+          const messages: Record<string, string> = {
+            unsupported: t("unsupported"),
+            permission: t("micDenied"),
+            network: t("sttNetwork"),
+          };
+          toast.error(messages[message] ?? tCommon("errors.generic"));
         },
       });
     }
@@ -276,6 +278,35 @@ export default function VoiceMapPage() {
                 {interim || t("speakNow")}
               </p>
             )}
+
+            {/* Type fallback - works even if the mic/STT is unavailable */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const v = manual.trim();
+                if (!v) return;
+                void handleFinal(v);
+                setManual("");
+              }}
+              className="flex gap-2"
+            >
+              <input
+                value={manual}
+                onChange={(e) => setManual(e.target.value)}
+                placeholder={t("typePlaceholder")}
+                aria-label={t("typePlaceholder")}
+                className="flex-1 min-w-0 bg-raised border border-line rounded-[4px] px-2.5 py-2 text-sm text-fg placeholder:text-fg-muted/60 focus:outline-none focus:border-line-active"
+              />
+              <Button
+                type="submit"
+                size="sm"
+                disabled={processing || !manual.trim()}
+                aria-label={t("send")}
+                className="shrink-0"
+              >
+                <Send size={16} />
+              </Button>
+            </form>
 
             <button
               type="button"

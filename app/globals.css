@@ -54,6 +54,7 @@ body {
   font-size: 1.0625rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* no horizontal drift on scroll (mobile) */
 }
 
 /* Numeric data (GPS, timestamps, frequencies, confidence) aligns vertically */
@@ -422,10 +423,27 @@ body {
 }
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-  background: var(--color-raised);
-  color: var(--color-fg);
+  background: var(--color-raised) !important;
+  color: var(--color-fg) !important;
   border-radius: 0;
   border: 1px solid var(--color-line);
+  box-shadow: var(--shadow-card);
+}
+.leaflet-popup-content {
+  margin: 12px 14px;
+  color: var(--color-fg);
+}
+.leaflet-popup-close-button {
+  color: var(--color-fg-muted) !important;
+  padding: 8px 8px 0 0 !important;
+}
+.leaflet-popup-close-button:hover {
+  color: var(--color-fg) !important;
+}
+/* clean markers: no focus box around tactical icons */
+.leaflet-marker-icon:focus,
+.leaflet-interactive:focus {
+  outline: none;
 }
 .leaflet-bar a {
   background: var(--color-raised);

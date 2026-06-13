@@ -30,6 +30,9 @@ interface SpeechRecognitionEventLike extends Event {
   readonly resultIndex: number;
   readonly results: SpeechResultList;
 }
+interface SpeechRecognitionErrorLike extends Event {
+  readonly error?: string;
+}
 interface SpeechRecognitionLike {
   lang: string;
   continuous: boolean;
@@ -38,7 +41,7 @@ interface SpeechRecognitionLike {
   stop(): void;
   abort(): void;
   onresult: ((e: SpeechRecognitionEventLike) => void) | null;
-  onerror: ((e: Event) => void) | null;
+  onerror: ((e: SpeechRecognitionErrorLike) => void) | null;
   onend: (() => void) | null;
 }
 type SpeechRecognitionCtor = new () => SpeechRecognitionLike;
@@ -163,10 +166,18 @@ export class SttController {
         else this.cb.onInterim(text);
       }
     };
-    recognition.onerror = () => {
+    recognition.onerror = (e: SpeechRecognitionErrorLike) => {
+      const code = e.error ?? "";
+      if (code === "no-speech" || code === "aborted") return; // benign
       if (!this.stopping) {
         this.cb.onState("error", null);
-        this.cb.onError("recognition");
+        if (code === "not-allowed" || code === "service-not-allowed") {
+          this.cb.onError("permission");
+        } else if (code === "network") {
+          this.cb.onError("network");
+        } else {
+          this.cb.onError("recognition");
+        }
       }
     };
     recognition.onend = () => {

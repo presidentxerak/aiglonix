@@ -291,7 +291,11 @@
     "unit": {
       "speed": "Vitesse",
       "heading": "cap"
-    }
+    },
+    "micDenied": "Accès micro refusé. Autorisez-le, ou saisissez une position ci-dessous.",
+    "sttNetwork": "Service vocal indisponible. Saisissez une position ci-dessous.",
+    "typePlaceholder": "Saisir une position…",
+    "send": "Ajouter"
   },
   "footer": {
     "classification": "NON CLASSIFIÉ // DÉMONSTRATION UNIQUEMENT",
