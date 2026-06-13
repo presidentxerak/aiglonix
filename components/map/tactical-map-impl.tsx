@@ -15,6 +15,7 @@ import L from "leaflet";
 import { useLocale, useTranslations } from "next-intl";
 import type { DetectionRow, JammerReportRow } from "@/lib/schemas";
 import type { EstimatedEmitter } from "@/lib/triangulation";
+import type { VoicePin } from "@/lib/voice/types";
 import { formatAge } from "@/lib/utils";
 import "leaflet/dist/leaflet.css";
 
@@ -39,6 +40,8 @@ export interface TacticalMapProps {
   /** simple tap/click picker (manual positioning in Drone Sentinel) */
   onPick?: (lat: number, lng: number) => void;
   picked?: [number, number] | null;
+  /** markers dropped by the Voice-to-Map pipeline */
+  pins?: VoicePin[];
 }
 
 function strengthColor(strength: number): string {
@@ -85,6 +88,24 @@ const pickIcon = L.divIcon({
   html: '<span class="block h-4 w-4 rounded-full border-2 border-accent bg-accent/40"></span>',
 });
 
+function voicePinIcon(recent: boolean): L.DivIcon {
+  const ring = recent
+    ? '<span class="absolute -inset-2 rounded-full bg-accent/40 pulse-ring"></span>'
+    : "";
+  // teardrop marker with a dot — a position called in by voice
+  const pin =
+    '<svg viewBox="0 0 24 24" class="absolute inset-0" fill="#22D3EE" stroke="#0A0E13" stroke-width="1.5">' +
+    '<path d="M12 2c-3.9 0-7 3.1-7 7 0 5 7 13 7 13s7-8 7-13c0-3.9-3.1-7-7-7z"/>' +
+    '<circle cx="12" cy="9" r="2.5" fill="#0A0E13" stroke="none"/></svg>';
+  return L.divIcon({
+    className: "",
+    iconSize: [24, 24],
+    iconAnchor: [12, 24],
+    popupAnchor: [0, -22],
+    html: `<span class="relative block h-6 w-6">${ring}${pin}</span>`,
+  });
+}
+
 function InteractionHandler({
   onLongPress,
   onPick,
@@ -126,11 +147,13 @@ export default function TacticalMapImpl({
   onLongPress,
   onPick,
   picked,
+  pins = [],
 }: TacticalMapProps) {
   const locale = useLocale();
   const tJam = useTranslations("mapvision.popup");
   const tEmitter = useTranslations("mapvision.emitter");
   const tSentinel = useTranslations("sentinel");
+  const tVoice = useTranslations("voicemap");
   const now = Date.now();
 
   const recentThreshold = useMemo(() => now - 5 * 60 * 1000, [now]);
@@ -227,6 +250,27 @@ export default function TacticalMapImpl({
                 {tSentinel("confidence")}: {Math.round(d.confidence * 100)}%
               </p>
               <p className="text-fg-muted">{formatAge(d.created_at, locale)}</p>
+            </div>
+          </Popup>
+        </Marker>
+      ))}
+
+      {pins.map((p) => (
+        <Marker
+          key={p.id}
+          position={[p.lat, p.lng]}
+          icon={voicePinIcon(p.at > now - 2 * 60 * 1000)}
+        >
+          <Popup>
+            <div className="text-sm">
+              <p className="font-bold text-accent">
+                {tVoice(`actions.${p.action}`)}
+              </p>
+              <p>{p.label}</p>
+              <p className="text-fg-muted text-xs">{p.display_name}</p>
+              <p className="text-fg-muted text-xs italic">
+                {tVoice("pin.heard")}: “{p.transcript}”
+              </p>
             </div>
           </Popup>
         </Marker>

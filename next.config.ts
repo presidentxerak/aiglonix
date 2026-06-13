@@ -19,7 +19,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' blob: data: https://*.basemaps.cartocdn.com ${supabaseUrl}`,
   "font-src 'self'",
-  `connect-src 'self' ${supabaseUrl} ${supabaseWs} https://challenges.cloudflare.com`,
+  `connect-src 'self' ${supabaseUrl} ${supabaseWs} https://challenges.cloudflare.com https://api.deepgram.com wss://api.deepgram.com`,
   "worker-src 'self' blob:",
   "frame-src https://challenges.cloudflare.com",
   "frame-ancestors 'none'",
@@ -64,7 +64,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source:
-          "/:segment(operation|drone-sentinel|map-vision|ghost-signal|login)",
+          "/:segment(operation|drone-sentinel|map-vision|voice-map|ghost-signal|login)",
         destination: "/en/:segment",
         permanent: false,
       },

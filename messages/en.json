@@ -5,7 +5,8 @@
       "operation": "Operation",
       "sentinel": "Sentry",
       "map": "Map",
-      "comms": "Comms"
+      "comms": "Comms",
+      "voice": "Voice"
     },
     "cta": {
       "signIn": "Sign in",
@@ -238,5 +239,33 @@
     "empty": "No messages on this channel yet.",
     "externalLink": "external link — verify the domain before copying",
     "offlineInfo": "Offline: messages are timestamped and queued locally, then synchronized in order, without duplicates."
+  },
+  "voicemap": {
+    "title": "Voice Map",
+    "hint": "Speak a position update — it becomes a live map marker.",
+    "start": "Start listening",
+    "stop": "Stop",
+    "idle": "Microphone off",
+    "speakNow": "Listening… speak now",
+    "processing": "Locating…",
+    "engine": {
+      "deepgram": "Listening (Deepgram)",
+      "webspeech": "Listening (browser)",
+      "starting": "Starting…"
+    },
+    "actions": {
+      "sighting": "Sighting",
+      "move": "Movement",
+      "hold": "Holding",
+      "contact": "Contact",
+      "mark": "Waypoint"
+    },
+    "pin": {
+      "heard": "Heard"
+    },
+    "dropped": "Marker dropped: {place}",
+    "notFound": "Couldn’t locate “{place}”.",
+    "example": "Try: “Drone spotted near the Eiffel Tower” or “Hold position at Gare du Nord”.",
+    "unsupported": "Voice input isn’t supported on this browser. Try Chrome."
   }
 }

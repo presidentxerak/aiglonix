@@ -5,7 +5,8 @@
       "operation": "Opération",
       "sentinel": "Sentinelle",
       "map": "Carte",
-      "comms": "Comms"
+      "comms": "Comms",
+      "voice": "Voix"
     },
     "cta": {
       "signIn": "Connexion",
@@ -238,5 +239,33 @@
     "empty": "Aucun message sur ce canal pour l'instant.",
     "externalLink": "lien externe — vérifiez le domaine avant de copier",
     "offlineInfo": "Hors ligne : les messages sont horodatés et mis en file localement, puis synchronisés dans l'ordre, sans doublon."
+  },
+  "voicemap": {
+    "title": "Carte Vocale",
+    "hint": "Dictez une position — elle devient un marqueur sur la carte en direct.",
+    "start": "Écouter",
+    "stop": "Stop",
+    "idle": "Micro coupé",
+    "speakNow": "À l’écoute… parlez",
+    "processing": "Localisation…",
+    "engine": {
+      "deepgram": "À l’écoute (Deepgram)",
+      "webspeech": "À l’écoute (navigateur)",
+      "starting": "Démarrage…"
+    },
+    "actions": {
+      "sighting": "Observation",
+      "move": "Déplacement",
+      "hold": "Maintien",
+      "contact": "Contact",
+      "mark": "Point"
+    },
+    "pin": {
+      "heard": "Entendu"
+    },
+    "dropped": "Marqueur placé : {place}",
+    "notFound": "Impossible de localiser « {place} ».",
+    "example": "Essayez : « Drone aperçu près de la Tour Eiffel » ou « Tiens la position à la Gare du Nord ».",
+    "unsupported": "La saisie vocale n’est pas supportée par ce navigateur. Essayez Chrome."
   }
 }
