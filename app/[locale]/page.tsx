@@ -89,19 +89,25 @@ export default async function LandingPage({
       {/* 1. Hero - full-bleed background video + overlay */}
       <section className="relative overflow-hidden border-b border-line/60">
         <video
-          className="absolute inset-0 h-full w-full object-cover opacity-35"
+          className="absolute inset-0 h-full w-full object-cover"
           autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           aria-hidden
         >
           <source src="/aiglonix-hero-video1.mp4" type="video/mp4" />
         </video>
+        {/* keep text readable on the left, let the video breathe on the right,
+            fade to the page colour at the bottom */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-b from-base/75 via-base/85 to-base"
+          className="absolute inset-0 bg-gradient-to-r from-base via-base/65 to-base/20"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-t from-base via-base/15 to-transparent"
         />
         <div className="relative mx-auto max-w-6xl px-4 md:px-8 py-20 md:py-32 flex flex-col lg:flex-row items-center gap-10">
           <div className="flex-1">
