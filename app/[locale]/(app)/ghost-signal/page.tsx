@@ -12,6 +12,7 @@ import {
 import { getSupabaseBrowser, isSupabaseConfigured } from "@/lib/supabase/client";
 import { syncManager } from "@/lib/offline/sync";
 import { useNetwork } from "@/components/shell/network-provider";
+import { useTeam } from "@/lib/team/context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn, formatDateTime } from "@/lib/utils";
@@ -71,6 +72,7 @@ export default function GhostSignalPage() {
   const tCommon = useTranslations("common");
   const locale = useLocale();
   const { online } = useNetwork();
+  const { teamId } = useTeam();
   const [messages, setMessages] = useState<DisplayMessage[]>([]);
   const [callsigns, setCallsigns] = useState<Record<string, string>>({});
   const [body, setBody] = useState("");
@@ -227,6 +229,7 @@ export default function GhostSignalPage() {
         kind: "message",
         id: payload.data.client_id,
         payload: payload.data,
+        team_id: teamId,
         queued_at: new Date().toISOString(),
       });
     } catch {

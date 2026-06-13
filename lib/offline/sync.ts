@@ -101,6 +101,7 @@ class SyncManager {
       const { error } = await supabase.from("messages").insert({
         ...item.payload,
         user_id: user.id,
+        ...(item.team_id ? { team_id: item.team_id } : {}),
       });
       if (!error || error.code === UNIQUE_VIOLATION) return true;
       return false;
@@ -124,6 +125,7 @@ class SyncManager {
       ...item.payload,
       image_url: imagePath,
       user_id: user.id,
+      ...(item.team_id ? { team_id: item.team_id } : {}),
     });
     if (!error) return true;
     return false;

@@ -10,6 +10,7 @@ import {
   type JammerReportRow,
 } from "@/lib/schemas";
 import { getSupabaseBrowser, isSupabaseConfigured } from "@/lib/supabase/client";
+import { useTeam } from "@/lib/team/context";
 import { estimateEmitters } from "@/lib/triangulation";
 import { TacticalMap } from "@/components/map/tactical-map";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ interface DraftReport {
 export default function MapVisionPage() {
   const t = useTranslations("mapvision");
   const tCommon = useTranslations("common");
+  const { teamId } = useTeam();
   const [jammers, setJammers] = useState<JammerReportRow[]>([]);
   const [draft, setDraft] = useState<DraftReport | null>(null);
   const [band, setBand] = useState<(typeof FREQ_BANDS)[number]>("2.4GHz");
@@ -139,7 +141,11 @@ export default function MapVisionPage() {
       if (!user) throw new Error("no session");
       const { error } = await supabase
         .from("jammer_reports")
-        .insert({ ...parsed.data, user_id: user.id });
+        .insert({
+          ...parsed.data,
+          user_id: user.id,
+          ...(teamId ? { team_id: teamId } : {}),
+        });
       if (error) throw error;
       toast.success(t("published"));
       setDraft(null);

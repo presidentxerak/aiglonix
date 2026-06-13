@@ -4,7 +4,9 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { Radar, Crosshair, Map as MapIcon, Mic, MessageSquare, LogOut } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { toast } from "sonner";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
+import { useTeam } from "@/lib/team/context";
 import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 import { useNetwork } from "./network-provider";
@@ -17,6 +19,28 @@ const NAV_ITEMS = [
   { href: "/voice-map", key: "voice", icon: Mic },
   { href: "/ghost-signal", key: "comms", icon: MessageSquare },
 ] as const;
+
+function TeamBadge() {
+  const { team } = useTeam();
+  const t = useTranslations("team");
+  if (!team) return null;
+  return (
+    <button
+      type="button"
+      title={t("copy")}
+      onClick={() => {
+        void navigator.clipboard?.writeText(team.invite_code);
+        toast.success(t("copied"));
+      }}
+      className="group text-left cursor-pointer"
+    >
+      <span className="block text-sm font-bold truncate">{team.name}</span>
+      <span className="block text-xs text-fg-muted tabular tracking-widest group-hover:text-fg transition-colors">
+        {team.invite_code}
+      </span>
+    </button>
+  );
+}
 
 function StatusDot() {
   const { online } = useNetwork();
@@ -132,6 +156,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           })}
         </nav>
         <div className="px-5 py-4 border-t border-line flex flex-col gap-3">
+          <TeamBadge />
           <StatusDot />
           <div className="flex items-center justify-between gap-2">
             <LocaleSwitcher />

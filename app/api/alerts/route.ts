@@ -38,7 +38,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
     }
 
-    // 4. Insert via service role (server only)
+    // 4. Scope the alert to the caller's team (no-op until migration 002)
+    let teamId: string | null = null;
+    try {
+      const { data: prof } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+      const tid = (prof as Record<string, unknown> | null)?.team_id;
+      if (typeof tid === "string") teamId = tid;
+    } catch {
+      // teams migration not applied -> shared mode
+    }
+
+    // 5. Insert via service role (server only)
     const admin = getSupabaseAdmin();
     const { error } = await admin.from("alerts").insert({
       kind: "manual",
@@ -46,6 +60,7 @@ export async function POST(request: Request) {
       severity: parsed.data.severity,
       lat: parsed.data.lat ?? null,
       lng: parsed.data.lng ?? null,
+      ...(teamId ? { team_id: teamId } : {}),
     });
     if (error) {
       return NextResponse.json({ error: "Server error" }, { status: 500 });

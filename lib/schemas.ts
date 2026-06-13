@@ -124,6 +124,8 @@ export const OutboxMessageSchema = z.object({
   kind: z.literal("message"),
   id: z.string().uuid(),
   payload: MessageInputSchema,
+  /** team scoping (set only when the teams migration is applied) */
+  team_id: z.string().uuid().nullable().optional(),
   queued_at: z.string(),
 });
 
@@ -133,6 +135,8 @@ export const OutboxDetectionSchema = z.object({
   payload: DetectionInputSchema,
   /** key of the image blob stored in IndexedDB, if any */
   image_key: z.string().nullable(),
+  /** team scoping (set only when the teams migration is applied) */
+  team_id: z.string().uuid().nullable().optional(),
   queued_at: z.string(),
 });
 
