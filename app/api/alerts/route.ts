@@ -6,7 +6,7 @@ import { checkRateLimit } from "@/lib/ratelimit";
 /**
  * Manual alert creation. The alerts table has NO client insert policy:
  * this route is the only write path, after session check + rate limit +
- * Zod validation. Error responses are generic on purpose — internals are
+ * Zod validation. Error responses are generic on purpose - internals are
  * never leaked.
  */
 export async function POST(request: Request) {
@@ -20,13 +20,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // 2. Rate limit per user — anti feed-poisoning
+    // 2. Rate limit per user - anti feed-poisoning
     const allowed = await checkRateLimit(user.id);
     if (!allowed) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
 
-    // 3. Validation — nothing from the client is trusted
+    // 3. Validation - nothing from the client is trusted
     let raw: unknown;
     try {
       raw = await request.json();

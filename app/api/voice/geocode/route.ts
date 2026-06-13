@@ -9,13 +9,13 @@ import { checkRateLimit } from "@/lib/ratelimit";
 
 /**
  * Geocode a place phrase via OpenStreetMap Nominatim. Called server-side so we
- * can attach a proper User-Agent (Nominatim policy) and cache results — never
+ * can attach a proper User-Agent (Nominatim policy) and cache results - never
  * from the browser. No API key required.
  */
 const NOMINATIM = "https://nominatim.openstreetmap.org/search";
 const USER_AGENT = "AIGLONIX/1.0 (voice-to-map tactical tracking)";
 
-// Small in-memory cache (per server instance) — Nominatim asks for restraint.
+// Small in-memory cache (per server instance) - Nominatim asks for restraint.
 const cache = new Map<string, GeocodeResult>();
 
 function biasViewbox(lat: number, lng: number): string {

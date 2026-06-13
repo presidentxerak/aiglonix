@@ -78,7 +78,7 @@ class SyncManager {
       const queue = await listQueue();
       for (const item of queue) {
         const delivered = await this.deliver(item);
-        if (!delivered) break; // network is down again — stop, retry later
+        if (!delivered) break; // network is down again - stop, retry later
         await dequeue(item.id);
         this.listeners.synced.forEach((fn) => fn(item));
         await this.refreshPending();

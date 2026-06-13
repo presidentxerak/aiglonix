@@ -172,7 +172,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
         <main className="flex-1 pb-20 md:pb-0">{children}</main>
 
-        {/* Mobile bottom navigation — thumb-reachable (§2.5 responsive) */}
+        {/* Mobile bottom navigation - thumb-reachable (§2.5 responsive) */}
         <nav
           aria-label="Main"
           className="md:hidden fixed bottom-0 inset-x-0 z-[1100] grid grid-cols-5 border-t border-line bg-surface"

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 /**
  * AIGLONIX eagle emblem (public/icon-aiglonix.svg). White-on-transparent, so
  * it sits on the dark tactical background. Decorative when paired with the
- * wordmark — the alt text lives on the Brand wrapper.
+ * wordmark - the alt text lives on the Brand wrapper.
  */
 export function Logo({
   className,

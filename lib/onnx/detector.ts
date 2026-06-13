@@ -6,7 +6,7 @@ import { MODEL_SIZE, type LetterboxInfo, type PreprocessResult } from "./preproc
 /**
  * In-browser YOLOv8 inference via onnxruntime-web (WASM backend).
  * Architecture decision (§5): zero GPU server, zero inference cost, local
- * latency — and it keeps working in jammed / disconnected areas.
+ * latency - and it keeps working in jammed / disconnected areas.
  *
  * The model file is interchangeable: day 1 = YOLOv8n COCO (validates the
  * whole chain), day 2 = a drone-specific model. Only CLASS_NAMES changes.
@@ -14,7 +14,7 @@ import { MODEL_SIZE, type LetterboxInfo, type PreprocessResult } from "./preproc
 
 export const MODEL_URL = "/models/yolov8n.onnx";
 
-// COCO class names — index = class id in the model output.
+// COCO class names - index = class id in the model output.
 export const CLASS_NAMES: readonly string[] = [
   "person", "bicycle", "car", "motorcycle", "airplane", "bus", "train",
   "truck", "boat", "traffic light", "fire hydrant", "stop sign",
@@ -51,7 +51,7 @@ export interface Detection {
 let sessionPromise: Promise<ort.InferenceSession> | null = null;
 
 /**
- * Singleton session — the ~12 MB model is fetched and compiled once.
+ * Singleton session - the ~12 MB model is fetched and compiled once.
  * Progress is reported so the UI can show a loading bar on first use.
  */
 export function loadDetector(

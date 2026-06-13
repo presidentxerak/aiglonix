@@ -83,7 +83,7 @@ export class SttController {
         if (d.enabled && typeof d.token === "string") token = d.token;
       }
     } catch {
-      // ignore — fall back below
+      // ignore - fall back below
     }
 
     const canDeepgram =

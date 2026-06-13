@@ -80,14 +80,14 @@ export default async function LandingPage({
           <LocaleSwitcher />
           <Link
             href="/login"
-            className="inline-flex min-h-11 items-center rounded-[4px] bg-accent px-4 text-sm font-bold text-ink hover:bg-accent/85 transition-colors duration-150"
+            className="inline-flex min-h-11 items-center rounded-[4px] btn-gradient text-white px-4 text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_-8px_rgba(56,189,248,0.55)]"
           >
             {t("header.signIn")}
           </Link>
         </div>
       </header>
 
-      {/* 1. Hero — full-bleed background video + overlay */}
+      {/* 1. Hero - full-bleed background video + overlay */}
       <section className="relative overflow-hidden border-b border-line/60">
         <video
           className="absolute inset-0 h-full w-full object-cover opacity-35"
@@ -122,7 +122,7 @@ export default async function LandingPage({
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link
                 href="/login"
-                className="inline-flex min-h-12 items-center justify-center rounded-[4px] bg-accent px-6 font-bold text-ink transition-all duration-200 hover:-translate-y-0.5 hover:bg-accent/90 hover:shadow-[0_12px_32px_-8px_rgba(56,189,248,0.55)]"
+                className="inline-flex min-h-12 items-center justify-center rounded-[4px] btn-gradient text-white px-6 font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(56,189,248,0.55)]"
               >
                 {t("hero.ctaPrimary")}
               </Link>
@@ -162,7 +162,7 @@ export default async function LandingPage({
           </div>
         </section>
 
-        {/* 3. Solution — the 4 modules */}
+        {/* 3. Solution - the 4 modules */}
         <section className="py-16 md:py-28">
           <Reveal>
             <h2 className="text-2xl md:text-4xl font-bold mb-10">
@@ -182,7 +182,7 @@ export default async function LandingPage({
           </div>
         </section>
 
-        {/* 3.5 The challenge — flagship feature (EDTH: operating under jamming) */}
+        {/* 3.5 The challenge - flagship feature (EDTH: operating under jamming) */}
         <section className="py-16 md:py-28">
           <Reveal>
             <span className="inline-block border border-accent/40 bg-surface px-3 py-1.5 text-xs text-accent mb-6">
@@ -353,7 +353,7 @@ export default async function LandingPage({
               </h2>
               <Link
                 href="/login"
-                className="mt-8 inline-flex min-h-12 items-center justify-center rounded-[4px] bg-accent px-8 font-bold text-ink hover:bg-accent/85 transition-colors duration-150"
+                className="mt-8 inline-flex min-h-12 items-center justify-center rounded-[4px] btn-gradient text-white px-8 font-bold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_32px_-8px_rgba(56,189,248,0.55)]"
               >
                 {t("finalCta.button")}
               </Link>

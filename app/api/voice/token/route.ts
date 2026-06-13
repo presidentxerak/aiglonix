@@ -5,7 +5,7 @@ import { getSupabaseServer } from "@/lib/supabase/server";
  * Mint a short-lived Deepgram token so the browser can open a realtime STT
  * WebSocket without ever seeing the long-lived DEEPGRAM_API_KEY. If no key is
  * configured (or the grant fails) we report { enabled: false } and the client
- * falls back to the browser's Web Speech API — the feature still works.
+ * falls back to the browser's Web Speech API - the feature still works.
  */
 export async function GET() {
   try {

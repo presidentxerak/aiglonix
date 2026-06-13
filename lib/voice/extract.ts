@@ -3,7 +3,7 @@ import { UNIT_TYPES, unitFromText } from "@/lib/tactical/units";
 
 /**
  * Deterministic extractor used as the fallback when MISTRAL_API_KEY is not
- * configured (the app must keep working with zero external keys — same
+ * configured (the app must keep working with zero external keys - same
  * philosophy as the in-memory rate-limit fallback). Pure and side-effect free.
  */
 
@@ -27,9 +27,9 @@ const ACTION_HINTS: Record<VoiceAction, readonly string[]> = {
   mark: ["mark", "waypoint", "note", "marque", "repère", "point"],
 };
 
-// Capture whatever follows a locative preposition — that's the place phrase.
+// Capture whatever follows a locative preposition - that's the place phrase.
 // Anchored on whitespace/start (not \b) so accented FR prepositions (à, près
-// de) match — \b forms no boundary before non-ASCII letters.
+// de) match - \b forms no boundary before non-ASCII letters.
 const NEAR_RE =
   /(?:^|\s)(?:near|next to|at|by|around|on|in|over|outside|toward|towards|à|au|aux|près de|proche de|sur|dans|vers|devant|derrière)\s+(.+)$/i;
 
@@ -72,7 +72,7 @@ export function heuristicExtract(transcript: string): ExtractedPlace {
   };
 }
 
-/** System prompt for the Mistral path — kept next to the fallback it mirrors. */
+/** System prompt for the Mistral path - kept next to the fallback it mirrors. */
 export const EXTRACT_SYSTEM_PROMPT = [
   "You extract a single geocodable location from a short spoken radio update.",
   "Return ONLY a JSON object with keys:",

@@ -7,7 +7,7 @@ let client: SupabaseClient | null = null;
 
 /**
  * Browser-side Supabase client (anon key only, session in httpOnly cookies
- * via @supabase/ssr — never in localStorage).
+ * via @supabase/ssr - never in localStorage).
  * Lazily created: must only be called from effects/event handlers.
  */
 export function getSupabaseBrowser(): SupabaseClient {

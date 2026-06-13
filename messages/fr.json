@@ -21,8 +21,8 @@
     "status": {
       "online": "Liaison établie",
       "offline": "Hors ligne",
-      "degraded": "Mode dégradé — opérations locales",
-      "reconnected": "Liaison rétablie — synchronisation",
+      "degraded": "Mode dégradé - opérations locales",
+      "reconnected": "Liaison rétablie - synchronisation",
       "pendingItems": "{count, plural, =0 {aucun élément en attente} one {# élément en attente} other {# éléments en attente}}"
     },
     "actions": {
@@ -35,7 +35,7 @@
     },
     "errors": {
       "generic": "Une erreur est survenue. Réessayez.",
-      "network": "Réseau indisponible — action mise en file locale.",
+      "network": "Réseau indisponible - action mise en file locale.",
       "config": "Backend non configuré. Renseignez les variables d'environnement Supabase."
     }
   },
@@ -45,10 +45,10 @@
     },
     "hero": {
       "baseline": "De la détection à la décision. En secondes. Même brouillé.",
-      "subtitle": "La plateforme tactique web qui détecte les drones par IA embarquée, cartographie les brouillages et maintient les communications — sans installation, sans infrastructure.",
+      "subtitle": "La plateforme tactique web qui détecte les drones par IA embarquée, cartographie les brouillages et maintient les communications - sans installation, sans infrastructure.",
       "ctaPrimary": "Accéder au poste de commandement",
       "ctaSecondary": "Découvrir",
-      "builtAt": "Construit en 48h — European Defense Tech Hackathon · Paris · Juin 2026",
+      "builtAt": "Construit en 48h - European Defense Tech Hackathon · Paris · Juin 2026",
       "voiceTagline": "Nous traduisons la voix en carte pour un suivi de position en temps réel."
     },
     "problem": {
@@ -58,33 +58,33 @@
       "c2Title": "Silence au pire moment",
       "c2Body": "Le brouillage coupe les communications exactement quand la coordination compte le plus.",
       "c3Title": "Information dispersée",
-      "c3Body": "Détections, signalements et ordres vivent dans des outils séparés — la décision arrive trop tard."
+      "c3Body": "Détections, signalements et ordres vivent dans des outils séparés - la décision arrive trop tard."
     },
     "solution": {
       "title": "Une URL. Quatre capacités.",
       "sentinelName": "Drone Sentinel",
       "sentinelBody": "L'IA tourne dans votre navigateur. Détection en moins de 3 secondes, même sans réseau.",
       "mapName": "Map Vision",
-      "mapBody": "Chaque brouillage signalé apparaît chez toute l'équipe en moins de 2 secondes — et trois signalements suffisent à localiser l'émetteur.",
+      "mapBody": "Chaque brouillage signalé apparaît chez toute l'équipe en moins de 2 secondes - et trois signalements suffisent à localiser l'émetteur.",
       "operationName": "Operation",
       "operationBody": "Toute la situation tactique sur un seul écran.",
       "ghostName": "Ghost Signal",
       "ghostBody": "Coupez le réseau. Vos messages attendent, puis se synchronisent. Dans l'ordre, sans doublon."
     },
     "challenge": {
-      "badge": "EDTH Paris 2026 — Challenge Durandal : détection et localisation collaboratives des brouilleurs",
+      "badge": "EDTH Paris 2026 - Challenge Durandal : détection et localisation collaboratives des brouilleurs",
       "title": "Ils brouillent. Nous triangulons.",
-      "body": "Le challenge : détecter, classifier et géolocaliser les sources d'interférence RF hostiles avec des capteurs distribués. Les capteurs distribués d'AIGLONIX, ce sont les opérateurs eux-mêmes — chaque téléphone devient un nœud de la situation guerre électronique.",
+      "body": "Le challenge : détecter, classifier et géolocaliser les sources d'interférence RF hostiles avec des capteurs distribués. Les capteurs distribués d'AIGLONIX, ce sont les opérateurs eux-mêmes - chaque téléphone devient un nœud de la situation guerre électronique.",
       "featureName": "Triangulation collaborative des émetteurs",
-      "featureBody": "Trois signalements de la même bande suffisent : AIGLONIX estime la position de l'émetteur par triangulation pondérée par l'intensité et partage la localisation à toute l'équipe en moins de 2 secondes, avec un rayon d'incertitude honnête. La zone brouillée cesse d'être subie — elle devient une cible actionnable.",
-      "s1": "Détecter — chaque signalement est un relèvement ; les opérateurs sont le réseau de capteurs distribués.",
-      "s2": "Classifier — par bande de fréquence (2.4 GHz, 5.8 GHz, GPS L1, 900 MHz), avec contre-mesure automatique : la recommandation de bascule de fréquence.",
-      "s3": "Opérer dénié — offline-first par conception : IA embarquée, comms outbox, situation tactique en cache."
+      "featureBody": "Trois signalements de la même bande suffisent : AIGLONIX estime la position de l'émetteur par triangulation pondérée par l'intensité et partage la localisation à toute l'équipe en moins de 2 secondes, avec un rayon d'incertitude honnête. La zone brouillée cesse d'être subie - elle devient une cible actionnable.",
+      "s1": "Détecter - chaque signalement est un relèvement ; les opérateurs sont le réseau de capteurs distribués.",
+      "s2": "Classifier - par bande de fréquence (2.4 GHz, 5.8 GHz, GPS L1, 900 MHz), avec contre-mesure automatique : la recommandation de bascule de fréquence.",
+      "s3": "Opérer dénié - offline-first par conception : IA embarquée, comms outbox, situation tactique en cache."
     },
     "how": {
       "title": "Comment ça marche",
       "s1": "Détecter",
-      "s1Body": "Pointez votre téléphone — l'IA embarquée identifie la menace.",
+      "s1Body": "Pointez votre téléphone - l'IA embarquée identifie la menace.",
       "s2": "Partager",
       "s2Body": "La détection se propage à toute l'équipe en temps réel.",
       "s3": "Décider",
@@ -93,9 +93,9 @@
     "proof": {
       "title": "Pas une maquette. De la production.",
       "stat1Value": "3",
-      "stat1Label": "< 3 s — détection IA embarquée",
+      "stat1Label": "< 3 s - détection IA embarquée",
       "stat2Value": "2",
-      "stat2Label": "< 2 s — propagation d'une alerte",
+      "stat2Label": "< 2 s - propagation d'une alerte",
       "stat3Value": "100",
       "stat3Label": "100 % fonctionnel hors-ligne",
       "note": "Tout ce que vous voyez tourne en production, maintenant."
@@ -103,7 +103,7 @@
     "security": {
       "title": "Conçu pour un environnement hostile",
       "p1Title": "Transport durci",
-      "p1Body": "HTTPS forcé, sessions blindées — cookies httpOnly, aucun token exposé.",
+      "p1Body": "HTTPS forcé, sessions blindées - cookies httpOnly, aucun token exposé.",
       "p2Title": "Anti-hameçonnage",
       "p2Body": "Une seule URL officielle, affichée ici. AIGLONIX ne demande jamais vos identifiants.",
       "p3Title": "Anti-intrusion",
@@ -118,14 +118,14 @@
     },
     "why": {
       "title": "Pourquoi AIGLONIX",
-      "p1": "Zéro installation — une URL, opérationnel en 30 secondes.",
-      "p2": "IA embarquée — fonctionne en zone brouillée ou déconnectée.",
-      "p3": "Architecture ouverte — Next.js + Supabase, auditable, extensible."
+      "p1": "Zéro installation - une URL, opérationnel en 30 secondes.",
+      "p2": "IA embarquée - fonctionne en zone brouillée ou déconnectée.",
+      "p3": "Architecture ouverte - Next.js + Supabase, auditable, extensible."
     },
     "roadmap": {
       "title": "Et après le hackathon",
-      "m1": "Modèle IA spécialisé — reconnaissance Shahed / FPV",
-      "m2": "Ingestion de capteurs réels — RF, acoustique",
+      "m1": "Modèle IA spécialisé - reconnaissance Shahed / FPV",
+      "m2": "Ingestion de capteurs réels - RF, acoustique",
       "m3": "Fédération multi-équipes"
     },
     "finalCta": {
@@ -158,7 +158,7 @@
     }
   },
   "operation": {
-    "title": "Opération — vue tactique",
+    "title": "Opération - vue tactique",
     "counters": {
       "drones": "Menaces actives",
       "jammers": "Brouillages actifs",
@@ -176,12 +176,12 @@
       "severity": "Sévérité",
       "submit": "Diffuser l'alerte",
       "success": "Alerte diffusée à tous les opérateurs",
-      "rateLimited": "Trop d'alertes — attendez une minute avant de réessayer."
+      "rateLimited": "Trop d'alertes - attendez une minute avant de réessayer."
     }
   },
   "sentinel": {
     "title": "Drone Sentinel",
-    "subtitle": "Détection IA embarquée — fonctionne même brouillé",
+    "subtitle": "Détection IA embarquée - fonctionne même brouillé",
     "modelLoading": "Chargement du modèle de détection…",
     "modelReady": "Modèle de détection prêt",
     "modelError": "Modèle de détection indisponible. Ajoutez yolov8n.onnx dans /public/models/.",
@@ -194,11 +194,11 @@
       "title": "Confirmer la position de diffusion",
       "gps": "Utiliser ma position GPS",
       "manual": "Touchez la carte pour positionner manuellement",
-      "hint": "Seule la position que vous confirmez explicitement est publiée — jamais une position captée silencieusement."
+      "hint": "Seule la position que vous confirmez explicitement est publiée - jamais une position captée silencieusement."
     },
     "publish": "Publier la détection",
     "published": "Détection publiée à l'équipe",
-    "queued": "Hors ligne — détection en file, elle se synchronisera automatiquement",
+    "queued": "Hors ligne - détection en file, elle se synchronisera automatiquement",
     "fileErrors": {
       "tooLarge": "Fichier trop volumineux (8 Mo max).",
       "badType": "Type de fichier non supporté (JPEG, PNG ou WebP)."
@@ -207,20 +207,20 @@
   },
   "mapvision": {
     "title": "Map Vision",
-    "subtitle": "Carte collaborative des brouillages — appui long pour signaler",
+    "subtitle": "Carte collaborative des brouillages - appui long pour signaler",
     "hint": "Appui long (ou double-clic) sur la carte pour signaler un brouillage",
     "form": {
       "title": "Signaler un brouillage",
       "band": "Bande de fréquence",
-      "strength": "Intensité (1–10)",
+      "strength": "Intensité (1-10)",
       "radius": "Rayon estimé (m)",
       "submit": "Publier le signalement"
     },
     "published": "Signalement de brouillage publié",
-    "recommendation": "⚠ Bande 2.4GHz compromise dans votre zone — basculer le contrôle drone sur 900MHz",
+    "recommendation": "⚠ Bande 2.4GHz compromise dans votre zone - basculer le contrôle drone sur 900MHz",
     "emitter": {
       "title": "Émetteur localisé",
-      "banner": "◎ Émetteur {band} localisé par triangulation — précision ~{m} m",
+      "banner": "◎ Émetteur {band} localisé par triangulation - précision ~{m} m",
       "reports": "{count, plural, one {# signalement} other {# signalements}}",
       "uncertainty": "précision ~{m} m",
       "confidence": "confiance"
@@ -233,17 +233,17 @@
   },
   "ghost": {
     "title": "Ghost Signal",
-    "subtitle": "Messagerie résiliente — offline-first",
+    "subtitle": "Messagerie résiliente - offline-first",
     "placeholder": "Message au canal ops…",
     "pending": "en attente",
     "synced": "synchronisé",
     "empty": "Aucun message sur ce canal pour l'instant.",
-    "externalLink": "lien externe — vérifiez le domaine avant de copier",
+    "externalLink": "lien externe - vérifiez le domaine avant de copier",
     "offlineInfo": "Hors ligne : les messages sont horodatés et mis en file localement, puis synchronisés dans l'ordre, sans doublon."
   },
   "voicemap": {
     "title": "Carte Vocale",
-    "hint": "Dictez une position — elle devient un marqueur sur la carte en direct.",
+    "hint": "Dictez une position - elle devient un marqueur sur la carte en direct.",
     "start": "Écouter",
     "stop": "Stop",
     "idle": "Micro coupé",
@@ -296,11 +296,11 @@
   "footer": {
     "classification": "NON CLASSIFIÉ // DÉMONSTRATION UNIQUEMENT",
     "tagline": "De la détection à la décision. En quelques secondes. Même sous brouillage.",
-    "builtNote": "Réalisé pour l'European Defense Tech Hackathon — Paris 2026. Prototype de démonstration ; pas un système accrédité, classifié ou opérationnel.",
+    "builtNote": "Réalisé pour l'European Defense Tech Hackathon - Paris 2026. Prototype de démonstration ; pas un système accrédité, classifié ou opérationnel.",
     "rights": "Tous droits réservés.",
-    "edth": "European Defense Tech Hackathon — Paris 2026",
+    "edth": "European Defense Tech Hackathon - Paris 2026",
     "official": "Domaine officiel",
-    "antiPhishing": "AIGLONIX ne vous demandera jamais votre mot de passe par e-mail ou messagerie. Vérifiez toujours le domaine — {domain} — avant de vous connecter.",
+    "antiPhishing": "AIGLONIX ne vous demandera jamais votre mot de passe par e-mail ou messagerie. Vérifiez toujours le domaine - {domain} - avant de vous connecter.",
     "col": {
       "platform": "Plateforme",
       "legal": "Mentions légales",
@@ -329,7 +329,7 @@
       "nato": "Interopérabilité OTAN par conception",
       "stanag": "Formats alignés STANAG (roadmap)",
       "gdpr": "RGPD · minimisation des données",
-      "export": "Contrôle export : ITAR / EAR — vérifier avant transfert"
+      "export": "Contrôle export : ITAR / EAR - vérifier avant transfert"
     }
   }
 }

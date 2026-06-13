@@ -135,7 +135,7 @@ export default function OperationPage() {
       )
       .subscribe();
 
-    // Operators online — Supabase Presence on the ops-room channel
+    // Operators online - Supabase Presence on the ops-room channel
     const presence = supabase.channel("ops-room", {
       config: { presence: { key: crypto.randomUUID() } },
     });
@@ -198,7 +198,7 @@ export default function OperationPage() {
 
   return (
     <div className="flex flex-col lg:flex-row lg:h-dvh">
-      {/* Map — 2/3 on desktop, 45vh on mobile */}
+      {/* Map - 2/3 on desktop, 45vh on mobile */}
       <div className="relative h-[45vh] lg:h-auto lg:flex-[2] min-w-0">
         <TacticalMap
           center={PARIS}
@@ -210,7 +210,7 @@ export default function OperationPage() {
         />
       </div>
 
-      {/* Right column — counters + feed */}
+      {/* Right column - counters + feed */}
       <div className="lg:flex-1 lg:max-w-md flex flex-col border-l border-line min-h-0">
         <div className="px-4 py-3 border-b border-line flex items-center justify-between gap-2">
           <h1 className="font-bold text-lg">{t("title")}</h1>
@@ -259,7 +259,7 @@ export default function OperationPage() {
           </div>
         )}
 
-        {/* Counters — horizontal scroll on mobile */}
+        {/* Counters - horizontal scroll on mobile */}
         <div className="flex gap-3 overflow-x-auto px-3 py-3">
           {counters.map(({ key, value }) => (
             <div key={key} className="card px-4 py-3 min-w-32 flex-1">
@@ -277,7 +277,7 @@ export default function OperationPage() {
         {/* Alert feed */}
         <div className="flex-1 overflow-y-auto px-3 pb-3 space-y-2 min-h-48">
           <p className="text-xs text-fg-muted px-1">
-            {t("feed.title")} — {t("feed.centerHint")}
+            {t("feed.title")} - {t("feed.centerHint")}
           </p>
           {alerts.length === 0 && (
             <p className="text-sm text-fg-muted text-center py-10">
@@ -295,7 +295,7 @@ export default function OperationPage() {
               }}
               className={cn(
                 "card w-full text-left px-3 py-2.5 cursor-pointer",
-                alert.severity === "critical" && "card-critical",
+                alert.severity === "critical" && "card-critical alert-gradient",
                 freshAlertIds.has(alert.id) && "feed-flash",
               )}
             >

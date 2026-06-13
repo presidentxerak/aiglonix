@@ -79,7 +79,7 @@ export default function LoginPage() {
         router.refresh();
       }
     } catch {
-      // Generic error on purpose — no internal detail, no user enumeration
+      // Generic error on purpose - no internal detail, no user enumeration
       toast.error(t("errors.authFailed"));
       turnstileRef.current?.reset();
       setCaptchaToken(null);
@@ -168,7 +168,7 @@ export default function LoginPage() {
           </button>
         </div>
 
-        {/* Anti-phishing policy (§2.7.3) — naming the official URL is defense #1 */}
+        {/* Anti-phishing policy (§2.7.3) - naming the official URL is defense #1 */}
         <p className="mt-6 text-xs text-fg-muted leading-relaxed border-l-2 border-line pl-3">
           {t("antiPhishing", { url: APP_URL.replace(/^https?:\/\//, "") })}
         </p>

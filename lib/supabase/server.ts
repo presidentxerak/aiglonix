@@ -24,7 +24,7 @@ export async function getSupabaseServer(): Promise<SupabaseClient> {
             cookieStore.set(name, value, options),
           );
         } catch {
-          // Called from a Server Component — middleware handles refresh.
+          // Called from a Server Component - middleware handles refresh.
         }
       },
     },
@@ -32,7 +32,7 @@ export async function getSupabaseServer(): Promise<SupabaseClient> {
 }
 
 /**
- * Service-role client. SERVER ONLY — the key never reaches the client bundle.
+ * Service-role client. SERVER ONLY - the key never reaches the client bundle.
  * Used exclusively by API routes after the caller's session has been verified.
  */
 export function getSupabaseAdmin(): SupabaseClient {

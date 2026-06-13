@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 /**
- * Deployment diagnostics — booleans only, no secret values ever leave the
+ * Deployment diagnostics - booleans only, no secret values ever leave the
  * server. Open /api/health in a browser to check that the deployment is
  * live and which env vars the runtime actually sees.
  */

@@ -3,7 +3,7 @@ import { ShieldCheck, Lock, FileText, Globe2 } from "lucide-react";
 import { Brand } from "@/components/brand/logo";
 
 /**
- * Landing footer — legal, privacy, security and defence-sector (NATO/EU)
+ * Landing footer - legal, privacy, security and defence-sector (NATO/EU)
  * compliance posture. Honest by design: links are placeholders for a
  * prototype and the classification banner makes the demo status explicit.
  */
@@ -101,7 +101,7 @@ export async function SiteFooter({ officialDomain }: { officialDomain: string })
         </p>
 
         <div className="mt-8 flex flex-col gap-2 border-t border-line/60 pt-6 text-xs text-fg-muted md:flex-row md:items-center md:justify-between">
-          <span>© 2026 AIGLONIX — {t("rights")}</span>
+          <span>© 2026 AIGLONIX - {t("rights")}</span>
           <span>{t("edth")}</span>
           <span className="tabular">
             {t("official")}: {officialDomain}

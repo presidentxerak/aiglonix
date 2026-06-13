@@ -67,7 +67,7 @@ function droneIcon(recent: boolean): L.DivIcon {
     className: "",
     iconSize: [16, 16],
     iconAnchor: [8, 8],
-    html: `<span class="relative block h-4 w-4">${ring}<span class="absolute inset-0 rounded-full border-2 border-critical bg-critical/40"></span></span>`,
+    html: `<span class="relative block h-4 w-4">${ring}<span class="absolute inset-0 rounded-full border-2 border-critical grad-magenta"></span></span>`,
   });
 }
 
@@ -75,7 +75,7 @@ function emitterIcon(recent: boolean): L.DivIcon {
   const ring = recent
     ? '<span class="absolute -inset-2 rounded-full bg-critical/40 pulse-ring"></span>'
     : "";
-  // crosshair reticle — "the jamming zone becomes a target"
+  // crosshair reticle - "the jamming zone becomes a target"
   const reticle =
     '<svg viewBox="0 0 24 24" class="absolute inset-0" fill="none" stroke="#F43F5E" stroke-width="2">' +
     '<circle cx="12" cy="12" r="7"/>' +
@@ -86,7 +86,7 @@ function emitterIcon(recent: boolean): L.DivIcon {
     className: "",
     iconSize: [24, 24],
     iconAnchor: [12, 12],
-    html: `<span class="relative block h-6 w-6">${ring}${reticle}</span>`,
+    html: `<span class="relative block h-6 w-6">${ring}<span class="absolute inset-1 rounded-full grad-magenta" style="opacity:0.4"></span>${reticle}</span>`,
   });
 }
 
@@ -118,8 +118,8 @@ function unitIcon(
     html:
       `<span class="relative block h-[30px] w-[30px] ${drop}">${threat}` +
       `<span class="absolute inset-0 unit-bob">` +
-      `<span class="absolute inset-0 rounded-full" style="background:${color}24;border:1.5px solid ${color}"></span>` +
-      `<svg viewBox="0 0 24 24" class="absolute inset-[5px] h-5 w-5" fill="none" stroke="${color}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${glyph}</svg>` +
+      `<span class="absolute inset-0 rounded-full unit-fill" style="border:2px solid ${color}"></span>` +
+      `<svg viewBox="0 0 24 24" class="absolute inset-[5px] h-5 w-5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${glyph}</svg>` +
       `</span></span>`,
   });
 }
@@ -244,7 +244,7 @@ export default function TacticalMapImpl({
           <Popup>
             <div className="text-sm tabular">
               <p className="font-bold text-critical">
-                ◎ {tEmitter("title")} — {e.freq_band}
+                ◎ {tEmitter("title")} - {e.freq_band}
               </p>
               <p>{tEmitter("reports", { count: e.report_count })}</p>
               <p>{tEmitter("uncertainty", { m: e.uncertainty_m })}</p>
@@ -288,7 +288,7 @@ export default function TacticalMapImpl({
                 className="font-bold"
                 style={{ color: FACTION_COLOR[u.faction] }}
               >
-                {tVoice(`units.${u.type}`)} — {tVoice(`faction.${u.faction}`)}
+                {tVoice(`units.${u.type}`)} - {tVoice(`faction.${u.faction}`)}
               </p>
               <p className="text-fg">{u.label}</p>
               {typeof u.speedKph === "number" && (
