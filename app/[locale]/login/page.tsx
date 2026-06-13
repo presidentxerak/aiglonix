@@ -9,7 +9,6 @@ import { useRouter } from "@/i18n/navigation";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
-import { LocaleSwitcher } from "@/components/shell/locale-switcher";
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 const APP_URL =
@@ -91,11 +90,10 @@ export default function LoginPage() {
   return (
     <div className="min-h-dvh flex flex-col items-center justify-center px-4 py-10">
       <div className="w-full max-w-sm">
-        <div className="flex items-center justify-between mb-8">
+        <div className="mb-8">
           <h1 className="font-bold text-2xl tracking-wide">
             {tCommon("appName")}
           </h1>
-          <LocaleSwitcher />
         </div>
 
         <div className="card p-5 md:p-6">
