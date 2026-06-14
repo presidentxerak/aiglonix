@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Mic, MicOff, Loader2, MapPin, Send, ChevronUp } from "lucide-react";
+import { Mic, MicOff, Loader2, MapPin, Send, ChevronUp, Trash2 } from "lucide-react";
 import { TacticalMap, type MapFocus } from "@/components/map/tactical-map";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -365,13 +365,13 @@ export default function VoiceMapPage() {
             ) : (
               <ul className="space-y-1.5 max-h-40 overflow-y-auto">
                 {pins.map((p) => (
-                  <li key={p.id}>
+                  <li key={p.id} className="flex items-center gap-1">
                     <button
                       type="button"
                       onClick={() =>
                         setFocus({ lat: p.lat, lng: p.lng, ts: Date.now() })
                       }
-                      className="w-full text-left flex items-start gap-2 text-xs hover:bg-raised rounded px-1.5 py-1 transition-colors cursor-pointer"
+                      className="min-w-0 flex-1 text-left flex items-start gap-2 text-xs hover:bg-raised rounded px-1.5 py-1 transition-colors cursor-pointer"
                     >
                       <MapPin
                         size={14}
@@ -386,6 +386,16 @@ export default function VoiceMapPage() {
                           {p.display_name}
                         </span>
                       </span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setPins((prev) => prev.filter((x) => x.id !== p.id))
+                      }
+                      aria-label={t("delete")}
+                      className="shrink-0 text-fg-muted hover:text-critical transition-colors cursor-pointer p-1"
+                    >
+                      <Trash2 size={14} aria-hidden />
                     </button>
                   </li>
                 ))}
