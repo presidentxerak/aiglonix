@@ -4,6 +4,7 @@ import { useEffect, useMemo } from "react";
 import {
   MapContainer,
   TileLayer,
+  LayersControl,
   Circle,
   Marker,
   Popup,
@@ -188,10 +189,20 @@ export default function TacticalMapImpl({
       className={className ?? "h-full w-full"}
       attributionControl={false}
     >
-      <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-        maxZoom={19}
-      />
+      <LayersControl position="topright">
+        <LayersControl.BaseLayer checked name="Tactical">
+          <TileLayer
+            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            maxZoom={19}
+          />
+        </LayersControl.BaseLayer>
+        <LayersControl.BaseLayer name="Satellite">
+          <TileLayer
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+            maxZoom={19}
+          />
+        </LayersControl.BaseLayer>
+      </LayersControl>
       <ZoomControl position="bottomright" />
       <InteractionHandler onLongPress={onLongPress} onPick={onPick} />
       <FocusHandler focus={focus} />

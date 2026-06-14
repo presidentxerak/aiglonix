@@ -328,7 +328,11 @@
     "typePlaceholder": "Saisir une position…",
     "send": "Ajouter",
     "collapse": "Masquer le panneau",
-    "delete": "Supprimer"
+    "delete": "Supprimer",
+    "photo": "Reconnaître un lieu depuis une photo",
+    "fromPhoto": "Depuis photo",
+    "fromSearch": "Recherche de lieu",
+    "photoError": "Impossible de reconnaître le lieu sur cette photo."
   },
   "footer": {
     "classification": "NON CLASSIFIÉ // DÉMONSTRATION UNIQUEMENT",

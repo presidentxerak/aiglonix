@@ -1,15 +1,10 @@
 import { NextResponse } from "next/server";
-import {
-  GeocodeInputSchema,
-  type GeocodeResult,
-} from "@/lib/voice/types";
-import { geocodePlace } from "@/lib/geocode";
+import { GeocodeInputSchema } from "@/lib/voice/types";
+import { searchPlaces } from "@/lib/geocode";
 import { getSupabaseServer } from "@/lib/supabase/server";
 import { checkRateLimit } from "@/lib/ratelimit";
 
-// Small in-memory cache (per server instance) - providers ask for restraint.
-const cache = new Map<string, GeocodeResult>();
-
+/** Autocomplete: ranked place candidates for a partial query. */
 export async function POST(request: Request) {
   try {
     const supabase = await getSupabaseServer();
@@ -19,9 +14,7 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-
-    const allowed = await checkRateLimit(`voice:${user.id}`);
-    if (!allowed) {
+    if (!(await checkRateLimit(`voice:${user.id}`))) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
 
@@ -35,21 +28,9 @@ export async function POST(request: Request) {
     if (!parsed.success) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
     }
-    const { query, near } = parsed.data;
 
-    const cacheKey = near
-      ? `${query}@${near.lat.toFixed(1)},${near.lng.toFixed(1)}`
-      : query;
-    const cached = cache.get(cacheKey);
-    if (cached) return NextResponse.json(cached, { status: 200 });
-
-    const result = await geocodePlace(query, near);
-    if (!result) {
-      return NextResponse.json({ error: "Not found" }, { status: 404 });
-    }
-
-    cache.set(cacheKey, result);
-    return NextResponse.json(result, { status: 200 });
+    const results = await searchPlaces(parsed.data.query, parsed.data.near, 5);
+    return NextResponse.json({ results }, { status: 200 });
   } catch {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
