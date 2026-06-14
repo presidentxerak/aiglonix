@@ -3,14 +3,26 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Mic, MicOff, Loader2, MapPin, Send, ChevronUp, Trash2 } from "lucide-react";
+import {
+  Mic,
+  MicOff,
+  Loader2,
+  MapPin,
+  Send,
+  ChevronUp,
+  Trash2,
+  Camera,
+} from "lucide-react";
 import { TacticalMap, type MapFocus } from "@/components/map/tactical-map";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { recompressForUpload } from "@/lib/onnx/preprocess";
 import { SttController, type SttEngine, type SttState } from "@/lib/voice/stt";
+import { PlaceIdSchema } from "@/lib/place/identify";
 import {
   ExtractedPlaceSchema,
   GeocodeResultSchema,
+  type GeocodeResult,
   type VoicePin,
   type VoiceAction,
 } from "@/lib/voice/types";
@@ -21,6 +33,35 @@ import {
 } from "@/lib/tactical/units";
 
 const PARIS: [number, number] = [48.8566, 2.3522];
+
+function blobToDataUrl(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(new Error("read failed"));
+    reader.readAsDataURL(blob);
+  });
+}
+
+function loadImage(file: File): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve(img);
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error("bad image"));
+    };
+    img.src = url;
+  });
+}
+
+function prettyCategory(c: string): string {
+  return c.charAt(0).toUpperCase() + c.slice(1).replace(/_/g, " ");
+}
 
 function factionFor(action: VoiceAction, unit: UnitType): Faction {
   if (unit === "jammer" || action === "contact" || action === "sighting")
@@ -80,6 +121,8 @@ export default function VoiceMapPage() {
   const [units, setUnits] = useState<TacticalUnit[]>([]);
   const [showDemo, setShowDemo] = useState(true);
   const [panelOpen, setPanelOpen] = useState(true);
+  const [suggestions, setSuggestions] = useState<GeocodeResult[]>([]);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const controllerRef = useRef<SttController | null>(null);
   const userPosRef = useRef<[number, number] | null>(null);
@@ -179,6 +222,107 @@ export default function VoiceMapPage() {
 
   const handleFinalRef = useRef(handleFinal);
   handleFinalRef.current = handleFinal;
+
+  // drop a precise marker from a geocoded place (search suggestion)
+  const dropPlace = useCallback(
+    (r: GeocodeResult) => {
+      const pin: VoicePin = {
+        id: crypto.randomUUID(),
+        lat: r.lat,
+        lng: r.lng,
+        label: r.name || r.display_name,
+        action: "mark",
+        unit: "unknown",
+        faction: "unknown",
+        transcript: t("fromSearch"),
+        display_name: r.display_name,
+        category: r.category,
+        at: Date.now(),
+      };
+      setPins((prev) => [pin, ...prev].slice(0, 50));
+      setFocus({ lat: pin.lat, lng: pin.lng, ts: pin.at });
+      setManual("");
+      setSuggestions([]);
+      toast.success(t("dropped", { place: pin.label }));
+    },
+    [t],
+  );
+
+  // photo -> Mistral vision recognises the place -> geocoded marker
+  const handlePhoto = useCallback(
+    async (file: File) => {
+      setProcessing(true);
+      try {
+        const img = await loadImage(file);
+        const blob = await recompressForUpload(img);
+        const image = await blobToDataUrl(blob);
+        const res = await fetch("/api/place/identify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ image }),
+        });
+        if (!res.ok) throw new Error("identify");
+        const data = PlaceIdSchema.parse(await res.json());
+        if (data.lat == null || data.lng == null) {
+          toast.error(t("notFound", { place: data.name }));
+          return;
+        }
+        const pin: VoicePin = {
+          id: crypto.randomUUID(),
+          lat: data.lat,
+          lng: data.lng,
+          label: data.name,
+          action: "mark",
+          unit: "unknown",
+          faction: "unknown",
+          transcript: t("fromPhoto"),
+          display_name: data.display_name ?? data.name,
+          category:
+            data.category !== "unknown"
+              ? prettyCategory(data.category)
+              : undefined,
+          at: Date.now(),
+        };
+        setPins((prev) => [pin, ...prev].slice(0, 50));
+        setFocus({ lat: pin.lat, lng: pin.lng, ts: pin.at });
+        toast.success(t("dropped", { place: data.name }));
+      } catch {
+        toast.error(t("photoError"));
+      } finally {
+        setProcessing(false);
+      }
+    },
+    [t],
+  );
+
+  // autocomplete: debounce the typed query into place suggestions
+  useEffect(() => {
+    const q = manual.trim();
+    const isListening = sttState === "listening" || sttState === "starting";
+    if (q.length < 3 || isListening) {
+      setSuggestions([]);
+      return;
+    }
+    const id = window.setTimeout(async () => {
+      try {
+        const near = userPosRef.current;
+        const res = await fetch("/api/place/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            query: q,
+            near: near ? { lat: near[0], lng: near[1] } : undefined,
+          }),
+        });
+        if (!res.ok) return;
+        const data = (await res.json()) as { results?: GeocodeResult[] };
+        setSuggestions(data.results ?? []);
+      } catch {
+        /* ignore */
+      }
+    }, 350);
+    return () => window.clearTimeout(id);
+  }, [manual, sttState]);
 
   const startListening = useCallback(async () => {
     if (!controllerRef.current) {
@@ -314,34 +458,93 @@ export default function VoiceMapPage() {
               </p>
             )}
 
-            {/* Type fallback - works even if the mic/STT is unavailable */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const v = manual.trim();
-                if (!v) return;
-                void handleFinal(v);
-                setManual("");
-              }}
-              className="flex gap-2"
-            >
-              <input
-                value={manual}
-                onChange={(e) => setManual(e.target.value)}
-                placeholder={t("typePlaceholder")}
-                aria-label={t("typePlaceholder")}
-                className="flex-1 min-w-0 bg-raised border border-line rounded-[4px] px-2.5 py-2 text-sm text-fg placeholder:text-fg-muted/60 focus:outline-none focus:border-line-active"
-              />
-              <Button
-                type="submit"
-                size="sm"
-                disabled={processing || !manual.trim()}
-                aria-label={t("send")}
-                className="shrink-0"
+            {/* Type to search a place (autocomplete) or a tactical phrase;
+                or attach a photo to recognise a landmark */}
+            <div className="relative">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const v = manual.trim();
+                  if (!v) return;
+                  void handleFinal(v);
+                  setManual("");
+                  setSuggestions([]);
+                }}
+                className="flex gap-2"
               >
-                <Send size={16} />
-              </Button>
-            </form>
+                <input
+                  value={manual}
+                  onChange={(e) => setManual(e.target.value)}
+                  placeholder={t("typePlaceholder")}
+                  aria-label={t("typePlaceholder")}
+                  autoComplete="off"
+                  className="flex-1 min-w-0 bg-raised border border-line rounded-none px-2.5 py-2 text-sm text-fg placeholder:text-fg-muted/60 focus:outline-none focus:border-line-active"
+                />
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="secondary"
+                  disabled={processing}
+                  aria-label={t("photo")}
+                  className="shrink-0"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <Camera size={16} />
+                </Button>
+                <Button
+                  type="submit"
+                  size="sm"
+                  disabled={processing || !manual.trim()}
+                  aria-label={t("send")}
+                  className="shrink-0"
+                >
+                  <Send size={16} />
+                </Button>
+              </form>
+
+              {suggestions.length > 0 && (
+                <ul className="absolute left-0 right-0 z-[1001] mt-1 card bg-surface max-h-48 overflow-y-auto">
+                  {suggestions.map((s, i) => (
+                    <li key={`${s.lat},${s.lng},${i}`}>
+                      <button
+                        type="button"
+                        onClick={() => dropPlace(s)}
+                        className="w-full text-left px-2 py-1.5 text-xs hover:bg-raised flex items-start gap-2 cursor-pointer"
+                      >
+                        <MapPin
+                          size={14}
+                          className="text-accent mt-0.5 shrink-0"
+                          aria-hidden
+                        />
+                        <span className="min-w-0">
+                          <span className="block truncate text-fg">
+                            {s.name || s.display_name}
+                            {s.category && (
+                              <span className="text-accent"> · {s.category}</span>
+                            )}
+                          </span>
+                          <span className="block truncate text-fg-muted">
+                            {s.display_name}
+                          </span>
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) void handlePhoto(file);
+                  e.target.value = "";
+                }}
+              />
+            </div>
 
             <button
               type="button"

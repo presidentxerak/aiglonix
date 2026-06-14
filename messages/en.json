@@ -328,7 +328,11 @@
     "typePlaceholder": "Type a position update…",
     "send": "Add",
     "collapse": "Hide panel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "photo": "Recognise a place from a photo",
+    "fromPhoto": "From photo",
+    "fromSearch": "Place search",
+    "photoError": "Couldn't recognise the place in this photo."
   },
   "footer": {
     "classification": "UNCLASSIFIED // FOR DEMONSTRATION ONLY",

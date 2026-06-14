@@ -17,7 +17,7 @@ const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://challenges.cloudflare.com",
   "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' blob: data: https://*.basemaps.cartocdn.com ${supabaseUrl}`,
+  `img-src 'self' blob: data: https://*.basemaps.cartocdn.com https://server.arcgisonline.com ${supabaseUrl}`,
   "font-src 'self'",
   `connect-src 'self' ${supabaseUrl} ${supabaseWs} https://challenges.cloudflare.com https://api.deepgram.com wss://api.deepgram.com`,
   "worker-src 'self' blob:",
