@@ -34,13 +34,56 @@ function shouldBias(query: string): boolean {
   return !/[,\d]/.test(query);
 }
 
+// OSM top-level classes that represent recognisable places/landmarks.
+const POI_CLASSES = new Set([
+  "leisure",
+  "tourism",
+  "historic",
+  "amenity",
+  "building",
+  "man_made",
+  "aeroway",
+  "military",
+  "sport",
+  "natural",
+  "waterway",
+  "railway",
+]);
+
+function titleCase(s: string): string {
+  return s
+    .replace(/[_-]+/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .trim();
+}
+
+interface NomItem {
+  lat?: string;
+  lon?: string;
+  display_name?: string;
+  class?: string;
+  type?: string;
+  importance?: number;
+  name?: string;
+  namedetails?: { name?: string };
+}
+
+// Rank by OSM importance + a bonus for being a named landmark/POI, so
+// "Stade de France" lands on the stadium, not a same-named street.
+function scoreNom(it: NomItem): number {
+  const imp = typeof it.importance === "number" ? it.importance : 0;
+  const poi = it.class && POI_CLASSES.has(it.class) ? 0.35 : 0;
+  const named = it.name || it.namedetails?.name ? 0.1 : 0;
+  return imp + poi + named;
+}
+
 async function geocodeNominatim(
   query: string,
   near: Near,
 ): Promise<GeocodeResult | null> {
   try {
     const url =
-      `${NOMINATIM}?format=jsonv2&limit=1&accept-language=en` +
+      `${NOMINATIM}?format=jsonv2&limit=8&addressdetails=1&namedetails=1&accept-language=en` +
       `&q=${encodeURIComponent(query)}` +
       (near && shouldBias(query) ? biasViewbox(near.lat, near.lng) : "");
     const res = await fetch(url, {
@@ -53,18 +96,49 @@ async function geocodeNominatim(
     });
     if (!res.ok) return null;
     const data: unknown = await res.json();
-    const first = Array.isArray(data) ? data[0] : undefined;
-    if (!first) return null;
-    const row = first as { lat?: string; lon?: string; display_name?: string };
+    if (!Array.isArray(data) || data.length === 0) return null;
+    const items = data as NomItem[];
+    const best = items.reduce((a, b) => (scoreNom(b) > scoreNom(a) ? b : a));
+    if (best.lat == null || best.lon == null) return null;
+    const name =
+      best.name ||
+      best.namedetails?.name ||
+      best.display_name?.split(",")[0]?.trim();
+    const category = best.type
+      ? titleCase(best.type)
+      : best.class
+        ? titleCase(best.class)
+        : undefined;
     const parsed = GeocodeResultSchema.safeParse({
-      lat: Number(row.lat),
-      lng: Number(row.lon),
-      display_name: row.display_name ?? query,
+      lat: Number(best.lat),
+      lng: Number(best.lon),
+      display_name: best.display_name ?? query,
+      name,
+      category,
     });
     return parsed.success ? parsed.data : null;
   } catch {
     return null;
   }
+}
+
+interface PhotonFeature {
+  geometry?: { coordinates?: number[] };
+  properties?: {
+    name?: string;
+    osm_key?: string;
+    osm_value?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+  };
+}
+
+function scorePhoton(f: PhotonFeature): number {
+  const p = f.properties ?? {};
+  const poi = p.osm_key && POI_CLASSES.has(p.osm_key) ? 0.35 : 0;
+  const named = p.name ? 0.1 : 0;
+  return poi + named;
 }
 
 async function geocodePhoton(
@@ -74,29 +148,37 @@ async function geocodePhoton(
   try {
     const bias =
       near && shouldBias(query) ? `&lat=${near.lat}&lon=${near.lng}` : "";
-    const url = `${PHOTON}?limit=1&lang=en&q=${encodeURIComponent(query)}${bias}`;
+    const url = `${PHOTON}?limit=8&lang=en&q=${encodeURIComponent(query)}${bias}`;
     const res = await fetch(url, {
       headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
       signal: AbortSignal.timeout(7000),
     });
     if (!res.ok) return null;
-    const data = (await res.json()) as {
-      features?: {
-        geometry?: { coordinates?: number[] };
-        properties?: Record<string, unknown>;
-      }[];
-    };
-    const f = data.features?.[0];
-    const coords = f?.geometry?.coordinates;
+    const data = (await res.json()) as { features?: PhotonFeature[] };
+    const feats = data.features ?? [];
+    let best = feats[0];
+    if (!best) return null;
+    let bestScore = scorePhoton(best);
+    for (const f of feats) {
+      const s = scorePhoton(f);
+      if (s > bestScore) {
+        best = f;
+        bestScore = s;
+      }
+    }
+    const coords = best.geometry?.coordinates;
     if (!coords || coords.length < 2) return null;
-    const p = f?.properties ?? {};
-    const name = [p.name, p.city, p.state, p.country]
+    const p = best.properties ?? {};
+    const display = [p.name, p.city, p.state, p.country]
       .filter((x): x is string => typeof x === "string" && x.length > 0)
       .join(", ");
+    const category = p.osm_value ? titleCase(p.osm_value) : undefined;
     const parsed = GeocodeResultSchema.safeParse({
       lat: coords[1],
       lng: coords[0],
-      display_name: name || query,
+      display_name: display || query,
+      name: p.name,
+      category,
     });
     return parsed.success ? parsed.data : null;
   } catch {
