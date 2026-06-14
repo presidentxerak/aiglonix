@@ -327,7 +327,8 @@
     "sttNetwork": "Service vocal indisponible. Saisissez une position ci-dessous.",
     "typePlaceholder": "Saisir une position…",
     "send": "Ajouter",
-    "collapse": "Masquer le panneau"
+    "collapse": "Masquer le panneau",
+    "delete": "Supprimer"
   },
   "footer": {
     "classification": "NON CLASSIFIÉ // DÉMONSTRATION UNIQUEMENT",

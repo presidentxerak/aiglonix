@@ -327,7 +327,8 @@
     "sttNetwork": "Speech service unavailable. Type a position below.",
     "typePlaceholder": "Type a position update…",
     "send": "Add",
-    "collapse": "Hide panel"
+    "collapse": "Hide panel",
+    "delete": "Delete"
   },
   "footer": {
     "classification": "UNCLASSIFIED // FOR DEMONSTRATION ONLY",
