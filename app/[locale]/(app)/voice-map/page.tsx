@@ -162,6 +162,7 @@ export default function VoiceMapPage() {
           faction: factionFor(place.action, place.unit),
           transcript: text,
           display_name: geo.display_name,
+          category: geo.category,
           at: Date.now(),
         };
         setPins((prev) => [pin, ...prev].slice(0, 50));

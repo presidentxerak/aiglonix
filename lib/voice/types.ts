@@ -53,6 +53,10 @@ export const GeocodeResultSchema = z.object({
   lat: z.number().min(-90).max(90),
   lng: z.number().min(-180).max(180),
   display_name: z.string(),
+  /** the recognised place name (e.g. "Stade de France") */
+  name: z.string().optional(),
+  /** OSM-derived category (e.g. "Stadium", "Monument", "Attraction") */
+  category: z.string().optional(),
 });
 export type GeocodeResult = z.infer<typeof GeocodeResultSchema>;
 
@@ -67,5 +71,7 @@ export interface VoicePin {
   faction: Faction;
   transcript: string;
   display_name: string;
+  /** recognised place category (e.g. "Stadium") when known */
+  category?: string;
   at: number;
 }

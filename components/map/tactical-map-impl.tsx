@@ -182,12 +182,16 @@ export default function TacticalMapImpl({
     <MapContainer
       center={center}
       zoom={zoom}
+      maxZoom={19}
       zoomControl={false}
       doubleClickZoom={!onLongPress}
       className={className ?? "h-full w-full"}
       attributionControl={false}
     >
-      <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" />
+      <TileLayer
+        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+        maxZoom={19}
+      />
       <ZoomControl position="bottomright" />
       <InteractionHandler onLongPress={onLongPress} onPick={onPick} />
       <FocusHandler focus={focus} />
@@ -361,6 +365,11 @@ export default function TacticalMapImpl({
                 {p.label}
               </p>
               <p className="text-xs text-fg-muted">{p.display_name}</p>
+              {p.category && (
+                <p className="text-[11px] font-bold uppercase tracking-wide text-accent">
+                  {p.category}
+                </p>
+              )}
               <p className="text-[11px] text-fg-disabled italic pt-1 border-t border-line/60">
                 {tVoice("pin.heard")}: {p.transcript}
               </p>
